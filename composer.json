@@ -1,0 +1,47 @@
+{
+  "name": "lbiltech/telegram-git-notifier",
+  "description": "Send notification from Gitlab and Github events to Telegram",
+  "keywords": [
+    "lbiltech",
+    "telegram-bot",
+    "notify",
+    "git-webhook",
+    "telegram-notifier",
+    "telegram-git-notifier",
+    "github-notifier",
+    "gitlab-notifier",
+    "github-telegram-bot",
+    "gitlab-telegram-bot",
+    "telegram-bot-github-notify",
+    "telegram-bot-gitlab-notify"
+  ],
+  "homepage": "https://github.com/lbiltech/telegram-git-notifier",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tan Nguyen",
+      "email": "tannp27@gmail.com",
+      "homepage": "https://tanhongit.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "LbilTech\\LaravelTelegramGitNotifier\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.0",
+    "eleirbag89/telegrambotphp": "^1.4",
+    "guzzlehttp/guzzle": "^7.8",
+    "symfony/http-foundation": "^6.3"
+  },
+  "support": {
+    "issues": "https://github.com/lbiltech/telegram-git-notifier/issues"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
