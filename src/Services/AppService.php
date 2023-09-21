@@ -4,6 +4,7 @@ namespace LbilTech\TelegramGitNotifier\Services;
 
 use Exception;
 
+use LbilTech\TelegramGitNotifier\Exceptions\FileNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use Telegram;
 
@@ -14,33 +15,24 @@ class AppService
     protected string $chatId;
 
     /**
-     * Send a message to telegram
-     *
      * @param string $message
      * @param array $options
-     * @param string $sendType
      *
      * @return void
      * @throws MessageIsEmptyException
      */
-    public function sendMessage(string $message = '', array $options = [], string $sendType = 'Message'): void
+    public function sendMessage(string $message = '', array $options = []): void
     {
         if (empty($message)) {
             throw MessageIsEmptyException::create();
         }
 
         $content = array(
-            'chat_id' => $this->chatId,
+            'chat_id'                  => $this->chatId,
             'disable_web_page_preview' => true,
-            'parse_mode' => 'HTML'
+            'parse_mode'               => 'HTML',
+            'text'                     => $message
         );
-
-        if ($sendType === 'Message') {
-            $content['text'] = $message;
-        } elseif ($sendType === 'Photo') {
-            $content['photo'] = $options['photo'] ?? null;
-            $content['caption'] = $message;
-        }
 
         if (!empty($options)) {
             $content['reply_markup'] = $options['reply_markup']
@@ -48,13 +40,38 @@ class AppService
                 : null;
         }
 
-        $this->telegram->{'send' . $sendType}($content);
+        $this->telegram->sendMessage($content);
+    }
+
+    /**
+     * @param string $photo
+     * @param string $caption
+     *
+     * @return void
+     * @throws FileNotFoundException
+     */
+    public function sendPhoto(string $photo = '', string $caption = ''): void
+    {
+        if (empty($photo)) {
+            throw FileNotFoundException::create();
+        }
+
+        $content = array(
+            'chat_id'                  => $this->chatId,
+            'disable_web_page_preview' => true,
+            'parse_mode'               => 'HTML',
+            'photo'                    => $photo,
+            'caption'                  => $caption
+        );
+
+        $this->telegram->sendPhoto($content);
     }
 
     /**
      * Send callback response to telegram (show alert)
      *
      * @param string|null $text
+     *
      * @return void
      * @throws MessageIsEmptyException
      */
@@ -67,8 +84,8 @@ class AppService
         try {
             $this->telegram->answerCallbackQuery([
                 'callback_query_id' => $this->telegram->Callback_ID(),
-                'text' => $text,
-                'show_alert' => true
+                'text'              => $text,
+                'show_alert'        => true
             ]);
         } catch (Exception $e) {
             error_log($e->getMessage());
@@ -80,6 +97,7 @@ class AppService
      *
      * @param string|null $text
      * @param array $options
+     *
      * @return void
      */
     public function editMessageText(
@@ -88,7 +106,7 @@ class AppService
     ): void {
         try {
             $content = array_merge([
-                'text' => $text ?? $this->Callback_Message_Text()
+                'text' => $text ?? $this->getCallbackTextMessage()
             ], $this->setCallbackContentMessage($options));
 
             $this->telegram->editMessageText($content);
@@ -101,12 +119,15 @@ class AppService
      * Edit message reply markup from a telegram
      *
      * @param array $options
+     *
      * @return void
      */
     public function editMessageReplyMarkup(array $options = []): void
     {
         try {
-            $this->telegram->editMessageReplyMarkup($this->setCallbackContentMessage($options));
+            $this->telegram->editMessageReplyMarkup(
+                $this->setCallbackContentMessage($options)
+            );
         } catch (Exception $e) {
             error_log($e->getMessage());
         }
@@ -117,7 +138,7 @@ class AppService
      *
      * @return string
      */
-    public function Callback_Message_Text(): string
+    public function getCallbackTextMessage(): string
     {
         return $this->telegram->Callback_Message()['text'];
     }
@@ -126,15 +147,16 @@ class AppService
      * Create content for a callback message
      *
      * @param array $options
+     *
      * @return array
      */
     public function setCallbackContentMessage(array $options = []): array
     {
         $content = array(
-            'chat_id' => $this->telegram->Callback_ChatID(),
-            'message_id' => $this->telegram->MessageID(),
+            'chat_id'                  => $this->telegram->Callback_ChatID(),
+            'message_id'               => $this->telegram->MessageID(),
             'disable_web_page_preview' => true,
-            'parse_mode' => 'HTML',
+            'parse_mode'               => 'HTML',
         );
 
         $content['reply_markup'] = $options['reply_markup']
@@ -142,22 +164,5 @@ class AppService
             : null;
 
         return $content;
-    }
-
-    /**
-     * Generate menu markup
-     *
-     * @return array[]
-     */
-    public function menuMarkup(): array
-    {
-        return [
-            [
-                $this->telegram->buildInlineKeyBoardButton("📰 About", "", "about", ""),
-                $this->telegram->buildInlineKeyBoardButton("📞 Contact", config('author.contact'))
-            ], [
-                $this->telegram->buildInlineKeyBoardButton("💠 Source Code", config('author.source_code'))
-            ]
-        ];
     }
 }
