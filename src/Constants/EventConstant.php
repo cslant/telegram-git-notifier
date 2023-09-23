@@ -15,4 +15,9 @@ class EventConstant
     public const EVENT_HAS_ACTION_SEPARATOR = 'atc.';
 
     public const EVENT_UPDATE_SEPARATOR = '.eus';
+
+    public const WEBHOOK_EVENT_HEADER = [
+        'github' => 'HTTP_X_GITHUB_EVENT',
+        'gitlab' => 'HTTP_X_GITLAB_EVENT',
+    ];
 }

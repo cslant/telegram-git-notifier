@@ -17,4 +17,6 @@ class SettingConstant
     public const SETTING_GITLAB_EVENTS = self::SETTING_CUSTOM_EVENTS . EventConstant::GITLAB_EVENT_SEPARATOR;
 
     public const SETTING_BACK = self::SETTING_PREFIX . 'back.';
+
+    public const CHAT_LINE_ITEM_COUNT = 2;
 }
