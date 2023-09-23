@@ -28,7 +28,10 @@
   "autoload": {
     "psr-4": {
       "LbilTech\\TelegramGitNotifier\\": "src/"
-    }
+    },
+    "files": [
+      "common/helpers.php"
+    ]
   },
   "require": {
     "php": "^8.0",
