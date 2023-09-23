@@ -12,11 +12,14 @@ class Event
 
     public string $platformFile = '';
 
-    public function __construct()
+    /**
+     * @param string $platformFile
+     *
+     * @return void
+     */
+    public function setPlatformFile(string $platformFile): void
     {
-        if (file_exists($this->platformFile)) {
-            $this->setEventConfig();
-        }
+        $this->platformFile = $platformFile;
     }
 
     /**
@@ -62,10 +65,9 @@ class Event
      */
     private function saveEventConfig(): void
     {
-        $jsonFile = $this->platformFile;
-        if (file_exists($jsonFile)) {
+        if (file_exists($this->platformFile)) {
             $json = json_encode($this->eventConfig, JSON_PRETTY_PRINT);
-            file_put_contents($jsonFile, $json, LOCK_EX);
+            file_put_contents($this->platformFile, $json, LOCK_EX);
         }
     }
 }

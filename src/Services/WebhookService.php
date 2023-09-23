@@ -2,50 +2,32 @@
 
 namespace LbilTech\TelegramGitNotifier\Services;
 
-class WebhookService
+use LbilTech\TelegramGitNotifier\Interfaces\WebhookInterface;
+
+class WebhookService implements WebhookInterface
 {
     private string $token;
 
     private string $url;
 
-    /**
-     * @param string $token
-     *
-     * @return void
-     */
     public function setToken(string $token): void
     {
         $this->token = $token;
     }
 
-    /**
-     * @param string $url
-     *
-     * @return void
-     */
     public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * Set webhook for telegram bot
-     *
-     * @return false|string
-     */
-    public function set(): false|string
+    public function setWebhook(): false|string
     {
         $url = "https://api.telegram.org/bot{$this->token}/setWebhook?url={$this->url}";
 
         return file_get_contents($url);
     }
 
-    /**
-     * Delete webhook for telegram bot
-     *
-     * @return false|string
-     */
-    public function delete(): false|string
+    public function deleteWebHook(): false|string
     {
         $url = "https://api.telegram.org/bot{$this->token}/deleteWebhook";
 

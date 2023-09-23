@@ -2,17 +2,22 @@
 
 namespace LbilTech\TelegramGitNotifier\Models;
 
+use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+
 class Setting
 {
     public array $settings = [];
 
     public string $settingFile = '';
 
-    public function __construct()
+    /**
+     * @param string $settingFile
+     *
+     * @return void
+     */
+    public function setSettingFile(string $settingFile): void
     {
-        if (file_exists($this->settingFile)) {
-            $this->setSettingConfig();
-        }
+        $this->settingFile = $settingFile;
     }
 
     /**
@@ -29,9 +34,11 @@ class Setting
     /**
      * @return bool
      */
-    public function allEventsNotifyStatus(): bool
+    public function isAllEventsNotification(): bool
     {
-        if (!empty($this->settings) && $this->settings['all_events_notify'] === true) {
+        if (!empty($this->settings)
+            && $this->settings[SettingConstant::T_ALL_EVENTS_NOTIFICATION] === true
+        ) {
             return true;
         }
 
@@ -43,7 +50,9 @@ class Setting
      */
     public function isNotified(): bool
     {
-        if (!empty($this->settings) && $this->settings['is_notified'] === true) {
+        if (!empty($this->settings)
+            && $this->settings[SettingConstant::T_IS_NOTIFIED] === true
+        ) {
             return true;
         }
 
@@ -55,23 +64,28 @@ class Setting
      *
      * @param string $settingName
      * @param $settingValue
+     *
      * @return bool
      */
-    public function updateSettingItem(string $settingName, $settingValue = null): bool
-    {
+    public function updateSettingItem(
+        string $settingName,
+        $settingValue = null
+    ): bool {
         $settingKeys = explode('.', $settingName);
         $lastKey = array_pop($settingKeys);
         $nestedSettings = &$this->settings;
 
         foreach ($settingKeys as $key) {
-            if (!isset($nestedSettings[$key]) || !is_array($nestedSettings[$key])) {
+            if (!isset($nestedSettings[$key])
+                || !is_array($nestedSettings[$key])
+            ) {
                 return false;
             }
             $nestedSettings = &$nestedSettings[$key];
         }
 
         if (isset($nestedSettings[$lastKey])) {
-            $newValue = $settingValue ?? !$nestedSettings[$lastKey]; // if value is null, then toggle value
+            $newValue = $settingValue ?? !$nestedSettings[$lastKey];
             $nestedSettings[$lastKey] = $newValue;
 
             return $this->saveSettingsToFile();
