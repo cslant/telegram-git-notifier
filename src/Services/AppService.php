@@ -6,21 +6,15 @@ use Exception;
 
 use LbilTech\TelegramGitNotifier\Exceptions\FileNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use LbilTech\TelegramGitNotifier\Interfaces\AppInterface;
 use Telegram;
 
-class AppService
+class AppService implements AppInterface
 {
     protected Telegram $telegram;
 
     protected string $chatId;
 
-    /**
-     * @param string $message
-     * @param array $options
-     *
-     * @return void
-     * @throws MessageIsEmptyException
-     */
     public function sendMessage(string $message = '', array $options = []): void
     {
         if (empty($message)) {
@@ -43,13 +37,6 @@ class AppService
         $this->telegram->sendMessage($content);
     }
 
-    /**
-     * @param string $photo
-     * @param string $caption
-     *
-     * @return void
-     * @throws FileNotFoundException
-     */
     public function sendPhoto(string $photo = '', string $caption = ''): void
     {
         if (empty($photo)) {
@@ -67,14 +54,6 @@ class AppService
         $this->telegram->sendPhoto($content);
     }
 
-    /**
-     * Send callback response to telegram (show alert)
-     *
-     * @param string|null $text
-     *
-     * @return void
-     * @throws MessageIsEmptyException
-     */
     public function answerCallbackQuery(string $text = null): void
     {
         if (empty($text)) {
@@ -92,14 +71,6 @@ class AppService
         }
     }
 
-    /**
-     * Edit message text and reply markup
-     *
-     * @param string|null $text
-     * @param array $options
-     *
-     * @return void
-     */
     public function editMessageText(
         ?string $text = null,
         array $options = []
@@ -115,13 +86,6 @@ class AppService
         }
     }
 
-    /**
-     * Edit message reply markup from a telegram
-     *
-     * @param array $options
-     *
-     * @return void
-     */
     public function editMessageReplyMarkup(array $options = []): void
     {
         try {
@@ -133,23 +97,11 @@ class AppService
         }
     }
 
-    /**
-     * Get the text from callback message
-     *
-     * @return string
-     */
     public function getCallbackTextMessage(): string
     {
         return $this->telegram->Callback_Message()['text'];
     }
 
-    /**
-     * Create content for a callback message
-     *
-     * @param array $options
-     *
-     * @return array
-     */
     public function setCallbackContentMessage(array $options = []): array
     {
         $content = array(
