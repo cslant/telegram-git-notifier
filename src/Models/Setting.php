@@ -6,9 +6,17 @@ use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 
 class Setting
 {
-    public array $settings = [];
+    private array $settings = [];
 
-    public string $settingFile = '';
+    private string $settingFile = '';
+
+    /**
+     * @return array
+     */
+    public function getSettings(): array
+    {
+        return $this->settings;
+    }
 
     /**
      * @param string $settingFile
@@ -18,6 +26,14 @@ class Setting
     public function setSettingFile(string $settingFile): void
     {
         $this->settingFile = $settingFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSettingFile(): string
+    {
+        return $this->settingFile;
     }
 
     /**
