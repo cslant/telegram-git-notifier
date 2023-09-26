@@ -10,15 +10,13 @@ class SettingService extends AppService implements SettingInterface
 {
     protected Setting $setting;
 
-    protected Telegram $telegram;
-
-    protected string $chatId;
+    public Telegram $telegram;
 
     protected array $settingData = [];
 
-    public function __construct(Telegram $telegram, string $chatId)
+    public function __construct(Telegram $telegram)
     {
-        parent::__construct($telegram, $chatId);
+        parent::__construct($telegram);
 
         $this->setting = new Setting();
         $this->settingData = $this->setting->getSettings();

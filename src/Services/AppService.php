@@ -14,9 +14,13 @@ class AppService implements AppInterface
 
     protected string $chatId;
 
-    public function __construct(Telegram $telegram, string $chatId)
+    public function __construct(Telegram $telegram)
     {
         $this->telegram = $telegram;
+    }
+
+    public function setCurrentChatId(string $chatId): void
+    {
         $this->chatId = $chatId;
     }
 

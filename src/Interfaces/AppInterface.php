@@ -16,7 +16,10 @@ interface AppInterface
      * @return void
      * @throws MessageIsEmptyException
      */
-    public function sendMessage(string $message = '', array $options = []): void;
+    public function sendMessage(
+        string $message = '',
+        array $options = []
+    ): void;
 
     /**
      * Send a photo to telegram
@@ -47,7 +50,10 @@ interface AppInterface
      *
      * @return void
      */
-    public function editMessageText(?string $text = null, array $options = []): void;
+    public function editMessageText(
+        ?string $text = null,
+        array $options = []
+    ): void;
 
     /**
      * Edit message reply markup from a telegram
@@ -73,4 +79,11 @@ interface AppInterface
      * @return array
      */
     public function setCallbackContentMessage(array $options = []): array;
+
+    /**
+     * @param string $chatId
+     *
+     * @return void
+     */
+    public function setCurrentChatId(string $chatId): void;
 }

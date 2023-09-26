@@ -4,39 +4,30 @@ namespace LbilTech\TelegramGitNotifier\Services;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Models\Event;
 use LbilTech\TelegramGitNotifier\Models\Setting;
+use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 use Telegram;
 
-class EventService extends AppService
+class EventService extends AppService implements EventInterface
 {
-    protected Setting $setting;
+    use ActionEventTrait;
 
-    protected Event $event;
+    public Setting $setting;
 
-    protected Telegram $telegram;
+    public Event $event;
 
-    protected string $chatId;
+    public Telegram $telegram;
 
-    public function __construct(
-        Telegram $telegram,
-        string $chatId
-    ) {
-        parent::__construct($telegram, $chatId);
+    public function __construct(Telegram $telegram)
+    {
+        parent::__construct($telegram);
 
         $this->setting = new Setting();
         $this->event = new Event();
     }
 
-    /**
-     * Validate access event before send notify
-     *
-     * @param string $platform Source code platform (GitHub, GitLab)
-     * @param string $event Event name (push, pull_request)
-     * @param $payload
-     *
-     * @return bool
-     */
     public function validateAccessEvent(
         string $platform,
         string $event,
@@ -67,35 +58,6 @@ class EventService extends AppService
         return (bool)$eventConfig;
     }
 
-    /**
-     * Get action name of event from payload data
-     *
-     * @param $payload
-     *
-     * @return string
-     */
-    public function getActionOfEvent($payload): string
-    {
-        $action = $payload?->action
-            ?? $payload?->object_attributes?->action
-            ?? $payload?->object_attributes?->noteable_type
-            ?? '';
-
-        if (!empty($action)) {
-            return tgn_convert_action_name($action);
-        }
-
-        return '';
-    }
-
-    /**
-     * Create markup for select event
-     *
-     * @param string|null $parentEvent
-     * @param string $platform
-     *
-     * @return array
-     */
     public function eventMarkup(
         ?string $parentEvent = null,
         string $platform = EventConstant::DEFAULT_PLATFORM
@@ -129,7 +91,6 @@ class EventService extends AppService
             );
         }
 
-        // add last item to a reply_markup array
         if (count($replyMarkupItem) > 0) {
             $replyMarkup[] = $replyMarkupItem;
         }
@@ -139,17 +100,7 @@ class EventService extends AppService
         return $replyMarkup;
     }
 
-    /**
-     * Get callback data for markup
-     *
-     * @param string $event
-     * @param string $platform
-     * @param array|bool $value
-     * @param string|null $parentEvent
-     *
-     * @return string
-     */
-    private function getCallbackData(
+    public function getCallbackData(
         string $event,
         string $platform,
         array|bool $value = false,
@@ -170,15 +121,7 @@ class EventService extends AppService
         return $prefix . $event . EventConstant::EVENT_UPDATE_SEPARATOR;
     }
 
-    /**
-     * Get event name for markup
-     *
-     * @param string $event
-     * @param $value
-     *
-     * @return string
-     */
-    private function getEventName(string $event, $value): string
+    public function getEventName(string $event, $value): string
     {
         if (is_array($value)) {
             return '⚙ ' . $event;
@@ -189,15 +132,7 @@ class EventService extends AppService
         return '❌ ' . $event;
     }
 
-    /**
-     * Get end keyboard buttons
-     *
-     * @param string $platform
-     * @param string|null $parentEvent
-     *
-     * @return array
-     */
-    private function getEndKeyboard(
+    public function getEndKeyboard(
         string $platform,
         ?string $parentEvent = null
     ): array {
@@ -218,14 +153,6 @@ class EventService extends AppService
         ];
     }
 
-    /**
-     * Handle event callback settings
-     *
-     * @param string|null $callback
-     * @param string|null $platform
-     *
-     * @return void
-     */
     public function eventHandle(
         ?string $callback = null,
         ?string $platform = null
@@ -245,15 +172,7 @@ class EventService extends AppService
         $this->handleEventUpdate($event, $platform);
     }
 
-    /**
-     * Get the platform from callback
-     *
-     * @param string|null $callback
-     * @param string|null $platform
-     *
-     * @return string
-     */
-    private function getPlatformFromCallback(
+    public function getPlatformFromCallback(
         ?string $callback,
         ?string $platform
     ): string {
@@ -275,16 +194,7 @@ class EventService extends AppService
         return EventConstant::DEFAULT_PLATFORM;
     }
 
-    /**
-     * First event settings
-     *
-     * @param string $platform
-     * @param string|null $callback
-     * @param string|null $view
-     *
-     * @return bool
-     */
-    private function sendSettingEventMessage(
+    public function sendSettingEventMessage(
         string $platform,
         ?string $callback = null,
         ?string $view = 'tools.custom_events'
@@ -303,14 +213,7 @@ class EventService extends AppService
         return false;
     }
 
-    /**
-     * Get event name from callback
-     *
-     * @param string|null $callback
-     *
-     * @return string
-     */
-    private function getEventFromCallback(?string $callback): string
+    public function getEventFromCallback(?string $callback): string
     {
         return str_replace([
             EventConstant::EVENT_PREFIX,
@@ -319,16 +222,7 @@ class EventService extends AppService
         ], '', $callback);
     }
 
-    /**
-     * Handle event with actions
-     *
-     * @param string $event
-     * @param string $platform
-     * @param string|null $view
-     *
-     * @return bool
-     */
-    private function handleEventWithActions(
+    public function handleEventWithActions(
         string $event,
         string $platform,
         ?string $view = 'tools.custom_event_actions'
@@ -352,15 +246,7 @@ class EventService extends AppService
         return false;
     }
 
-    /**
-     * Handle event update
-     *
-     * @param string $event
-     * @param string $platform
-     *
-     * @return void
-     */
-    private function handleEventUpdate(string $event, string $platform): void
+    public function handleEventUpdate(string $event, string $platform): void
     {
         if (str_contains($event, EventConstant::EVENT_UPDATE_SEPARATOR)) {
             $event = str_replace(
@@ -372,15 +258,7 @@ class EventService extends AppService
         }
     }
 
-    /**
-     * Handle event update
-     *
-     * @param string $event
-     * @param string $platform
-     *
-     * @return void
-     */
-    private function eventUpdateHandle(string $event, string $platform): void
+    public function eventUpdateHandle(string $event, string $platform): void
     {
         [$event, $action] = explode('.', $event);
 

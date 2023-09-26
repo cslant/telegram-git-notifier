@@ -7,15 +7,13 @@ use Telegram;
 
 class TelegramService extends AppService implements TelegramInterface
 {
-    protected Telegram $telegram;
-
-    protected string $chatId;
+    public Telegram $telegram;
 
     protected SettingService $settingService;
 
-    public function __construct(Telegram $telegram, string $chatId, SettingService $settingService)
+    public function __construct(Telegram $telegram, SettingService $settingService)
     {
-        parent::__construct($telegram, $chatId);
+        parent::__construct($telegram);
 
         $this->settingService = $settingService;
     }
