@@ -15,5 +15,5 @@ interface TelegramInterface
      * @return void
      * @throws MessageIsEmptyException
      */
-    public function setMyCommands(array $menuCommand,string $menuTemplate): void;
+    public function setMyCommands(array $menuCommand, string $menuTemplate): void;
 }
