@@ -6,8 +6,6 @@ class SettingConstant
 {
     public const SETTING_PREFIX = 'stg.';
 
-    public const SETTING_BACK = self::SETTING_PREFIX . 'back.';
-
     public const T_IS_NOTIFIED = 'is_notified';
 
     public const T_ALL_EVENTS_NOTIFICATION = 'all_events_notify';
@@ -23,4 +21,12 @@ class SettingConstant
     public const SETTING_GITLAB_EVENTS = self::SETTING_CUSTOM_EVENTS . EventConstant::GITLAB_EVENT_SEPARATOR;
 
     public const BTN_LINE_ITEM_COUNT = 2;
+
+    public const SETTING_BACK = self::SETTING_PREFIX . 'back.';
+
+    public const SETTING_BACK_TO_MAIN_MENU = self::SETTING_BACK . 'menu';
+
+    public const SETTING_BACK_TO_EVENTS_MENU = self::SETTING_BACK . 'settings.custom_events';
+
+    public const SETTING_BACK_TO_SETTINGS_MENU = self::SETTING_BACK . 'settings';
 }

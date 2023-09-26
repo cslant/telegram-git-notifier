@@ -3,7 +3,6 @@
 namespace LbilTech\TelegramGitNotifier\Services;
 
 use Exception;
-
 use LbilTech\TelegramGitNotifier\Exceptions\FileNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use LbilTech\TelegramGitNotifier\Interfaces\AppInterface;
@@ -14,6 +13,12 @@ class AppService implements AppInterface
     protected Telegram $telegram;
 
     protected string $chatId;
+
+    public function __construct(Telegram $telegram, string $chatId)
+    {
+        $this->telegram = $telegram;
+        $this->chatId = $chatId;
+    }
 
     public function sendMessage(string $message = '', array $options = []): void
     {

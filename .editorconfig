@@ -16,3 +16,6 @@ trim_trailing_whitespace = false
 
 [*.yml]
 indent_style = space
+
+[*.php]
+ij_php_concat_spaces = true

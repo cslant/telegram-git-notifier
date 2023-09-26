@@ -20,4 +20,9 @@ class EventConstant
     public const EVENT_HAS_ACTION_SEPARATOR = 'atc.';
 
     public const EVENT_UPDATE_SEPARATOR = '.eus';
+
+    public const PLATFORM_EVENT_SEPARATOR = [
+        'github' => self::GITHUB_EVENT_SEPARATOR,
+        'gitlab' => self::GITLAB_EVENT_SEPARATOR,
+    ];
 }
