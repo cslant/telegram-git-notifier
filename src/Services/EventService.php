@@ -7,23 +7,22 @@ use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Models\Event;
 use LbilTech\TelegramGitNotifier\Models\Setting;
+use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 use Telegram;
 
 class EventService extends AppService implements EventInterface
 {
-    protected Setting $setting;
+    use ActionEventTrait;
 
-    protected Event $event;
+    public Setting $setting;
 
-    protected Telegram $telegram;
+    public Event $event;
 
-    protected string $chatId;
+    public Telegram $telegram;
 
-    public function __construct(
-        Telegram $telegram,
-        string $chatId
-    ) {
-        parent::__construct($telegram, $chatId);
+    public function __construct(Telegram $telegram)
+    {
+        parent::__construct($telegram);
 
         $this->setting = new Setting();
         $this->event = new Event();
@@ -57,20 +56,6 @@ class EventService extends AppService implements EventInterface
         }
 
         return (bool)$eventConfig;
-    }
-
-    public function getActionOfEvent($payload): string
-    {
-        $action = $payload?->action
-            ?? $payload?->object_attributes?->action
-            ?? $payload?->object_attributes?->noteable_type
-            ?? '';
-
-        if (!empty($action)) {
-            return tgn_convert_action_name($action);
-        }
-
-        return '';
     }
 
     public function eventMarkup(

@@ -79,4 +79,11 @@ interface AppInterface
      * @return array
      */
     public function setCallbackContentMessage(array $options = []): array;
+
+    /**
+     * @param string $chatId
+     *
+     * @return void
+     */
+    public function setCurrentChatId(string $chatId): void;
 }
