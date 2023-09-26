@@ -104,7 +104,8 @@ class NotificationService
             $this->message = $message;
         }
 
-        $method_url = 'https://api.telegram.org/bot' . config(
+        $method_url = 'https://api.telegram.org/bot'
+            . config(
                 'telegram-bot.token'
             ) . '/sendMessage';
         $url = $method_url . '?chat_id=' . $chatId
