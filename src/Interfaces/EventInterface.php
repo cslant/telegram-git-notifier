@@ -3,6 +3,7 @@
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 
 interface EventInterface
@@ -123,7 +124,7 @@ interface EventInterface
     public function sendSettingEventMessage(
         string $platform,
         ?string $callback = null,
-        ?string $view = 'tools.custom_events'
+        ?string $view = SettingConstant::V_SETTING_EVENT
     ): bool;
 
     /**
@@ -147,7 +148,7 @@ interface EventInterface
     public function handleEventWithActions(
         string $event,
         string $platform,
-        ?string $view = 'tools.custom_event_actions'
+        ?string $view = SettingConstant::V_SETTING_EVENT_ACTION
     ): bool;
 
     /**

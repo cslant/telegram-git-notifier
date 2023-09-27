@@ -197,7 +197,7 @@ class EventService extends AppService implements EventInterface
     public function sendSettingEventMessage(
         string $platform,
         ?string $callback = null,
-        ?string $view = 'tools.custom_events'
+        ?string $view = SettingConstant::V_SETTING_EVENT
     ): bool {
         if (SettingConstant::SETTING_GITHUB_EVENTS === $callback
             || SettingConstant::SETTING_GITLAB_EVENTS === $callback
@@ -225,7 +225,7 @@ class EventService extends AppService implements EventInterface
     public function handleEventWithActions(
         string $event,
         string $platform,
-        ?string $view = 'tools.custom_event_actions'
+        ?string $view = SettingConstant::V_SETTING_EVENT_ACTION
     ): bool {
         if (str_contains($event, EventConstant::EVENT_HAS_ACTION_SEPARATOR)) {
             $event = str_replace(
