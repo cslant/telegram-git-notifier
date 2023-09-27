@@ -19,4 +19,11 @@ interface TelegramInterface
         array $menuCommand,
         string $menuTemplate
     ): void;
+
+    /**
+     * Check callback from a telegram
+     *
+     * @return bool
+     */
+    public function isCallback(): bool;
 }
