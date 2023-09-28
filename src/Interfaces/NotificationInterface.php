@@ -50,4 +50,14 @@ interface NotificationInterface
      * @throws SendNotificationException
      */
     public function sendNotify(string $chatId, string $message = null): bool;
+
+    /**
+     * Get action name of event from payload data
+     *
+     * @param $payload
+     *
+     * @return string
+     * @see ActionEventTrait::getActionOfEvent()
+     */
+    public function getActionOfEvent($payload): string;
 }

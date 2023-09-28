@@ -50,11 +50,7 @@ class ConfigHelper
     public function getTemplateData($partialPath, array $data = []): bool|string
     {
         $viewPathFile = $this->execConfig('view.path') . '/'
-            . str_replace(
-                '.',
-                '/',
-                $partialPath
-            ) . '.php';
+            . str_replace('.', '/', $partialPath) . '.php';
 
         if (!file_exists($viewPathFile)) {
             throw EntryNotFoundException::viewNotFound($viewPathFile);
