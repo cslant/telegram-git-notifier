@@ -4,10 +4,10 @@ namespace LbilTech\TelegramGitNotifier\Exceptions;
 
 use Exception;
 
-class FileNotFoundException extends Exception
+class SendNotificationException extends Exception
 {
     public static function create(): self
     {
-        return new static('File not found');
+        return new self('Can\'t send notification');
     }
 }

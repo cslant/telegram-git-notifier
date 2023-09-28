@@ -2,7 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
-use LbilTech\TelegramGitNotifier\Exceptions\FileNotFoundException;
+use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 interface AppInterface
@@ -28,7 +28,7 @@ interface AppInterface
      * @param string $caption
      *
      * @return void
-     * @throws FileNotFoundException
+     * @throws EntryNotFoundException
      */
     public function sendPhoto(string $photo = '', string $caption = ''): void;
 

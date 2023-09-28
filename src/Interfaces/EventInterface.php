@@ -3,7 +3,9 @@
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
+use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 
 interface EventInterface
 {
@@ -92,6 +94,8 @@ interface EventInterface
      * @param string|null $platform
      *
      * @return void
+     * @throws EntryNotFoundException
+     * @throws InvalidViewTemplateException
      */
     public function eventHandle(
         ?string $callback = null,
@@ -119,11 +123,13 @@ interface EventInterface
      * @param string|null $view
      *
      * @return bool
+     * @throws EntryNotFoundException
+     * @throws InvalidViewTemplateException
      */
     public function sendSettingEventMessage(
         string $platform,
         ?string $callback = null,
-        ?string $view = 'tools.custom_events'
+        ?string $view = SettingConstant::V_SETTING_EVENT
     ): bool;
 
     /**
@@ -143,11 +149,13 @@ interface EventInterface
      * @param string|null $view
      *
      * @return bool
+     * @throws EntryNotFoundException
+     * @throws InvalidViewTemplateException
      */
     public function handleEventWithActions(
         string $event,
         string $platform,
-        ?string $view = 'tools.custom_event_actions'
+        ?string $view = SettingConstant::V_SETTING_EVENT_ACTION
     ): bool;
 
     /**
@@ -157,6 +165,8 @@ interface EventInterface
      * @param string $platform
      *
      * @return void
+     * @throws EntryNotFoundException
+     * @throws InvalidViewTemplateException
      */
     public function handleEventUpdate(string $event, string $platform): void;
 
@@ -167,6 +177,8 @@ interface EventInterface
      * @param string $platform
      *
      * @return void
+     * @throws EntryNotFoundException
+     * @throws InvalidViewTemplateException
      */
     public function eventUpdateHandle(string $event, string $platform): void;
 }

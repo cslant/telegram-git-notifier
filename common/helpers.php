@@ -1,10 +1,15 @@
 <?php
 
+use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use LbilTech\TelegramGitNotifier\Helpers\ConfigHelper;
+
 if (!function_exists('tgn_urlencoded_message')) {
     /**
      * Urlencoded message
      *
      * @param string $message
+     *
      * @return array|string|string[]
      */
     function tgn_urlencoded_message(string $message): array|string
@@ -18,6 +23,7 @@ if (!function_exists('tgn_singularity')) {
      * The reverse of pluralizing, returns the singular form of a word in a string.
      *
      * @param $word
+     *
      * @return bool|string
      */
     function tgn_singularity($word): bool|string
@@ -48,7 +54,11 @@ if (!function_exists('tgn_singularity')) {
             '/(n)ews$/i' => '$1ews',
             '/(.)s$/i' => '$1'
         ];
-        return preg_replace(array_keys($singular_rules), array_values($singular_rules), $word);
+        return preg_replace(
+            array_keys($singular_rules),
+            array_values($singular_rules),
+            $word
+        );
     }
 }
 
@@ -57,6 +67,7 @@ if (!function_exists('tgn_snake_case')) {
      * Convert a string to a snack case
      *
      * @param $string
+     *
      * @return string
      */
     function tgn_snake_case($string): string
@@ -71,6 +82,7 @@ if (!function_exists('tgn_event_name')) {
      * Get event name
      *
      * @param string $event
+     *
      * @return string
      */
     function tgn_event_name(string $event): string
@@ -84,6 +96,7 @@ if (!function_exists('tgn_convert_event_name')) {
      * Convert event name
      *
      * @param string $event
+     *
      * @return string
      */
     function tgn_convert_event_name(string $event): string
@@ -97,10 +110,42 @@ if (!function_exists('tgn_convert_action_name')) {
      * Convert action name
      *
      * @param string $action
+     *
      * @return string
      */
     function tgn_convert_action_name(string $action): string
     {
         return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $action));
+    }
+}
+
+if (!function_exists('config')) {
+    /**
+     * Return config value by string
+     *
+     * @param string $string
+     *
+     * @return mixed
+     * @throws EntryNotFoundException
+     */
+    function config(string $string): mixed
+    {
+        return (new ConfigHelper())->execConfig($string);
+    }
+}
+
+if (!function_exists('view')) {
+    /**
+     * Get view template
+     *
+     * @param string $partialPath
+     * @param array $data
+     *
+     * @return bool|string
+     * @throws EntryNotFoundException|InvalidViewTemplateException
+     */
+    function view(string $partialPath, array $data = []): bool|string
+    {
+        return (new ConfigHelper())->getTemplateData($partialPath, $data);
     }
 }

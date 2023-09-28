@@ -9,13 +9,10 @@ class TelegramService extends AppService implements TelegramInterface
 {
     public Telegram $telegram;
 
-    protected SettingService $settingService;
-
-    public function __construct(Telegram $telegram, SettingService $settingService)
-    {
+    public function __construct(
+        Telegram $telegram
+    ) {
         parent::__construct($telegram);
-
-        $this->settingService = $settingService;
     }
 
     public function setMyCommands(
@@ -26,5 +23,16 @@ class TelegramService extends AppService implements TelegramInterface
             'commands' => json_encode($menuCommand)
         ]);
         $this->sendMessage(view($menuTemplate));
+    }
+
+    public function isCallback(): bool
+    {
+        if (!is_null($this->telegram->getData())
+            && !is_null($this->telegram->Callback_ChatID())
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
