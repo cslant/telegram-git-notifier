@@ -37,7 +37,8 @@
     "php": "^8.0",
     "eleirbag89/telegrambotphp": "^1.4",
     "guzzlehttp/guzzle": "^7.8",
-    "symfony/http-foundation": "^6.3"
+    "symfony/http-foundation": "^6.3",
+    "vlucas/phpdotenv": "^5.5"
   },
   "support": {
     "issues": "https://github.com/lbiltech/telegram-git-notifier/issues"

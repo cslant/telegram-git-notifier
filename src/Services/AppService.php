@@ -3,7 +3,7 @@
 namespace LbilTech\TelegramGitNotifier\Services;
 
 use Exception;
-use LbilTech\TelegramGitNotifier\Exceptions\FileNotFoundException;
+use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use LbilTech\TelegramGitNotifier\Interfaces\AppInterface;
 use Telegram;
@@ -49,7 +49,7 @@ class AppService implements AppInterface
     public function sendPhoto(string $photo = '', string $caption = ''): void
     {
         if (empty($photo)) {
-            throw FileNotFoundException::create();
+            throw EntryNotFoundException::fileNotFound();
         }
 
         $content = array(
