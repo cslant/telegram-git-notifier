@@ -28,13 +28,13 @@ class NotificationService implements NotificationInterface
         string $viewTemplate = null,
     ): void {
         $telegramService->telegram->sendMessage([
-            'chat_id' => config('telegram-bot.chat_id'),
-            'text' => view(
+            'chat_id'                  => config('telegram-bot.chat_id'),
+            'text'                     => view(
                 $viewTemplate ?? config('view.globals.access_denied'),
                 ['chatId' => $chatId]
             ),
             'disable_web_page_preview' => true,
-            'parse_mode' => 'HTML'
+            'parse_mode'               => 'HTML'
         ]);
     }
 
@@ -62,23 +62,16 @@ class NotificationService implements NotificationInterface
     private function setMessage(string $typeEvent): void
     {
         $event = tgn_event_name($typeEvent);
-
         $action = $this->getActionOfEvent($this->payload);
 
-        if (!empty($action)) {
-            $this->message = view(
-                "events.{$this->platform}.{$event}.{$action}",
-                [
-                    'payload' => $this->payload,
-                    'event'   => tgn_convert_event_name($typeEvent),
-                ]
-            );
-        } else {
-            $this->message = view(
-                "events.{$this->platform}.{$event}.default",
-                ['payload' => $this->payload]
-            );
-        }
+        $viewTemplate = empty($action)
+            ? "events.{$this->platform}.{$event}.default"
+            : "events.{$this->platform}.{$event}.{$action}";
+
+        $this->message = view($viewTemplate, [
+            'payload' => $this->payload,
+            'event'   => tgn_convert_event_name($typeEvent),
+        ]);
     }
 
     public function sendNotify(string $chatId, string $message = null): bool
@@ -87,11 +80,16 @@ class NotificationService implements NotificationInterface
             $this->message = $message;
         }
 
-        $method_url = 'https://api.telegram.org/bot'
-            . config('telegram-bot.token') . '/sendMessage';
-        $url = $method_url . '?chat_id=' . $chatId
-            . '&disable_web_page_preview=1&parse_mode=html&text='
-            . tgn_urlencoded_message($this->message);
+        $queryParams = [
+            'chat_id'                  => $chatId,
+            'disable_web_page_preview' => 1,
+            'parse_mode'               => 'html',
+            'text'                     => tgn_urlencoded_message($this->message)
+        ];
+
+        $url = 'https://api.telegram.org/bot'
+            . config('telegram-bot.token') . '/sendMessage'
+            . '?' . http_build_query($queryParams);
 
         $client = new Client();
 
@@ -100,9 +98,9 @@ class NotificationService implements NotificationInterface
 
             if ($response->getStatusCode() === 200) {
                 return true;
-            } else {
-                throw SendNotificationException::create();
             }
+
+            throw SendNotificationException::create();
         } catch (GuzzleException $e) {
             error_log($e->getMessage());
         }
