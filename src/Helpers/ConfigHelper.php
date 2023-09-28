@@ -12,7 +12,7 @@ class ConfigHelper
 
     public function __construct()
     {
-        $this->config = require __DIR__ . '/../../config/tg-notifier.php';
+        $this->config = require_once __DIR__ . '/../../config/tg-notifier.php';
     }
 
     /**
@@ -49,7 +49,8 @@ class ConfigHelper
      */
     public function getTemplateData($partialPath, array $data = []): bool|string
     {
-        $viewPathFile = $this->execConfig('view.path') . '/' . str_replace(
+        $viewPathFile = $this->execConfig('view.path') . '/'
+            . str_replace(
                 '.',
                 '/',
                 $partialPath
@@ -63,7 +64,7 @@ class ConfigHelper
             extract($data);
 
             ob_start();
-            require $viewPathFile;
+            require_once $viewPathFile;
             $content = ob_get_contents();
             ob_end_clean();
         } catch (Throwable $e) {
