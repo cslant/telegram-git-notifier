@@ -50,25 +50,20 @@ class ConfigHelper
     public function getTemplateData($partialPath, array $data = []): bool|string
     {
         $viewPathFile = $this->execConfig('view.path') . '/'
-            . str_replace(
-                '.',
-                '/',
-                $partialPath
-            ) . '.php';
+            . str_replace('.', '/', $partialPath) . '.php';
 
         if (!file_exists($viewPathFile)) {
-            return '';
+            throw EntryNotFoundException::viewNotFound($viewPathFile);
         }
 
+        ob_start();
         try {
-            extract($data);
-
-            ob_start();
+            extract($data, EXTR_SKIP);
             require_once $viewPathFile;
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
         } catch (Throwable $e) {
-            throw InvalidViewTemplateException::create($viewPathFile);
+            ob_end_clean();
+            error_log($e->getMessage());
         }
 
         return $content;

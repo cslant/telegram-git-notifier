@@ -24,23 +24,28 @@ class AppService implements AppInterface
         $this->chatId = $chatId;
     }
 
+    private function createBaseContent(): array
+    {
+        return [
+            'chat_id'                  => $this->chatId,
+            'disable_web_page_preview' => true,
+            'parse_mode'               => 'HTML'
+        ];
+    }
+
     public function sendMessage(string $message = '', array $options = []): void
     {
         if (empty($message)) {
             throw MessageIsEmptyException::create();
         }
 
-        $content = array(
-            'chat_id'                  => $this->chatId,
-            'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML',
-            'text'                     => $message
-        );
+        $content = $this->createBaseContent();
+        $content['text'] = $message;
 
-        if (!empty($options)) {
-            $content['reply_markup'] = $options['reply_markup']
-                ? $this->telegram->buildInlineKeyBoard($options['reply_markup'])
-                : null;
+        if (!empty($options['reply_markup'])) {
+            $content['reply_markup'] = $this->telegram->buildInlineKeyBoard(
+                $options['reply_markup']
+            );
         }
 
         $this->telegram->sendMessage($content);
@@ -52,13 +57,9 @@ class AppService implements AppInterface
             throw EntryNotFoundException::fileNotFound();
         }
 
-        $content = array(
-            'chat_id'                  => $this->chatId,
-            'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML',
-            'photo'                    => $photo,
-            'caption'                  => $caption
-        );
+        $content = $this->createBaseContent();
+        $content['photo'] = $photo;
+        $content['caption'] = $caption;
 
         $this->telegram->sendPhoto($content);
     }
@@ -76,7 +77,7 @@ class AppService implements AppInterface
                 'show_alert'        => true
             ]);
         } catch (Exception $e) {
-            error_log($e->getMessage());
+            error_log("Error answering callback query: " . $e->getMessage());
         }
     }
 
@@ -113,12 +114,12 @@ class AppService implements AppInterface
 
     public function setCallbackContentMessage(array $options = []): array
     {
-        $content = array(
+        $content = [
             'chat_id'                  => $this->telegram->Callback_ChatID(),
             'message_id'               => $this->telegram->MessageID(),
             'disable_web_page_preview' => true,
             'parse_mode'               => 'HTML',
-        );
+        ];
 
         $content['reply_markup'] = $options['reply_markup']
             ? $this->telegram->buildInlineKeyBoard($options['reply_markup'])

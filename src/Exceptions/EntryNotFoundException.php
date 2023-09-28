@@ -15,4 +15,9 @@ class EntryNotFoundException extends Exception
     {
         return new static("Config {$config} not found");
     }
+
+    public static function viewNotFound($view): self
+    {
+        return new static("View {$view} not found");
+    }
 }
