@@ -9,8 +9,6 @@ class TelegramService extends AppService implements TelegramInterface
 {
     public Telegram $telegram;
 
-    protected SettingService $settingService;
-
     public function __construct(
         Telegram $telegram
     ) {

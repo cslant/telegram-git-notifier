@@ -67,7 +67,7 @@ class ConfigHelper
             $content = ob_get_clean();
         } catch (Throwable $e) {
             ob_end_clean();
-            throw InvalidViewTemplateException::create($viewPathFile, $e);
+            error_log($e->getMessage());
         }
 
         return $content;

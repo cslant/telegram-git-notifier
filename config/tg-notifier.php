@@ -4,7 +4,6 @@ return [
     'app' => [
         'name'     => $_ENV['TGN_APP_NAME'] ?? 'Telegram Git Notifier',
         'url'      => $_ENV['TGN_APP_URL'] ?? 'http://localhost:3000',
-        'image'    => $_ENV['TGN_APP_IMAGE'] ?? 'public/images/github.jpeg',
         'timezone' => $_ENV['TIMEZONE'] ?? 'Asia/Ho_Chi_Minh',
     ],
 
@@ -28,6 +27,11 @@ return [
             'resources/views/telegram-git-notifier',
         'event' => [
             'default' => $_ENV['TGN_VIEW_EVENT_DEFAULT'] ?? 'default',
+        ],
+
+        'globals' => [
+            'access_denied' => $_ENV['TGN_VIEW_GLOBALS_ACCESS_DENIED'] ??
+                'globals.access_denied',
         ]
     ]
 ];
