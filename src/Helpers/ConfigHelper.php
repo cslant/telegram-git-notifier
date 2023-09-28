@@ -57,18 +57,17 @@ class ConfigHelper
             ) . '.php';
 
         if (!file_exists($viewPathFile)) {
-            return '';
+            throw EntryNotFoundException::viewNotFound($viewPathFile);
         }
 
+        ob_start();
         try {
-            extract($data);
-
-            ob_start();
+            extract($data, EXTR_SKIP);
             require_once $viewPathFile;
-            $content = ob_get_contents();
-            ob_end_clean();
+            $content = ob_get_clean();
         } catch (Throwable $e) {
-            throw InvalidViewTemplateException::create($viewPathFile);
+            ob_end_clean();
+            throw InvalidViewTemplateException::create($viewPathFile, $e);
         }
 
         return $content;
