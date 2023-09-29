@@ -126,7 +126,6 @@ if (!function_exists('config')) {
      * @param string $string
      *
      * @return mixed
-     * @throws EntryNotFoundException
      */
     function config(string $string): mixed
     {
