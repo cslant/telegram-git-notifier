@@ -2,7 +2,6 @@
 
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
 use LbilTech\TelegramGitNotifier\Services\TelegramService;
@@ -18,7 +17,6 @@ interface NotificationInterface
      * @param string|null $chatId
      *
      * @return void
-     * @throws EntryNotFoundException
      * @throws InvalidViewTemplateException
      */
     public function accessDenied(
@@ -35,7 +33,6 @@ interface NotificationInterface
      *
      * @return mixed|void
      * @throws InvalidViewTemplateException
-     * @throws EntryNotFoundException
      */
     public function setPayload(Request $request, string $event);
 
@@ -46,7 +43,6 @@ interface NotificationInterface
      * @param string|null $message
      *
      * @return bool
-     * @throws EntryNotFoundException
      * @throws SendNotificationException
      */
     public function sendNotify(string $chatId, string $message = null): bool;

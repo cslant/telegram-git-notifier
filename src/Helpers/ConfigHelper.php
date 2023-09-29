@@ -12,7 +12,7 @@ class ConfigHelper
 
     public function __construct()
     {
-        $this->config = require_once __DIR__ . '/../../config/tg-notifier.php';
+        $this->config = require __DIR__ . '/../../config/tg-notifier.php';
     }
 
     /**
@@ -21,7 +21,6 @@ class ConfigHelper
      * @param string $string
      *
      * @return array|mixed
-     * @throws EntryNotFoundException
      */
     public function execConfig(string $string): mixed
     {
@@ -29,7 +28,7 @@ class ConfigHelper
         $result = $this->config;
         foreach ($config as $value) {
             if (!isset($result[$value])) {
-                throw EntryNotFoundException::configNotFound($string);
+                return '';
             }
 
             $result = $result[$value];
@@ -44,8 +43,6 @@ class ConfigHelper
      * @param array $data
      *
      * @return bool|string
-     * @throws InvalidViewTemplateException
-     * @throws EntryNotFoundException
      */
     public function getTemplateData($partialPath, array $data = []): bool|string
     {
@@ -53,7 +50,7 @@ class ConfigHelper
             . str_replace('.', '/', $partialPath) . '.php';
 
         if (!file_exists($viewPathFile)) {
-            throw EntryNotFoundException::viewNotFound($viewPathFile);
+            return '';
         }
 
         ob_start();
@@ -61,7 +58,7 @@ class ConfigHelper
             extract($data, EXTR_SKIP);
             require_once $viewPathFile;
             $content = ob_get_clean();
-        } catch (Throwable $e) {
+        } catch (EntryNotFoundException|InvalidViewTemplateException|Throwable $e) {
             ob_end_clean();
             error_log($e->getMessage());
         }

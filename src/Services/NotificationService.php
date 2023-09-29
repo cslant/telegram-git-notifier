@@ -5,8 +5,6 @@ namespace LbilTech\TelegramGitNotifier\Services;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
 use LbilTech\TelegramGitNotifier\Interfaces\NotificationInterface;
 use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
@@ -21,6 +19,13 @@ class NotificationService implements NotificationInterface
     protected string $message = '';
 
     public string $platform = EventConstant::DEFAULT_PLATFORM;
+
+    public Client $client;
+
+    public function __construct(Client $client)
+    {
+        $this->client = $client;
+    }
 
     public function accessDenied(
         TelegramService $telegramService,
@@ -56,8 +61,6 @@ class NotificationService implements NotificationInterface
      * @param string $typeEvent
      *
      * @return void
-     * @throws InvalidViewTemplateException
-     * @throws EntryNotFoundException
      */
     private function setMessage(string $typeEvent): void
     {
@@ -91,10 +94,8 @@ class NotificationService implements NotificationInterface
             . config('telegram-bot.token') . '/sendMessage'
             . '?' . http_build_query($queryParams);
 
-        $client = new Client();
-
         try {
-            $response = $client->request('GET', $url);
+            $response = $this->client->request('GET', $url);
 
             if ($response->getStatusCode() === 200) {
                 return true;
