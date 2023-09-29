@@ -21,7 +21,6 @@ class ConfigHelper
      * @param string $string
      *
      * @return array|mixed
-     * @throws EntryNotFoundException
      */
     public function execConfig(string $string): mixed
     {
@@ -29,7 +28,7 @@ class ConfigHelper
         $result = $this->config;
         foreach ($config as $value) {
             if (!isset($result[$value])) {
-                throw EntryNotFoundException::configNotFound($string);
+                return '';
             }
 
             $result = $result[$value];

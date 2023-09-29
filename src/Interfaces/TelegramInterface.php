@@ -2,7 +2,6 @@
 
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
@@ -16,7 +15,6 @@ interface TelegramInterface
      *
      * @return void
      * @throws MessageIsEmptyException
-     * @throws EntryNotFoundException
      * @throws InvalidViewTemplateException
      */
     public function setMyCommands(

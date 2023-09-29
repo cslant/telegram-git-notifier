@@ -28,7 +28,7 @@ if (!function_exists('tgn_singularity')) {
      */
     function tgn_singularity($word): bool|string
     {
-        $singular_rules = [
+        static $singular_rules = [
             '/(quiz)zes$/i' => '$1',
             '/(matr)ices$/i' => '$1ix',
             '/(vert|ind)ices$/i' => '$1ex',
