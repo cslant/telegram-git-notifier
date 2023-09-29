@@ -1,7 +1,5 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Helpers\ConfigHelper;
 
 if (!function_exists('tgn_urlencoded_message')) {
@@ -28,7 +26,7 @@ if (!function_exists('tgn_singularity')) {
      */
     function tgn_singularity($word): bool|string
     {
-        $singular_rules = [
+        static $singular_rules = [
             '/(quiz)zes$/i' => '$1',
             '/(matr)ices$/i' => '$1ix',
             '/(vert|ind)ices$/i' => '$1ex',
@@ -126,7 +124,6 @@ if (!function_exists('config')) {
      * @param string $string
      *
      * @return mixed
-     * @throws EntryNotFoundException
      */
     function config(string $string): mixed
     {
@@ -142,7 +139,6 @@ if (!function_exists('view')) {
      * @param array $data
      *
      * @return bool|string
-     * @throws EntryNotFoundException|InvalidViewTemplateException
      */
     function view(string $partialPath, array $data = []): bool|string
     {
