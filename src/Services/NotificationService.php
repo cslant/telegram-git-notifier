@@ -56,8 +56,6 @@ class NotificationService implements NotificationInterface
      * @param string $typeEvent
      *
      * @return void
-     * @throws InvalidViewTemplateException
-     * @throws EntryNotFoundException
      */
     private function setMessage(string $typeEvent): void
     {

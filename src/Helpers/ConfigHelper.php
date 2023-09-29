@@ -43,8 +43,6 @@ class ConfigHelper
      * @param array $data
      *
      * @return bool|string
-     * @throws InvalidViewTemplateException
-     * @throws EntryNotFoundException
      */
     public function getTemplateData($partialPath, array $data = []): bool|string
     {
@@ -52,7 +50,7 @@ class ConfigHelper
             . str_replace('.', '/', $partialPath) . '.php';
 
         if (!file_exists($viewPathFile)) {
-            throw EntryNotFoundException::viewNotFound($viewPathFile);
+            return '';
         }
 
         ob_start();
@@ -60,7 +58,7 @@ class ConfigHelper
             extract($data, EXTR_SKIP);
             require_once $viewPathFile;
             $content = ob_get_clean();
-        } catch (Throwable $e) {
+        } catch (EntryNotFoundException|InvalidViewTemplateException|Throwable $e) {
             ob_end_clean();
             error_log($e->getMessage());
         }

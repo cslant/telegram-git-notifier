@@ -141,7 +141,6 @@ if (!function_exists('view')) {
      * @param array $data
      *
      * @return bool|string
-     * @throws EntryNotFoundException|InvalidViewTemplateException
      */
     function view(string $partialPath, array $data = []): bool|string
     {
