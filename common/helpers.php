@@ -1,7 +1,5 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Helpers\ConfigHelper;
 
 if (!function_exists('tgn_urlencoded_message')) {
