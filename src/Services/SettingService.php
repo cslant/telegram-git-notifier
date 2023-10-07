@@ -167,14 +167,17 @@ class SettingService extends AppService implements SettingInterface
     public function sendSettingEventMessage(
         string $platform,
         ?string $callback = null,
-        ?string $view = SettingConstant::V_SETTING_EVENT
+        ?string $view = null
     ): bool {
         if (SettingConstant::SETTING_GITHUB_EVENTS === $callback
             || SettingConstant::SETTING_GITLAB_EVENTS === $callback
             || !$callback
         ) {
             $this->editMessageText(
-                view($view, ['platform' => $platform]),
+                view(
+                    $view ?? config('view.tools.custom_event'),
+                    compact('platform')
+                ),
                 ['reply_markup' => $this->eventMarkup(null, $platform)]
             );
             return true;
@@ -195,7 +198,7 @@ class SettingService extends AppService implements SettingInterface
     public function handleEventWithActions(
         string $event,
         string $platform,
-        ?string $view = SettingConstant::V_SETTING_EVENT_ACTION
+        ?string $view = null
     ): bool {
         if (str_contains($event, EventConstant::EVENT_HAS_ACTION_SEPARATOR)) {
             $event = str_replace(
@@ -205,7 +208,7 @@ class SettingService extends AppService implements SettingInterface
             );
             $this->editMessageText(
                 view(
-                    $view,
+                    $view ?? config('view.tools.custom_event_action'),
                     compact('event', 'platform')
                 ),
                 ['reply_markup' => $this->eventMarkup($event, $platform)]
@@ -241,5 +244,68 @@ class SettingService extends AppService implements SettingInterface
                 : null,
             $platform
         );
+    }
+
+    public function settingHandle(?string $view = null): void
+    {
+        $this->sendMessage(
+            view($view ?? config('view.tools.setting')),
+            ['reply_markup' => $this->settingMarkup()]
+        );
+    }
+
+    public function settingMarkup(): array
+    {
+        $markup = [
+            [
+                $this->telegram->buildInlineKeyBoardButton(
+                    $this->setting[SettingConstant::T_IS_NOTIFIED] ? '✅ Allow notifications'
+                        : 'Allow notifications',
+                    '',
+                    SettingConstant::SETTING_IS_NOTIFIED
+                ),
+            ],
+            [
+                $this->telegram->buildInlineKeyBoardButton(
+                    $this->setting[SettingConstant::T_ALL_EVENTS_NOTIFICATION]
+                        ? '✅ Enable All Events Notify'
+                        : 'Enable All Events Notify',
+                    '',
+                    SettingConstant::SETTING_ALL_EVENTS_NOTIFY
+                ),
+            ]
+        ];
+
+        $markup = $this->customEventMarkup($markup);
+
+        $markup[] = [
+            $this->telegram->buildInlineKeyBoardButton(
+                '🔙 Back to menu',
+                '',
+                SettingConstant::SETTING_BACK . 'menu'
+            ),
+        ];
+
+        return $markup;
+    }
+
+    public function customEventMarkup(array $markup): array
+    {
+        if (!$this->setting[SettingConstant::T_ALL_EVENTS_NOTIFICATION]) {
+            $markup[] = [
+                $this->telegram->buildInlineKeyBoardButton(
+                    '🦑 Custom github events',
+                    '',
+                    SettingConstant::SETTING_GITHUB_EVENTS
+                ),
+                $this->telegram->buildInlineKeyBoardButton(
+                    '🦊 Custom gitlab events',
+                    '',
+                    SettingConstant::SETTING_GITLAB_EVENTS
+                ),
+            ];
+        }
+
+        return $markup;
     }
 }
