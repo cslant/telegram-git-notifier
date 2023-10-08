@@ -33,9 +33,9 @@ class NotificationService implements NotificationInterface
         string $viewTemplate = null,
     ): void {
         $telegramService->telegram->sendMessage([
-            'chat_id'                  => config('bot.chat_id'),
+            'chat_id'                  => config('telegram-git-notifier.bot.chat_id'),
             'text'                     => view(
-                $viewTemplate ?? config('view.globals.access_denied'),
+                $viewTemplate ?? config('telegram-git-notifier.view.globals.access_denied'),
                 ['chatId' => $chatId]
             ),
             'disable_web_page_preview' => true,
@@ -91,7 +91,7 @@ class NotificationService implements NotificationInterface
         ];
 
         $url = 'https://api.telegram.org/bot'
-            . config('bot.token') . '/sendMessage'
+            . config('telegram-git-notifier.bot.token') . '/sendMessage'
             . '?' . http_build_query($queryParams);
 
         try {

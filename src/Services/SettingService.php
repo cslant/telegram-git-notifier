@@ -175,7 +175,7 @@ class SettingService extends AppService implements SettingInterface
         ) {
             $this->editMessageText(
                 view(
-                    $view ?? config('view.tools.custom_event'),
+                    $view ?? config('telegram-git-notifier.view.tools.custom_event'),
                     compact('platform')
                 ),
                 ['reply_markup' => $this->eventMarkup(null, $platform)]
@@ -208,7 +208,7 @@ class SettingService extends AppService implements SettingInterface
             );
             $this->editMessageText(
                 view(
-                    $view ?? config('view.tools.custom_event_action'),
+                    $view ?? config('telegram-git-notifier.view.tools.custom_event_action'),
                     compact('event', 'platform')
                 ),
                 ['reply_markup' => $this->eventMarkup($event, $platform)]
@@ -249,7 +249,7 @@ class SettingService extends AppService implements SettingInterface
     public function settingHandle(?string $view = null): void
     {
         $this->sendMessage(
-            view($view ?? config('view.tools.setting')),
+            view($view ?? config('telegram-git-notifier.view.tools.setting')),
             ['reply_markup' => $this->settingMarkup()]
         );
     }
