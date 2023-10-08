@@ -7,7 +7,7 @@ return [
         'timezone' => $_ENV['TIMEZONE'] ?? 'Asia/Ho_Chi_Minh',
     ],
 
-    'telegram-bot' => [
+    'bot' => [
         'token'           => $_ENV['TELEGRAM_BOT_TOKEN'] ?? '',
         'chat_id'         => $_ENV['TELEGRAM_BOT_CHAT_ID'] ?? '',
         'notify_chat_ids' => explode(

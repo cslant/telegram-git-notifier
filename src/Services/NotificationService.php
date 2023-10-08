@@ -33,7 +33,7 @@ class NotificationService implements NotificationInterface
         string $viewTemplate = null,
     ): void {
         $telegramService->telegram->sendMessage([
-            'chat_id'                  => config('telegram-bot.chat_id'),
+            'chat_id'                  => config('bot.chat_id'),
             'text'                     => view(
                 $viewTemplate ?? config('view.globals.access_denied'),
                 ['chatId' => $chatId]
@@ -91,7 +91,7 @@ class NotificationService implements NotificationInterface
         ];
 
         $url = 'https://api.telegram.org/bot'
-            . config('telegram-bot.token') . '/sendMessage'
+            . config('bot.token') . '/sendMessage'
             . '?' . http_build_query($queryParams);
 
         try {
