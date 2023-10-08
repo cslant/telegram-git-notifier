@@ -10,10 +10,6 @@ class SettingConstant
 
     public const T_ALL_EVENTS_NOTIFICATION = 'all_events_notify';
 
-    public const V_SETTING_EVENT = 'tools.custom_events';
-
-    public const V_SETTING_EVENT_ACTION = 'tools.custom_event_actions';
-
     public const SETTING_IS_NOTIFIED = self::SETTING_PREFIX . self::T_IS_NOTIFIED;
 
     public const SETTING_ALL_EVENTS_NOTIFY = self::SETTING_PREFIX . self::T_ALL_EVENTS_NOTIFICATION;

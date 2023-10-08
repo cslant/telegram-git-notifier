@@ -32,6 +32,17 @@ return [
         'globals' => [
             'access_denied' => $_ENV['TGN_VIEW_GLOBALS_ACCESS_DENIED'] ??
                 'globals.access_denied',
-        ]
+        ],
+
+        'tools' => [
+            'settings'            => $_ENV['TGN_VIEW_TOOL_SETTING'] ??
+                'tools.settings',
+            'custom_event_action' => $_ENV['TGN_VIEW_TOOL_CUSTOM_EVENT_ACTION']
+                ?? 'tools.custom_event_action',
+            'custom_event'        => $_ENV['TGN_VIEW_TOOL_CUSTOM_EVENT'] ??
+                'tools.custom_event',
+            'set_menu_command'    => $_ENV['TGN_VIEW_TOOL_SET_MENU_COMMAND'] ??
+                'tools.set_menu_command',
+        ],
     ]
 ];
