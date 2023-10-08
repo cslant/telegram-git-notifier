@@ -10,13 +10,13 @@ use Telegram;
 
 class AppService implements AppInterface
 {
-    protected Telegram $telegram;
+    public Telegram $telegram;
 
     protected string $chatId;
 
-    public function __construct(Telegram $telegram)
+    public function __construct(Telegram $telegram = null)
     {
-        $this->telegram = $telegram;
+        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
     }
 
     public function setCurrentChatId(string $chatId): void

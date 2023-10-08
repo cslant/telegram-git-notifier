@@ -23,7 +23,10 @@ class TelegramService extends AppService implements TelegramInterface
             'commands' => json_encode($menuCommand)
         ]);
         $this->sendMessage(
-            view($view ?? config('view.tools.set_menu_command'))
+            view(
+                $view ??
+                config('telegram-git-notifier.view.tools.set_menu_cmd')
+            )
         );
     }
 
