@@ -3,12 +3,11 @@
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 interface SettingInterface
 {
-
     /**
      * Create markup for select event
      *
@@ -102,7 +101,7 @@ interface SettingInterface
     public function sendSettingEventMessage(
         string $platform,
         ?string $callback = null,
-        ?string $view = SettingConstant::V_SETTING_EVENT
+        ?string $view = null
     ): bool;
 
     /**
@@ -127,7 +126,7 @@ interface SettingInterface
     public function handleEventWithActions(
         string $event,
         string $platform,
-        ?string $view = SettingConstant::V_SETTING_EVENT_ACTION
+        ?string $view = null
     ): bool;
 
     /**
@@ -151,4 +150,28 @@ interface SettingInterface
      * @throws InvalidViewTemplateException
      */
     public function eventUpdateHandle(string $event, string $platform): void;
+
+    /**
+     * Send a setting message
+     *
+     * @param string|null $view
+     *
+     * @return void
+     * @throws MessageIsEmptyException
+     */
+    public function settingHandle(?string $view = null): void;
+
+    /**
+     * Generate setting markup
+     *
+     * @return array[]
+     */
+    public function settingMarkup(): array;
+
+    /**
+     * @param array $markup
+     *
+     * @return array
+     */
+    public function customEventMarkup(array $markup): array;
 }
