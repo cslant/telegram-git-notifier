@@ -10,14 +10,14 @@ interface TelegramInterface
      * Set the menu button for a telegram
      *
      * @param array $menuCommand
-     * @param string $menuTemplate
+     * @param string|null $view
      *
      * @return void
      * @throws MessageIsEmptyException
      */
     public function setMyCommands(
         array $menuCommand,
-        string $menuTemplate
+        ?string $view = null
     ): void;
 
     /**

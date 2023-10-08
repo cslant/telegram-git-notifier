@@ -17,12 +17,14 @@ class TelegramService extends AppService implements TelegramInterface
 
     public function setMyCommands(
         array $menuCommand,
-        string $menuTemplate
+        ?string $view = null
     ): void {
         $this->telegram->setMyCommands([
             'commands' => json_encode($menuCommand)
         ]);
-        $this->sendMessage(view($menuTemplate));
+        $this->sendMessage(
+            view($view ?? config('view.tools.set_menu_command'))
+        );
     }
 
     public function isCallback(): bool
