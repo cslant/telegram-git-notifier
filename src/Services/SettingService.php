@@ -175,7 +175,8 @@ class SettingService extends AppService implements SettingInterface
         ) {
             $this->editMessageText(
                 view(
-                    $view ?? config('telegram-git-notifier.view.tools.custom_event'),
+                    $view ??
+                    config('telegram-git-notifier.view.tools.custom_event'),
                     compact('platform')
                 ),
                 ['reply_markup' => $this->eventMarkup(null, $platform)]
@@ -259,7 +260,8 @@ class SettingService extends AppService implements SettingInterface
         $markup = [
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    $this->setting[SettingConstant::T_IS_NOTIFIED] ? '✅ Allow notifications'
+                    $this->setting[SettingConstant::T_IS_NOTIFIED]
+                        ? '✅ Allow notifications'
                         : 'Allow notifications',
                     '',
                     SettingConstant::SETTING_IS_NOTIFIED

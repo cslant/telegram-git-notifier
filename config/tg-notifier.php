@@ -44,7 +44,7 @@ return [
                     ?? 'tools.custom_event_action',
                 'custom_event'        => $_ENV['TGN_VIEW_TOOL_CUSTOM_EVENT'] ??
                     'tools.custom_event',
-                'set_menu_cmd'    => $_ENV['TGN_VIEW_TOOL_SET_MENU_COMMAND']
+                'set_menu_cmd'        => $_ENV['TGN_VIEW_TOOL_SET_MENU_COMMAND']
                     ?? 'tools.set_menu_cmd',
             ],
         ],
