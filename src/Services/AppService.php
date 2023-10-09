@@ -19,9 +19,9 @@ class AppService implements AppInterface
         $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
     }
 
-    public function setCurrentChatId(string $chatId): void
+    public function setCurrentChatId(string $chatId = null): void
     {
-        $this->chatId = $chatId;
+        $this->chatId = $chatId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
     private function createBaseContent(): array
