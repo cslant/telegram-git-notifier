@@ -41,7 +41,7 @@ class Setting
      *
      * @return void
      */
-    private function setSettingConfig(): void
+    public function setSettingConfig(): void
     {
         $json = file_get_contents($this->settingFile);
         $this->settings = json_decode($json, true);
