@@ -2,20 +2,6 @@
 
 use LbilTech\TelegramGitNotifier\Helpers\ConfigHelper;
 
-if (!function_exists('tgn_urlencoded_message')) {
-    /**
-     * Urlencoded message
-     *
-     * @param string $message
-     *
-     * @return array|string|string[]
-     */
-    function tgn_urlencoded_message(string $message): array|string
-    {
-        return str_replace(["\n"], ['%0A'], urlencode($message));
-    }
-}
-
 if (!function_exists('tgn_singularity')) {
     /**
      * The reverse of pluralizing, returns the singular form of a word in a string.

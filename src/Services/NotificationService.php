@@ -14,9 +14,9 @@ class NotificationService implements NotificationInterface
 {
     use ActionEventTrait;
 
-    protected mixed $payload;
+    public mixed $payload;
 
-    protected string $message = '';
+    public string $message = '';
 
     public string $platform = EventConstant::DEFAULT_PLATFORM;
 
@@ -87,7 +87,7 @@ class NotificationService implements NotificationInterface
             'chat_id'                  => $chatId,
             'disable_web_page_preview' => 1,
             'parse_mode'               => 'html',
-            'text'                     => tgn_urlencoded_message($this->message)
+            'text'                     => $this->message
         ];
 
         $url = 'https://api.telegram.org/bot'
