@@ -26,7 +26,7 @@ return [
 
         'view' => [
             'path' => $_ENV['TGN_VIEW_PATH'] ??
-                'resources/views/telegram-git-notifier',
+                'resources/views',
 
             'event' => [
                 'default' => $_ENV['TGN_VIEW_EVENT_DEFAULT'] ?? 'default',
