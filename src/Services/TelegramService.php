@@ -32,9 +32,16 @@ class TelegramService extends AppService implements TelegramInterface
 
     public function isCallback(): bool
     {
-        if (!is_null($this->telegram->getData())
-            && !is_null($this->telegram->Callback_ChatID())
-        ) {
+        if ($this->telegram->getUpdateType() === Telegram::CALLBACK_QUERY) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isMessage(): bool
+    {
+        if ($this->telegram->getUpdateType() === Telegram::MESSAGE) {
             return true;
         }
 
