@@ -11,7 +11,8 @@ use Telegram;
 
 class SettingService extends AppService implements SettingInterface
 {
-    use EventSettingTrait, BotSettingTrait;
+    use EventSettingTrait;
+    use BotSettingTrait;
 
     public Setting $setting;
 
