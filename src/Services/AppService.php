@@ -12,7 +12,7 @@ class AppService implements AppInterface
 {
     public Telegram $telegram;
 
-    protected string $chatId;
+    public string $chatId;
 
     public function __construct(Telegram $telegram = null)
     {

@@ -18,8 +18,8 @@ return [
         ],
 
         'author' => [
-            'contact'     => $_ENV['TGN_AUTHOR_CONTACT'] ??
-                'https://t.me/tannp27',
+            'discussion'     => $_ENV['TGN_AUTHOR_DISCUSSION'] ??
+                'https://github.com/lbiltech/telegram-git-notifier/discussions',
             'source_code' => $_ENV['TGN_AUTHOR_SOURCE_CODE'] ??
                 'https://github.com/lbiltech/telegram-git-notifier',
         ],
