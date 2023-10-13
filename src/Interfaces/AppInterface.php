@@ -24,7 +24,7 @@ interface AppInterface
     /**
      * Send a photo to telegram
      *
-     * @param string $photo
+     * @param string $photo (path to photo)
      * @param string $caption
      *
      * @return void

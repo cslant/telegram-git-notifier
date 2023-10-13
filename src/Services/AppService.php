@@ -58,7 +58,7 @@ class AppService implements AppInterface
         }
 
         $content = $this->createBaseContent();
-        $content['photo'] = $photo;
+        $content['photo'] = curl_file_create($photo);
         $content['caption'] = $caption;
 
         $this->telegram->sendPhoto($content);
