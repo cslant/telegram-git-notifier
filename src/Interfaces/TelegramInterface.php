@@ -26,4 +26,11 @@ interface TelegramInterface
      * @return bool
      */
     public function isCallback(): bool;
+
+    /**
+     * Check message or command from a telegram
+     *
+     * @return bool
+     */
+    public function isMessage(): bool;
 }
