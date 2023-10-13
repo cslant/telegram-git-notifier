@@ -23,12 +23,7 @@ trait EventSettingTrait
                 $replyMarkupItem = [];
             }
 
-            $callbackData = $this->getCallbackData(
-                $key,
-                $platform,
-                $value,
-                $parentEvent
-            );
+            $callbackData = $this->getCallbackData($key, $platform, $value, $parentEvent);
             $eventName = $this->getEventName($key, $value);
 
             $replyMarkupItem[] = $this->telegram->buildInlineKeyBoardButton(
