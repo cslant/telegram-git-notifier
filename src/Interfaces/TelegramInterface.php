@@ -33,4 +33,11 @@ interface TelegramInterface
      * @return bool
      */
     public function isMessage(): bool;
+
+    /**
+     * Check owner of a telegram
+     *
+     * @return bool
+     */
+    public function isOwner(): bool;
 }

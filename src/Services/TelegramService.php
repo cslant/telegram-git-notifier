@@ -10,9 +10,13 @@ class TelegramService extends AppService implements TelegramInterface
     public Telegram $telegram;
 
     public function __construct(
-        Telegram $telegram
+        Telegram $telegram,
+        ?string $chatId = null
     ) {
         parent::__construct($telegram);
+        $this->setCurrentChatId($chatId);
+
+        $this->telegram = $telegram;
     }
 
     public function setMyCommands(
@@ -42,6 +46,15 @@ class TelegramService extends AppService implements TelegramInterface
     public function isMessage(): bool
     {
         if ($this->telegram->getUpdateType() === Telegram::MESSAGE) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isOwner(): bool
+    {
+        if ($this->telegram->ChatID() == $this->chatId) {
             return true;
         }
 
