@@ -127,4 +127,15 @@ class AppService implements AppInterface
 
         return $content;
     }
+
+    public function getBotName(): ?string
+    {
+        return $this->telegram->getMe()['result']['username'] ?? null;
+    }
+
+    public function getCommandMessage(): string
+    {
+        $text = $this->telegram->Text();
+        return str_replace('@' . $this->getBotName(), '', $text);
+    }
 }
