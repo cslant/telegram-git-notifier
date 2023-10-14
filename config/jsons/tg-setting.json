@@ -1,4 +1,5 @@
 {
   "is_notified": true,
-  "all_events_notify": false
+  "all_events_notify": false,
+  "command_bot_only": false
 }

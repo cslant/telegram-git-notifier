@@ -40,4 +40,10 @@ interface TelegramInterface
      * @return bool
      */
     public function isOwner(): bool;
+
+    /**
+     * Check chat id from telegram permission with config
+     * @return bool
+     */
+    public function isNotifyChat(): bool;
 }
