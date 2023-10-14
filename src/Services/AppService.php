@@ -58,7 +58,7 @@ class AppService implements AppInterface
         }
 
         $content = $this->createBaseContent();
-        $content['photo'] = $photo;
+        $content['photo'] = curl_file_create($photo);
         $content['caption'] = $caption;
 
         $this->telegram->sendPhoto($content);
@@ -126,5 +126,16 @@ class AppService implements AppInterface
             : null;
 
         return $content;
+    }
+
+    public function getBotName(): ?string
+    {
+        return $this->telegram->getMe()['result']['username'] ?? null;
+    }
+
+    public function getCommandMessage(): string
+    {
+        $text = $this->telegram->Text();
+        return str_replace('@' . $this->getBotName(), '', $text);
     }
 }

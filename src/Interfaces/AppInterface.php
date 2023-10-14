@@ -24,7 +24,7 @@ interface AppInterface
     /**
      * Send a photo to telegram
      *
-     * @param string $photo
+     * @param string $photo (path to photo)
      * @param string $caption
      *
      * @return void
@@ -86,4 +86,18 @@ interface AppInterface
      * @return void
      */
     public function setCurrentChatId(string $chatId): void;
+
+    /**
+     * Get the username of the bot
+     *
+     * @return string|null
+     */
+    public function getBotName(): ?string;
+
+    /**
+     * Get the command message from a telegram
+     *
+     * @return string
+     */
+    public function getCommandMessage(): string;
 }

@@ -23,11 +23,14 @@ class SettingService extends AppService implements SettingInterface
     public function __construct(
         Telegram $telegram,
         Setting $setting,
-        Event $event
+        Event $event,
+        ?string $chatId = null
     ) {
         parent::__construct($telegram);
 
         $this->setting = $setting;
         $this->event = $event;
+
+        $this->setCurrentChatId($chatId);
     }
 }
