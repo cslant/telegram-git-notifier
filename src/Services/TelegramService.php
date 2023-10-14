@@ -60,4 +60,14 @@ class TelegramService extends AppService implements TelegramInterface
 
         return false;
     }
+
+    public function isNotifyChat(): bool
+    {
+        $chatIds = config('telegram-git-notifier.bot.notify_chat_ids');
+        if (in_array($this->telegram->ChatID(), $chatIds)) {
+            return true;
+        }
+
+        return false;
+    }
 }
