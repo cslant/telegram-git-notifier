@@ -2,7 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier\Constants;
 
-class SettingConstant
+final class SettingConstant
 {
     public const SETTING_PREFIX = 'stg.';
 

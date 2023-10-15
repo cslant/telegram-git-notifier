@@ -6,7 +6,7 @@ use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use Throwable;
 
-class ConfigHelper
+final class ConfigHelper
 {
     public array $config;
 

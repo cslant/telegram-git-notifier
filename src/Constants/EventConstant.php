@@ -2,7 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier\Constants;
 
-class EventConstant
+final class EventConstant
 {
     public const DEFAULT_PLATFORM = 'github';
 

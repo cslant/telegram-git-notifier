@@ -2,9 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier\Exceptions;
 
-use Exception;
-
-class SendNotificationException extends Exception
+final class SendNotificationException extends TelegramGitNotifierException
 {
     public static function create(): self
     {

@@ -2,22 +2,20 @@
 
 namespace LbilTech\TelegramGitNotifier\Exceptions;
 
-use Exception;
-
-class EntryNotFoundException extends Exception
+final class EntryNotFoundException extends TelegramGitNotifierException
 {
     public static function fileNotFound(): self
     {
-        return new static('File not found');
+        return new self('File not found');
     }
 
     public static function configNotFound($config): self
     {
-        return new static("Config {$config} not found");
+        return new self("Config {$config} not found");
     }
 
     public static function viewNotFound($view): self
     {
-        return new static("View {$view} not found");
+        return new self("View {$view} not found");
     }
 }

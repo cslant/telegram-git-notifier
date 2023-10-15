@@ -2,9 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier\Exceptions;
 
-use Exception;
-
-class MessageIsEmptyException extends Exception
+final class MessageIsEmptyException extends TelegramGitNotifierException
 {
     public static function create(): self
     {
