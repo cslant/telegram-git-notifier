@@ -1,19 +1,15 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier\Structures;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
-use LbilTech\TelegramGitNotifier\Interfaces\NotificationInterface;
-use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 use Symfony\Component\HttpFoundation\Request;
 
-class NotificationService implements NotificationInterface
+trait Notification
 {
-    use ActionEventTrait;
-
     public mixed $payload;
 
     public string $message = '';
@@ -22,17 +18,11 @@ class NotificationService implements NotificationInterface
 
     public Client $client;
 
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     public function accessDenied(
-        TelegramService $telegramService,
         string $chatId = null,
         string $viewTemplate = null,
     ): void {
-        $telegramService->telegram->sendMessage([
+        $this->telegram->sendMessage([
             'chat_id'                  => config('telegram-git-notifier.bot.chat_id'),
             'text'                     => view(
                 $viewTemplate ?? config('telegram-git-notifier.view.globals.access_denied'),

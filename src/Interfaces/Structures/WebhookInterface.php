@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
 
 interface WebhookInterface
 {

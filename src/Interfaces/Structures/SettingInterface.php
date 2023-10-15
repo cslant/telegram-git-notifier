@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
@@ -174,4 +174,21 @@ interface SettingInterface
      * @return array
      */
     public function customEventMarkup(array $markup): array;
+
+    /**
+     * Update setting item value and save to json file
+     *
+     * @param string $settingName
+     * @param $settingValue
+     *
+     * @return bool
+     */
+    public function updateSettingItem(string $settingName, $settingValue = null): bool;
+
+    /**
+     * Condition for checking the notification status
+     *
+     * @return bool
+     */
+    public function isNotified(): bool;
 }

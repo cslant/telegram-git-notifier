@@ -1,10 +1,10 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier;
 
-use LbilTech\TelegramGitNotifier\Interfaces\WebhookInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\Structures\WebhookInterface;
 
-class WebhookService implements WebhookInterface
+class Webhook implements WebhookInterface
 {
     private string $token;
 

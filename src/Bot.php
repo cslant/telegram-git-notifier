@@ -1,22 +1,33 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier;
 
-use LbilTech\TelegramGitNotifier\Interfaces\TelegramInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\BotInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\Structures\EventInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\Structures\SettingInterface;
+use LbilTech\TelegramGitNotifier\Structures\App;
+use LbilTech\TelegramGitNotifier\Structures\Event;
+use LbilTech\TelegramGitNotifier\Structures\Setting;
+use LbilTech\TelegramGitNotifier\Trait\BotSettingTrait;
+use LbilTech\TelegramGitNotifier\Trait\EventSettingTrait;
+use LbilTech\TelegramGitNotifier\Trait\ValidationEventTrait;
+use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 use Telegram;
 
-class TelegramService extends AppService implements TelegramInterface
+class Bot implements AppInterface, EventInterface, SettingInterface, BotInterface
 {
-    public Telegram $telegram;
+    use App;
+    use Event;
+    use Setting;
+    use ValidationEventTrait;
+    use ActionEventTrait;
+    use BotSettingTrait;
+    use EventSettingTrait;
 
-    public function __construct(
-        Telegram $telegram,
-        ?string $chatId = null
-    ) {
-        parent::__construct($telegram);
-        $this->setCurrentChatId($chatId);
-
-        $this->telegram = $telegram;
+    public function __construct(Telegram $telegram = null)
+    {
+        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
     }
 
     public function setMyCommands(

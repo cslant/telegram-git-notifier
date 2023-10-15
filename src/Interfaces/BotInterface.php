@@ -4,7 +4,7 @@ namespace LbilTech\TelegramGitNotifier\Interfaces;
 
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
-interface TelegramInterface
+interface BotInterface
 {
     /**
      * Set the menu button for a telegram

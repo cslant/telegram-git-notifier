@@ -1,30 +1,24 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier\Structures;
 
 use Exception;
 use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
-use LbilTech\TelegramGitNotifier\Interfaces\AppInterface;
 use Telegram;
 
-class AppService implements AppInterface
+trait App
 {
     public Telegram $telegram;
 
     public string $chatId;
-
-    public function __construct(Telegram $telegram = null)
-    {
-        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
-    }
 
     public function setCurrentChatId(string $chatId = null): void
     {
         $this->chatId = $chatId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
-    private function createBaseContent(): array
+    private function createTelegramBaseContent(): array
     {
         return [
             'chat_id'                  => $this->chatId,
@@ -39,7 +33,7 @@ class AppService implements AppInterface
             throw MessageIsEmptyException::create();
         }
 
-        $content = $this->createBaseContent();
+        $content = $this->createTelegramBaseContent();
         $content['text'] = $message;
 
         if (!empty($options['reply_markup'])) {
@@ -57,7 +51,7 @@ class AppService implements AppInterface
             throw EntryNotFoundException::fileNotFound();
         }
 
-        $content = $this->createBaseContent();
+        $content = $this->createTelegramBaseContent();
         $content['photo'] = curl_file_create($photo);
         $content['caption'] = $caption;
 

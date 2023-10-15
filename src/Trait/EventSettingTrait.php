@@ -202,8 +202,8 @@ trait EventSettingTrait
     {
         [$event, $action] = explode('.', $event);
 
-        $this->event->setEventConfig($platform);
-        $this->event->updateEvent($event, $action);
+        $this->setEventConfig($platform);
+        $this->updateEvent($event, $action);
         $this->eventHandle(
             $action
                 ? EventConstant::PLATFORM_EVENT_SEPARATOR[$platform]

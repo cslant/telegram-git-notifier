@@ -1,10 +1,9 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
 
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
-use LbilTech\TelegramGitNotifier\Services\TelegramService;
 use Symfony\Component\HttpFoundation\Request;
 
 interface NotificationInterface
@@ -12,7 +11,6 @@ interface NotificationInterface
     /**
      * Notify access denied to other chat ids
      *
-     * @param TelegramService $telegramService
      * @param string|null $viewTemplate
      * @param string|null $chatId
      *
@@ -20,7 +18,6 @@ interface NotificationInterface
      * @throws InvalidViewTemplateException
      */
     public function accessDenied(
-        TelegramService $telegramService,
         string $chatId = null,
         string $viewTemplate = null,
     ): void;
