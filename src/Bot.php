@@ -28,6 +28,7 @@ class Bot implements AppInterface, EventInterface, SettingInterface, BotInterfac
     public function __construct(Telegram $telegram = null)
     {
         $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
+        $this->setCurrentChatBotId();
     }
 
     public function setMyCommands(
@@ -65,7 +66,7 @@ class Bot implements AppInterface, EventInterface, SettingInterface, BotInterfac
 
     public function isOwner(): bool
     {
-        if ($this->telegram->ChatID() == $this->chatId) {
+        if ($this->telegram->ChatID() == $this->chatBotId) {
             return true;
         }
 

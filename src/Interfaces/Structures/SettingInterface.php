@@ -183,7 +183,7 @@ interface SettingInterface
      *
      * @return bool
      */
-    public function updateSettingItem(string $settingName, $settingValue = null): bool;
+    public function updateSetting(string $settingName, $settingValue = null): bool;
 
     /**
      * Condition for checking the notification status

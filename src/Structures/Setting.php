@@ -72,7 +72,7 @@ trait Setting
         return false;
     }
 
-    public function updateSettingItem(
+    public function updateSetting(
         string $settingName,
         $settingValue = null
     ): bool {

@@ -11,17 +11,17 @@ trait App
 {
     public Telegram $telegram;
 
-    public string $chatId;
+    public string $chatBotId;
 
-    public function setCurrentChatId(string $chatId = null): void
+    public function setCurrentChatBotId(string $chatBotId = null): void
     {
-        $this->chatId = $chatId ?? config('telegram-git-notifier.bot.chat_id');
+        $this->chatBotId = $chatBotId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
     private function createTelegramBaseContent(): array
     {
         return [
-            'chat_id'                  => $this->chatId,
+            'chat_id'                  => $this->chatBotId,
             'disable_web_page_preview' => true,
             'parse_mode'               => 'HTML'
         ];
@@ -40,7 +40,10 @@ trait App
             $content['reply_markup'] = $this->telegram->buildInlineKeyBoard(
                 $options['reply_markup']
             );
+            unset($options['reply_markup']);
         }
+
+        $content = array_merge($content, $options);
 
         $this->telegram->sendMessage($content);
     }
@@ -58,18 +61,19 @@ trait App
         $this->telegram->sendPhoto($content);
     }
 
-    public function answerCallbackQuery(string $text = null): void
+    public function answerCallbackQuery(string $text = null, array $options = []): void
     {
         if (empty($text)) {
             throw MessageIsEmptyException::create();
         }
 
         try {
-            $this->telegram->answerCallbackQuery([
+            $options = array_merge([
                 'callback_query_id' => $this->telegram->Callback_ID(),
                 'text'              => $text,
                 'show_alert'        => true
-            ]);
+            ], $options);
+            $this->telegram->answerCallbackQuery($options);
         } catch (Exception $e) {
             error_log("Error answering callback query: " . $e->getMessage());
         }

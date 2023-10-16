@@ -85,7 +85,7 @@ interface AppInterface
      *
      * @return void
      */
-    public function setCurrentChatId(string $chatId): void;
+    public function setCurrentChatBotId(string $chatId): void;
 
     /**
      * Get the username of the bot

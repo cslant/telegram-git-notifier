@@ -2,9 +2,8 @@
 
 namespace LbilTech\TelegramGitNotifier\Structures;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,10 +12,6 @@ trait Notification
     public mixed $payload;
 
     public string $message = '';
-
-    public string $platform = EventConstant::DEFAULT_PLATFORM;
-
-    public Client $client;
 
     public function accessDenied(
         string $chatId = null,
@@ -73,26 +68,13 @@ trait Notification
             $this->message = $message;
         }
 
-        $queryParams = [
-            'chat_id'                  => $chatId,
-            'disable_web_page_preview' => 1,
-            'parse_mode'               => 'html',
-            'text'                     => $this->message
-        ];
-
-        $url = 'https://api.telegram.org/bot'
-            . config('telegram-git-notifier.bot.token') . '/sendMessage'
-            . '?' . http_build_query($queryParams);
-
         try {
-            $response = $this->client->request('GET', $url);
-
-            if ($response->getStatusCode() === 200) {
-                return true;
-            }
+            $this->sendMessage($this->message, [
+                'chat_id' => $chatId,
+            ]);
 
             throw SendNotificationException::create();
-        } catch (GuzzleException $e) {
+        } catch (MessageIsEmptyException $e) {
             error_log($e->getMessage());
         }
 
