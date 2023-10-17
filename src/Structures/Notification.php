@@ -62,25 +62,18 @@ trait Notification
         ]);
     }
 
-    public function sendNotify(string $chatId, string $message = null): bool
+    public function sendNotify(string $message = null, array $options = []): bool
     {
-        if (!is_null($message)) {
-            $this->message = $message;
-        }
+        $this->message = $message ?? $this->message;
 
-        $queryParams = [
-            'chat_id'                  => $chatId,
-            'disable_web_page_preview' => 1,
-            'parse_mode'               => 'html',
-            'text'                     => $this->message
-        ];
+        $queryParams = array_merge($this->createTelegramBaseContent(), ['text' => $this->message], $options);
 
-        $url = 'https://api.telegram.org/bot'
-            . config('telegram-git-notifier.bot.token') . '/sendMessage'
-            . '?' . http_build_query($queryParams);
+        $url = 'https://api.telegram.org/bot' . config('telegram-git-notifier.bot.token') . '/sendMessage';
 
         try {
-            $response = $this->client->request('GET', $url);
+            $response = $this->client->request('POST', $url, [
+                'form_params' => $queryParams
+            ]);
 
             if ($response->getStatusCode() === 200) {
                 return true;

@@ -16,6 +16,7 @@ interface NotificationInterface
      *
      * @return void
      * @throws InvalidViewTemplateException
+     * @see Notification::accessDenied()
      */
     public function accessDenied(
         string $chatId = null,
@@ -30,19 +31,21 @@ interface NotificationInterface
      *
      * @return mixed|void
      * @throws InvalidViewTemplateException
+     * @see Notification::setPayload()
      */
     public function setPayload(Request $request, string $event);
 
     /**
      * Send notification to telegram
      *
-     * @param string $chatId
      * @param string|null $message
+     * @param array $options
      *
      * @return bool
      * @throws SendNotificationException
+     * @see Notification::sendNotify()
      */
-    public function sendNotify(string $chatId, string $message = null): bool;
+    public function sendNotify(string $message = null, array $options = []): bool;
 
     /**
      * Get action name of event from payload data

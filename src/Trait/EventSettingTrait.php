@@ -14,8 +14,8 @@ trait EventSettingTrait
         $replyMarkup = $replyMarkupItem = [];
 
         $this->event->setEventConfig($platform);
-        $events = $parentEvent === null ? $this->event->eventConfig
-            : $this->event->eventConfig[$parentEvent];
+        $events = $parentEvent === null ? $this->event->getEventConfig()
+            : $this->event->getEventConfig()[$parentEvent];
 
         foreach ($events as $key => $value) {
             if (count($replyMarkupItem) === SettingConstant::BTN_LINE_ITEM_COUNT) {

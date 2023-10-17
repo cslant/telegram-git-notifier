@@ -2,6 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier\Interfaces;
 
+use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 use Symfony\Component\HttpFoundation\Request;
 
 interface EventInterface
@@ -12,7 +13,7 @@ interface EventInterface
      * @param $payload
      *
      * @return string
-     * @see EventTrait::getActionOfEvent()
+     * @see ActionEventTrait::getActionOfEvent()
      */
     public function getActionOfEvent($payload): string;
 
