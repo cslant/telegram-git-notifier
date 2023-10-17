@@ -2,7 +2,7 @@
 
 namespace LbilTech\TelegramGitNotifier;
 
-use LbilTech\TelegramGitNotifier\Interfaces\Structures\WebhookInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\WebhookInterface;
 
 class Webhook implements WebhookInterface
 {

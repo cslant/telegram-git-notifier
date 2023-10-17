@@ -43,7 +43,7 @@ trait App
             unset($options['reply_markup']);
         }
 
-        $content = array_merge($content, $options);
+        $content = $content + $options;
 
         $this->telegram->sendMessage($content);
     }

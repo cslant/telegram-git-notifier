@@ -1,12 +1,12 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Structures;
+namespace LbilTech\TelegramGitNotifier\Models;
 
 use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 
-trait Setting
+class Setting
 {
-    private array $settings = [];
+    public array $settings = [];
 
     private string $settingFile = '';
 
@@ -61,6 +61,11 @@ trait Setting
         return false;
     }
 
+    /**
+     * Condition for checking the notification status
+     *
+     * @return bool
+     */
     public function isNotified(): bool
     {
         if (!empty($this->settings)
@@ -72,6 +77,14 @@ trait Setting
         return false;
     }
 
+    /**
+     * Update setting item value and save to file
+     *
+     * @param string $settingName
+     * @param $settingValue
+     *
+     * @return bool
+     */
     public function updateSetting(
         string $settingName,
         $settingValue = null

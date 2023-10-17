@@ -2,8 +2,8 @@
 
 namespace LbilTech\TelegramGitNotifier\Structures;
 
+use GuzzleHttp\Exception\GuzzleException;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,9 +30,9 @@ trait Notification
 
     public function setPayload(Request $request, string $event)
     {
-        if ($this->platform === 'gitlab') {
+        if ($this->event->platform === 'gitlab') {
             $this->payload = json_decode($request->getContent());
-        } elseif ($this->platform === EventConstant::DEFAULT_PLATFORM) {
+        } elseif ($this->event->platform === EventConstant::DEFAULT_PLATFORM) {
             $this->payload = json_decode($request->request->get('payload'));
         }
         $this->setMessage($event);
@@ -53,8 +53,8 @@ trait Notification
         $action = $this->getActionOfEvent($this->payload);
 
         $viewTemplate = empty($action)
-            ? "events.{$this->platform}.{$event}.default"
-            : "events.{$this->platform}.{$event}.{$action}";
+            ? "events.{$this->event->platform}.{$event}.default"
+            : "events.{$this->event->platform}.{$event}.{$action}";
 
         $this->message = view($viewTemplate, [
             'payload' => $this->payload,
@@ -68,13 +68,26 @@ trait Notification
             $this->message = $message;
         }
 
+        $queryParams = [
+            'chat_id'                  => $chatId,
+            'disable_web_page_preview' => 1,
+            'parse_mode'               => 'html',
+            'text'                     => $this->message
+        ];
+
+        $url = 'https://api.telegram.org/bot'
+            . config('telegram-git-notifier.bot.token') . '/sendMessage'
+            . '?' . http_build_query($queryParams);
+
         try {
-            $this->sendMessage($this->message, [
-                'chat_id' => $chatId,
-            ]);
+            $response = $this->client->request('GET', $url);
+
+            if ($response->getStatusCode() === 200) {
+                return true;
+            }
 
             throw SendNotificationException::create();
-        } catch (MessageIsEmptyException $e) {
+        } catch (GuzzleException $e) {
             error_log($e->getMessage());
         }
 

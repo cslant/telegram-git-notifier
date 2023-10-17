@@ -13,9 +13,9 @@ trait EventSettingTrait
     ): array {
         $replyMarkup = $replyMarkupItem = [];
 
-        $this->setEventConfig($platform);
-        $events = $parentEvent === null ? $this->eventConfig
-            : $this->eventConfig[$parentEvent];
+        $this->event->setEventConfig($platform);
+        $events = $parentEvent === null ? $this->event->eventConfig
+            : $this->event->eventConfig[$parentEvent];
 
         foreach ($events as $key => $value) {
             if (count($replyMarkupItem) === SettingConstant::BTN_LINE_ITEM_COUNT) {
@@ -202,8 +202,8 @@ trait EventSettingTrait
     {
         [$event, $action] = explode('.', $event);
 
-        $this->setEventConfig($platform);
-        $this->updateEvent($event, $action);
+        $this->event->setEventConfig($platform);
+        $this->event->updateEvent($event, $action);
         $this->eventHandle(
             $action
                 ? EventConstant::PLATFORM_EVENT_SEPARATOR[$platform]

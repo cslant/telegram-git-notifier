@@ -50,7 +50,7 @@ interface NotificationInterface
      * @param $payload
      *
      * @return string
-     * @see ActionEventTrait::getActionOfEvent()
+     * @see EventTrait::getActionOfEvent()
      */
     public function getActionOfEvent($payload): string;
 }

@@ -174,21 +174,4 @@ interface SettingInterface
      * @return array
      */
     public function customEventMarkup(array $markup): array;
-
-    /**
-     * Update setting item value and save to json file
-     *
-     * @param string $settingName
-     * @param $settingValue
-     *
-     * @return bool
-     */
-    public function updateSetting(string $settingName, $settingValue = null): bool;
-
-    /**
-     * Condition for checking the notification status
-     *
-     * @return bool
-     */
-    public function isNotified(): bool;
 }

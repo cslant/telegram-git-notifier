@@ -1,10 +1,10 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Structures;
+namespace LbilTech\TelegramGitNotifier\Models;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 
-trait Event
+class Event
 {
     public array $eventConfig = [];
 
@@ -12,16 +12,31 @@ trait Event
 
     private string $platformFile = '';
 
+    /**
+     * @return string
+     */
     public function getPlatformFile(): string
     {
         return $this->platformFile;
     }
 
+    /**
+     * @param string $platformFile
+     *
+     * @return void
+     */
     public function setPlatformFile(string $platformFile): void
     {
         $this->platformFile = $platformFile;
     }
 
+    /**
+     * Set event config
+     *
+     * @param string $platform
+     *
+     * @return void
+     */
     public function setEventConfig(
         string $platform = EventConstant::DEFAULT_PLATFORM
     ): void {
@@ -31,6 +46,14 @@ trait Event
         $this->eventConfig = json_decode($json, true);
     }
 
+    /**
+     * Update event config by event and action
+     *
+     * @param string $event
+     * @param string|null $action
+     *
+     * @return void
+     */
     public function updateEvent(string $event, string|null $action): void
     {
         if (!empty($action)) {

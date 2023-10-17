@@ -19,7 +19,7 @@ trait BotSettingTrait
         $markup = [
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    $this->getSettings()[SettingConstant::T_IS_NOTIFIED]
+                    $this->setting->getSettings()[SettingConstant::T_IS_NOTIFIED]
                         ? '✅ Allow notifications'
                         : 'Allow notifications',
                     '',
@@ -28,7 +28,7 @@ trait BotSettingTrait
             ],
             [
                 $this->telegram->buildInlineKeyBoardButton(
-                    $this->getSettings()[SettingConstant::T_ALL_EVENTS_NOTIFICATION]
+                    $this->setting->getSettings()[SettingConstant::T_ALL_EVENTS_NOTIFICATION]
                         ? '✅ Enable All Events Notify'
                         : 'Enable All Events Notify',
                     '',
@@ -52,7 +52,7 @@ trait BotSettingTrait
 
     public function customEventMarkup(array $markup): array
     {
-        if (!$this->getSettings()[SettingConstant::T_ALL_EVENTS_NOTIFICATION]) {
+        if (!$this->setting->getSettings()[SettingConstant::T_ALL_EVENTS_NOTIFICATION]) {
             $markup[] = [
                 $this->telegram->buildInlineKeyBoardButton(
                     '🦑 Custom github events',

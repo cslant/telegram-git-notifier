@@ -18,10 +18,22 @@ return [
         ],
 
         'author' => [
-            'discussion'     => $_ENV['TGN_AUTHOR_DISCUSSION'] ??
+            'discussion'  => $_ENV['TGN_AUTHOR_DISCUSSION'] ??
                 'https://github.com/lbiltech/telegram-git-notifier/discussions',
             'source_code' => $_ENV['TGN_AUTHOR_SOURCE_CODE'] ??
                 'https://github.com/lbiltech/telegram-git-notifier',
+        ],
+
+        'data_file' => [
+            'setting'  => $_ENV['TGN_PATH_SETTING'] ??
+                'storage/json/tgn/tgn-settings.json',
+
+            'platform' => [
+                'gitlab' => $_ENV['TGN_PATH_PLATFORM_GITLAB'] ??
+                    'storage/json/tgn/gitlab-events.json',
+                'github' => $_ENV['TGN_PATH_PLATFORM_GITHUB'] ??
+                    'storage/json/tgn/github-events.json',
+            ],
         ],
 
         'view' => [
