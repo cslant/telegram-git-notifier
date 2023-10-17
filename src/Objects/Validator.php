@@ -20,7 +20,16 @@ class Validator
         $this->event = $event;
     }
 
-    public function accessEvent(
+    /**
+     * Validate is access event before send notify
+     *
+     * @param string $platform Source code platform (GitHub, GitLab)
+     * @param string $event Event name (push, pull_request)
+     * @param $payload
+     *
+     * @return bool
+     */
+    public function isAccessEvent(
         string $platform,
         string $event,
         $payload
@@ -34,7 +43,7 @@ class Validator
         }
         $this->event->setEventConfig($platform);
 
-        $eventConfig = $this->event->eventConfig[tgn_convert_event_name($event)] ?? false;
+        $eventConfig = $this->event->getEventConfig()[tgn_convert_event_name($event)] ?? false;
         $action = $this->getActionOfEvent($payload);
 
         if (!empty($action) && isset($eventConfig[$action])) {

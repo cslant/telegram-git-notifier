@@ -6,7 +6,7 @@ use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 
 class Setting
 {
-    public array $settings = [];
+    private array $settings = [];
 
     private string $settingFile = '';
 
