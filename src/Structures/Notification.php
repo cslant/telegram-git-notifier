@@ -18,7 +18,7 @@ trait Notification
         string $viewTemplate = null,
     ): void {
         $this->telegram->sendMessage([
-            'chat_id'                  => config('telegram-git-notifier.bot.chat_id'),
+            'chat_id'                  => $this->chatBotId,
             'text'                     => view(
                 $viewTemplate ?? config('telegram-git-notifier.view.globals.access_denied'),
                 ['chatId' => $chatId]
@@ -64,7 +64,7 @@ trait Notification
 
     public function sendNotify(string $message = null, array $options = []): bool
     {
-        $this->message = $message ?? $this->message;
+        $this->message = !empty($message) ? $message : $this->message;
 
         $queryParams = array_merge($this->createTelegramBaseContent(), ['text' => $this->message], $options);
 

@@ -11,10 +11,14 @@ return [
         'bot' => [
             'token'           => $_ENV['TELEGRAM_BOT_TOKEN'] ?? '',
             'chat_id'         => $_ENV['TELEGRAM_BOT_CHAT_ID'] ?? '',
-            'notify_chat_ids' => explode(
-                ',',
-                $_ENV['TELEGRAM_NOTIFY_CHAT_IDS'] ?? ''
-            ),
+
+            /**
+             * Set the chat ids that will receive notifications
+             * You can add the owner bot id, group id, ... ( And please use semicolon ";" to separate chat ids )
+             * The environment variable is expected to be in the format:
+             * "chat_id1;chat_id2,thread_id2;chat_id3,thread_id3;..."
+            */
+            'notify_chat_ids' => $_ENV['TELEGRAM_NOTIFY_CHAT_IDS'] ?? '',
         ],
 
         'author' => [
@@ -24,6 +28,7 @@ return [
                 'https://github.com/lbiltech/telegram-git-notifier',
         ],
 
+        /** Set the path to the data file */
         'data_file' => [
             'setting'  => $_ENV['TGN_PATH_SETTING'] ??
                 'storage/json/tgn/tgn-settings.json',
@@ -36,6 +41,7 @@ return [
             ],
         ],
 
+        /** Set the path to the view file */
         'view' => [
             'path' => $_ENV['TGN_VIEW_PATH'] ??
                 'resources/views',
