@@ -4,6 +4,7 @@ namespace LbilTech\TelegramGitNotifier;
 
 use GuzzleHttp\Client;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use LbilTech\TelegramGitNotifier\Constants\NotificationConstant;
 use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
@@ -39,5 +40,22 @@ class Notifier implements AppInterface, NotificationInterface, EventInterface
         $this->setPlatFormForEvent($platform, $platformFile);
 
         $this->client = $client ?? new Client();
+    }
+
+    function parseNotifyChatIds(): array
+    {
+        $chatData = explode(
+            NotificationConstant::CHAT_ID_PAIRS_SEPARATOR,
+            config('telegram-git-notifier.bot.notify_chat_ids')
+        );
+        $chatThreadMapping = [];
+
+        foreach ($chatData as $data) {
+            [$chatId, $threadIds] = explode(NotificationConstant::CHAT_THREAD_ID_SEPARATOR, $data) + [null, null];
+            $chatThreadMapping[$chatId] = $threadIds
+                ? explode(NotificationConstant::THREAD_ID_SEPARATOR, $threadIds)
+                : [];
+        }
+        return $chatThreadMapping;
     }
 }

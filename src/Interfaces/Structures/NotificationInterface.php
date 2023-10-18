@@ -56,4 +56,11 @@ interface NotificationInterface
      * @see EventTrait::getActionOfEvent()
      */
     public function getActionOfEvent($payload): string;
+
+    /**
+     * Convert chat and thread ids to array
+     * Example: 1234567890;1234567890:thread1;1234567890:thread1,thread2
+     * @return array
+     */
+    public function parseNotifyChatIds(): array;
 }

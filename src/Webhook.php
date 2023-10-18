@@ -33,4 +33,18 @@ class Webhook implements WebhookInterface
 
         return file_get_contents($url);
     }
+
+    public function getWebHookInfo(): false|string
+    {
+        $url = "https://api.telegram.org/bot{$this->token}/getWebhookInfo";
+
+        return file_get_contents($url);
+    }
+
+    public function getUpdates(): false|string
+    {
+        $url = "https://api.telegram.org/bot{$this->token}/getUpdates";
+
+        return file_get_contents($url);
+    }
 }
