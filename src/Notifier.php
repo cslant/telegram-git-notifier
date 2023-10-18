@@ -42,7 +42,7 @@ class Notifier implements AppInterface, NotificationInterface, EventInterface
         $this->client = $client ?? new Client();
     }
 
-    function parseNotifyChatIds(): array
+    public function parseNotifyChatIds(): array
     {
         $chatData = explode(
             NotificationConstant::CHAT_ID_PAIRS_SEPARATOR,

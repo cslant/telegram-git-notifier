@@ -15,9 +15,12 @@ return [
             /**
              * Set the chat ids that will receive notifications
              * You can add the owner bot id, group id, ...
-             * ( Please use semicolon ";" to separate chat ids )
-             * ( And use colon ":" to separate chat id and thread id )
-             * ( And use comma "," if you want to add multiple thread ids )
+             * -------------------------------------------------------
+             * Note:
+             * Please use semicolon ";" to separate chat ids
+             * And use colon ":" to separate chat id and thread id
+             * And use comma "," if you want to add multiple thread ids
+             * -------------------------------------------------------
              * The environment variable is expected to be in the format:
              * "chat_id1;chat_id2:thread_id2;chat_id3:thread_id3_1,thread_id3_2;..."
             */
