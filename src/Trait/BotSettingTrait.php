@@ -6,6 +6,31 @@ use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
 
 trait BotSettingTrait
 {
+    public function updateSetting(?string $settingFile = null): void
+    {
+        if ($this->setting->getSettingFile()) {
+            return;
+        }
+        $settingFile = $settingFile ?? config('telegram-git-notifier.data_file.setting');
+        $this->setting->setSettingFile($settingFile);
+        $this->setting->setSettingConfig();
+    }
+
+    public function setMyCommands(
+        array $menuCommand,
+        ?string $view = null
+    ): void {
+        $this->telegram->setMyCommands([
+            'commands' => json_encode($menuCommand)
+        ]);
+        $this->sendMessage(
+            view(
+                $view ??
+                config('telegram-git-notifier.view.tools.set_menu_cmd')
+            )
+        );
+    }
+
     public function settingHandle(?string $view = null): void
     {
         $this->sendMessage(

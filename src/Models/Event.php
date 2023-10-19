@@ -6,7 +6,7 @@ use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 
 class Event
 {
-    public array $eventConfig = [];
+    private array $eventConfig = [];
 
     public string $platform = EventConstant::DEFAULT_PLATFORM;
 
@@ -28,6 +28,14 @@ class Event
     public function setPlatformFile(string $platformFile): void
     {
         $this->platformFile = $platformFile;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEventConfig(): array
+    {
+        return $this->eventConfig;
     }
 
     /**

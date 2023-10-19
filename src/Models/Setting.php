@@ -62,6 +62,8 @@ class Setting
     }
 
     /**
+     * Condition for checking the notification status
+     *
      * @return bool
      */
     public function isNotified(): bool
@@ -83,7 +85,7 @@ class Setting
      *
      * @return bool
      */
-    public function updateSettingItem(
+    public function updateSetting(
         string $settingName,
         $settingValue = null
     ): bool {

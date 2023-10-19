@@ -2,17 +2,15 @@
 
 namespace LbilTech\TelegramGitNotifier\Exceptions;
 
-use Exception;
-
-class CallbackException extends Exception
+final class CallbackException extends TelegramGitNotifierException
 {
     public static function isEmpty(): self
     {
-        return new static('Callback is empty');
+        return new self('Callback is empty');
     }
 
     public static function invalid(): self
     {
-        return new static('Callback is invalid');
+        return new self('Callback is invalid');
     }
 }

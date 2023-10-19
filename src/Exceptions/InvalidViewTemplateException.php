@@ -2,10 +2,9 @@
 
 namespace LbilTech\TelegramGitNotifier\Exceptions;
 
-use Exception;
 use Throwable;
 
-class InvalidViewTemplateException extends Exception
+final class InvalidViewTemplateException extends TelegramGitNotifierException
 {
     public static function create(
         string $view,

@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
 
 use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
@@ -15,6 +15,7 @@ interface AppInterface
      *
      * @return void
      * @throws MessageIsEmptyException
+     * @see App::sendMessage()
      */
     public function sendMessage(
         string $message = '',
@@ -29,6 +30,7 @@ interface AppInterface
      *
      * @return void
      * @throws EntryNotFoundException
+     * @see App::sendPhoto()
      */
     public function sendPhoto(string $photo = '', string $caption = ''): void;
 
@@ -39,6 +41,7 @@ interface AppInterface
      *
      * @return void
      * @throws MessageIsEmptyException
+     * @see App::answerCallbackQuery()
      */
     public function answerCallbackQuery(string $text = null): void;
 
@@ -49,6 +52,7 @@ interface AppInterface
      * @param array $options
      *
      * @return void
+     * @see App::editMessageText()
      */
     public function editMessageText(
         ?string $text = null,
@@ -61,6 +65,7 @@ interface AppInterface
      * @param array $options
      *
      * @return void
+     * @see App::editMessageReplyMarkup()
      */
     public function editMessageReplyMarkup(array $options = []): void;
 
@@ -68,6 +73,7 @@ interface AppInterface
      * Get the text from callback message
      *
      * @return string
+     * @see App::getCallbackTextMessage()
      */
     public function getCallbackTextMessage(): string;
 
@@ -77,6 +83,7 @@ interface AppInterface
      * @param array $options
      *
      * @return array
+     * @see App::setCallbackContentMessage()
      */
     public function setCallbackContentMessage(array $options = []): array;
 
@@ -84,13 +91,15 @@ interface AppInterface
      * @param string $chatId
      *
      * @return void
+     * @see App::setCurrentChatBotId()
      */
-    public function setCurrentChatId(string $chatId): void;
+    public function setCurrentChatBotId(string $chatId): void;
 
     /**
      * Get the username of the bot
      *
      * @return string|null
+     * @see App::getBotName()
      */
     public function getBotName(): ?string;
 
@@ -98,6 +107,7 @@ interface AppInterface
      * Get the command message from a telegram
      *
      * @return string
+     * @see App::getCommandMessage()
      */
     public function getCommandMessage(): string;
 }

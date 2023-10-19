@@ -35,4 +35,18 @@ interface WebhookInterface
      * @return false|string
      */
     public function deleteWebHook(): false|string;
+
+    /**
+     * Get webhook info
+     *
+     * @return false|string
+     */
+    public function getWebHookInfo(): false|string;
+
+    /**
+     * Get webhook update
+     *
+     * @return false|string
+     */
+    public function getUpdates(): false|string;
 }

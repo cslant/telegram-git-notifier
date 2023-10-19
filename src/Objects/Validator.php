@@ -1,29 +1,35 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier\Objects;
 
-use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Models\Event;
 use LbilTech\TelegramGitNotifier\Models\Setting;
 use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 
-class EventService implements EventInterface
+class Validator
 {
     use ActionEventTrait;
 
-    public Setting $setting;
+    private Setting $setting;
 
-    public Event $event;
+    private Event $event;
 
-    public function __construct(
-        Setting $setting,
-        Event $event
-    ) {
+    public function __construct(Setting $setting, Event $event)
+    {
         $this->setting = $setting;
         $this->event = $event;
     }
 
-    public function validateAccessEvent(
+    /**
+     * Validate is access event before send notify
+     *
+     * @param string $platform Source code platform (GitHub, GitLab)
+     * @param string $event Event name (push, pull_request)
+     * @param $payload
+     *
+     * @return bool
+     */
+    public function isAccessEvent(
         string $platform,
         string $event,
         $payload
@@ -35,11 +41,9 @@ class EventService implements EventInterface
         if ($this->setting->isAllEventsNotification()) {
             return true;
         }
-
         $this->event->setEventConfig($platform);
-        $eventConfig = $this->event->eventConfig;
 
-        $eventConfig = $eventConfig[tgn_convert_event_name($event)] ?? false;
+        $eventConfig = $this->event->getEventConfig()[tgn_convert_event_name($event)] ?? false;
         $action = $this->getActionOfEvent($payload);
 
         if (!empty($action) && isset($eventConfig[$action])) {

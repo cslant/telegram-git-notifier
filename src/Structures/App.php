@@ -1,33 +1,27 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier\Structures;
 
 use Exception;
 use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
-use LbilTech\TelegramGitNotifier\Interfaces\AppInterface;
 use Telegram;
 
-class AppService implements AppInterface
+trait App
 {
     public Telegram $telegram;
 
-    public string $chatId;
+    public string $chatBotId;
 
-    public function __construct(Telegram $telegram = null)
+    public function setCurrentChatBotId(string $chatBotId = null): void
     {
-        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
+        $this->chatBotId = $chatBotId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
-    public function setCurrentChatId(string $chatId = null): void
-    {
-        $this->chatId = $chatId ?? config('telegram-git-notifier.bot.chat_id');
-    }
-
-    private function createBaseContent(): array
+    private function createTelegramBaseContent(): array
     {
         return [
-            'chat_id'                  => $this->chatId,
+            'chat_id'                  => $this->chatBotId,
             'disable_web_page_preview' => true,
             'parse_mode'               => 'HTML'
         ];
@@ -39,14 +33,17 @@ class AppService implements AppInterface
             throw MessageIsEmptyException::create();
         }
 
-        $content = $this->createBaseContent();
+        $content = $this->createTelegramBaseContent();
         $content['text'] = $message;
 
         if (!empty($options['reply_markup'])) {
             $content['reply_markup'] = $this->telegram->buildInlineKeyBoard(
                 $options['reply_markup']
             );
+            unset($options['reply_markup']);
         }
+
+        $content = $content + $options;
 
         $this->telegram->sendMessage($content);
     }
@@ -57,25 +54,26 @@ class AppService implements AppInterface
             throw EntryNotFoundException::fileNotFound();
         }
 
-        $content = $this->createBaseContent();
+        $content = $this->createTelegramBaseContent();
         $content['photo'] = curl_file_create($photo);
         $content['caption'] = $caption;
 
         $this->telegram->sendPhoto($content);
     }
 
-    public function answerCallbackQuery(string $text = null): void
+    public function answerCallbackQuery(string $text = null, array $options = []): void
     {
         if (empty($text)) {
             throw MessageIsEmptyException::create();
         }
 
         try {
-            $this->telegram->answerCallbackQuery([
+            $options = array_merge([
                 'callback_query_id' => $this->telegram->Callback_ID(),
                 'text'              => $text,
                 'show_alert'        => true
-            ]);
+            ], $options);
+            $this->telegram->answerCallbackQuery($options);
         } catch (Exception $e) {
             error_log("Error answering callback query: " . $e->getMessage());
         }

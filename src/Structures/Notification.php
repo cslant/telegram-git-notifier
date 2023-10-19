@@ -1,39 +1,24 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace LbilTech\TelegramGitNotifier\Structures;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
-use LbilTech\TelegramGitNotifier\Interfaces\NotificationInterface;
-use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
 use Symfony\Component\HttpFoundation\Request;
 
-class NotificationService implements NotificationInterface
+trait Notification
 {
-    use ActionEventTrait;
-
     public mixed $payload;
 
     public string $message = '';
 
-    public string $platform = EventConstant::DEFAULT_PLATFORM;
-
-    public Client $client;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     public function accessDenied(
-        TelegramService $telegramService,
         string $chatId = null,
         string $viewTemplate = null,
     ): void {
-        $telegramService->telegram->sendMessage([
-            'chat_id'                  => config('telegram-git-notifier.bot.chat_id'),
+        $this->telegram->sendMessage([
+            'chat_id'                  => $this->chatBotId,
             'text'                     => view(
                 $viewTemplate ?? config('telegram-git-notifier.view.globals.access_denied'),
                 ['chatId' => $chatId]
@@ -45,9 +30,9 @@ class NotificationService implements NotificationInterface
 
     public function setPayload(Request $request, string $event)
     {
-        if ($this->platform === 'gitlab') {
+        if ($this->event->platform === 'gitlab') {
             $this->payload = json_decode($request->getContent());
-        } elseif ($this->platform === EventConstant::DEFAULT_PLATFORM) {
+        } elseif ($this->event->platform === EventConstant::DEFAULT_PLATFORM) {
             $this->payload = json_decode($request->request->get('payload'));
         }
         $this->setMessage($event);
@@ -68,8 +53,8 @@ class NotificationService implements NotificationInterface
         $action = $this->getActionOfEvent($this->payload);
 
         $viewTemplate = empty($action)
-            ? "events.{$this->platform}.{$event}.default"
-            : "events.{$this->platform}.{$event}.{$action}";
+            ? "events.{$this->event->platform}.{$event}.default"
+            : "events.{$this->event->platform}.{$event}.{$action}";
 
         $this->message = view($viewTemplate, [
             'payload' => $this->payload,
@@ -77,25 +62,18 @@ class NotificationService implements NotificationInterface
         ]);
     }
 
-    public function sendNotify(string $chatId, string $message = null): bool
+    public function sendNotify(string $message = null, array $options = []): bool
     {
-        if (!is_null($message)) {
-            $this->message = $message;
-        }
+        $this->message = !empty($message) ? $message : $this->message;
 
-        $queryParams = [
-            'chat_id'                  => $chatId,
-            'disable_web_page_preview' => 1,
-            'parse_mode'               => 'html',
-            'text'                     => $this->message
-        ];
+        $queryParams = array_merge($this->createTelegramBaseContent(), ['text' => $this->message], $options);
 
-        $url = 'https://api.telegram.org/bot'
-            . config('telegram-git-notifier.bot.token') . '/sendMessage'
-            . '?' . http_build_query($queryParams);
+        $url = 'https://api.telegram.org/bot' . config('telegram-git-notifier.bot.token') . '/sendMessage';
 
         try {
-            $response = $this->client->request('GET', $url);
+            $response = $this->client->request('POST', $url, [
+                'form_params' => $queryParams
+            ]);
 
             if ($response->getStatusCode() === 200) {
                 return true;

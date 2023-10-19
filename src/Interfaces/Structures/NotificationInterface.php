@@ -1,10 +1,9 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
 
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
-use LbilTech\TelegramGitNotifier\Services\TelegramService;
 use Symfony\Component\HttpFoundation\Request;
 
 interface NotificationInterface
@@ -12,15 +11,14 @@ interface NotificationInterface
     /**
      * Notify access denied to other chat ids
      *
-     * @param TelegramService $telegramService
      * @param string|null $viewTemplate
      * @param string|null $chatId
      *
      * @return void
      * @throws InvalidViewTemplateException
+     * @see Notification::accessDenied()
      */
     public function accessDenied(
-        TelegramService $telegramService,
         string $chatId = null,
         string $viewTemplate = null,
     ): void;
@@ -33,19 +31,21 @@ interface NotificationInterface
      *
      * @return mixed|void
      * @throws InvalidViewTemplateException
+     * @see Notification::setPayload()
      */
     public function setPayload(Request $request, string $event);
 
     /**
      * Send notification to telegram
      *
-     * @param string $chatId
      * @param string|null $message
+     * @param array $options
      *
      * @return bool
      * @throws SendNotificationException
+     * @see Notification::sendNotify()
      */
-    public function sendNotify(string $chatId, string $message = null): bool;
+    public function sendNotify(string $message = null, array $options = []): bool;
 
     /**
      * Get action name of event from payload data
@@ -53,7 +53,14 @@ interface NotificationInterface
      * @param $payload
      *
      * @return string
-     * @see ActionEventTrait::getActionOfEvent()
+     * @see EventTrait::getActionOfEvent()
      */
     public function getActionOfEvent($payload): string;
+
+    /**
+     * Convert chat and thread ids to array
+     * Example: 1234567890;1234567890:thread1;1234567890:thread1,thread2
+     * @return array
+     */
+    public function parseNotifyChatIds(): array;
 }
