@@ -4,7 +4,10 @@ return [
     'telegram-git-notifier' => [
         'app' => [
             'name'     => $_ENV['TGN_APP_NAME'] ?? 'Telegram Git Notifier',
+
+            // Required for the bot to work properly
             'url'      => $_ENV['TGN_APP_URL'] ?? 'http://localhost:3000',
+
             'timezone' => $_ENV['TIMEZONE'] ?? 'Asia/Ho_Chi_Minh',
         ],
 
