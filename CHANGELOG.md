@@ -2,6 +2,15 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.2.0 - 2023-10-20
+
+- Add support for sending notifications in topics (threads in supergroups)
+- Enhanced capability to send notifications across multiple topics simultaneously
+- Add support for Telegram bot commands
+- Refactor source code
+- Update support for custom commands and buttons
+- Enhanced support for custom callbacks
+
 ## v1.1.0 - 2023-10-14
 
 - Add support for GitLab and GitHub events
