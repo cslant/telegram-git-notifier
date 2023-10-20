@@ -81,8 +81,7 @@ trait EventSettingTrait
         $back = SettingConstant::SETTING_BACK_TO_SETTINGS_MENU;
 
         if ($parentEvent) {
-            $back = SettingConstant::SETTING_BACK_TO_EVENTS_MENU
-                . $platform;
+            $back = SettingConstant::SETTING_BACK_TO_EVENTS_MENU . $platform;
         }
 
         return [

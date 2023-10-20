@@ -4,6 +4,7 @@ namespace LbilTech\TelegramGitNotifier;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Interfaces\BotInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\SettingInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Models\Event;
@@ -15,7 +16,7 @@ use LbilTech\TelegramGitNotifier\Trait\EventSettingTrait;
 use LbilTech\TelegramGitNotifier\Trait\EventTrait;
 use Telegram;
 
-class Bot implements AppInterface, BotInterface, EventInterface
+class Bot implements AppInterface, BotInterface, EventInterface, SettingInterface
 {
     use App;
     use TelegramBot;
