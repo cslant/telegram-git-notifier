@@ -32,11 +32,11 @@ class Bot implements AppInterface, BotInterface, EventInterface, SettingInterfac
     public function __construct(
         Telegram $telegram = null,
         ?string $chatBotId = null,
-        Setting $setting = null,
         Event $event = null,
-        ?string $settingFile = null,
         ?string $platform = EventConstant::DEFAULT_PLATFORM,
         ?string $platformFile = null,
+        Setting $setting = null,
+        ?string $settingFile = null,
     ) {
         $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
         $this->setCurrentChatBotId($chatBotId);

@@ -9,11 +9,13 @@ trait EventSettingTrait
 {
     public function eventMarkup(
         ?string $parentEvent = null,
-        string $platform = EventConstant::DEFAULT_PLATFORM
+        string $platform = EventConstant::DEFAULT_PLATFORM,
+        string $platformFile = null
     ): array {
         $replyMarkup = $replyMarkupItem = [];
 
-        $this->event->setEventConfig($platform);
+        $this->setPlatFormForEvent($platform, $platformFile);
+
         $events = $parentEvent === null ? $this->event->getEventConfig()
             : $this->event->getEventConfig()[$parentEvent];
 
@@ -96,7 +98,8 @@ trait EventSettingTrait
 
     public function eventHandle(
         ?string $callback = null,
-        ?string $platform = null
+        ?string $platform = null,
+        ?string $platFormFile = null
     ): void {
         $platform = $this->getPlatformFromCallback($callback, $platform);
 
@@ -110,7 +113,7 @@ trait EventSettingTrait
             return;
         }
 
-        $this->handleEventUpdate($event, $platform);
+        $this->handleEventUpdate($event, $platform, $platFormFile);
     }
 
     public function getPlatformFromCallback(
@@ -185,23 +188,33 @@ trait EventSettingTrait
         return false;
     }
 
-    public function handleEventUpdate(string $event, string $platform): void
-    {
+    public function handleEventUpdate(
+        string $event,
+        string $platform,
+        string $platFormFile = null
+    ): void {
         if (str_contains($event, EventConstant::EVENT_UPDATE_SEPARATOR)) {
             $event = str_replace(
                 EventConstant::EVENT_UPDATE_SEPARATOR,
                 '',
                 $event
             );
-            $this->eventUpdateHandle($event, $platform);
+            $this->eventUpdateHandle($event, $platform, $platFormFile);
         }
     }
 
-    public function eventUpdateHandle(string $event, string $platform): void
-    {
-        [$event, $action] = explode('.', $event);
+    public function eventUpdateHandle(
+        string $event,
+        string $platform,
+        string $platFormFile = null
+    ): void {
+        if (str_contains($event, '.')) {
+            [$event, $action] = explode('.', $event);
+        } else {
+            $action = null;
+        }
 
-        $this->event->setEventConfig($platform);
+        $this->setPlatFormForEvent($platform);
         $this->event->updateEvent($event, $action);
         $this->eventHandle(
             $action
