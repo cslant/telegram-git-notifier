@@ -26,13 +26,13 @@ interface AppInterface
      * Send a photo to telegram
      *
      * @param string $photo (path to photo)
-     * @param string $caption
+     * @param array $caption
      *
      * @return void
      * @throws EntryNotFoundException
      * @see App::sendPhoto()
      */
-    public function sendPhoto(string $photo = '', string $caption = ''): void;
+    public function sendPhoto(string $photo = '', array $caption = []): void;
 
     /**
      * Send callback response to telegram (show alert)

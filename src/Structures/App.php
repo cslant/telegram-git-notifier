@@ -48,7 +48,7 @@ trait App
         $this->telegram->sendMessage($content);
     }
 
-    public function sendPhoto(string $photo = '', string $caption = ''): void
+    public function sendPhoto(string $photo = '', array $options = []): void
     {
         if (empty($photo)) {
             throw EntryNotFoundException::fileNotFound();
@@ -56,7 +56,8 @@ trait App
 
         $content = $this->createTelegramBaseContent();
         $content['photo'] = curl_file_create($photo);
-        $content['caption'] = $caption;
+
+        $content = $content + $options;
 
         $this->telegram->sendPhoto($content);
     }
