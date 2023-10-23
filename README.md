@@ -5,6 +5,10 @@ With this package,
 you can create a Telegram bot to receive notifications from GitHub or GitLab events
 and manage customization through messages and buttons on Telegram.
 
+<p align="center">
+  <img alt="Telegram git notifier core" src="https://github.com/lbiltech/telegram-git-notifier/assets/35853002/193e523b-4654-4f61-aaf4-5b6d106b67e3" />
+</p>
+
 ![License](https://img.shields.io/github/license/lbiltech/telegram-git-notifier.svg?style=flat-square)
 [![Latest Version](https://img.shields.io/github/release/lbiltech/telegram-git-notifier.svg?style=flat-square)](https://github.com/lbiltech/telegram-git-notifier/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/lbiltech/telegram-git-notifier.svg?style=flat-square)](https://packagist.org/packages/lbiltech/telegram-git-notifier)
