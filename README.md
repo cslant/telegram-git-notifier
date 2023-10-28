@@ -1,6 +1,6 @@
 # Telegram Git Notifier
 
-This package provides the ability to integrate the Telegram messaging service and GitHub/GitLab.
+This package provides the ability to integrate the Telegram messaging service and GitHub and GitLab.
 With this package,
 you can create a Telegram bot to receive notifications from GitHub or GitLab events
 and manage customization through messages and buttons on Telegram.

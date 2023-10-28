@@ -8,11 +8,11 @@ class TelegramGitNotifierException extends Exception
 {
     public static function isEmpty(): self
     {
-        return new static('Telegram Git Notifier is empty');
+        return new self('Telegram Git Notifier is empty');
     }
 
     public static function invalid(): self
     {
-        return new static('Telegram Git Notifier is invalid');
+        return new self('Telegram Git Notifier is invalid');
     }
 }
