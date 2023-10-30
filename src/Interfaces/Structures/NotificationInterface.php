@@ -50,12 +50,12 @@ interface NotificationInterface
     /**
      * Get action name of event from payload data
      *
-     * @param $payload
+     * @param object $payload
      *
      * @return string
      * @see EventTrait::getActionOfEvent()
      */
-    public function getActionOfEvent($payload): string;
+    public function getActionOfEvent(object $payload): string;
 
     /**
      * Convert chat and thread ids to array

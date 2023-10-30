@@ -43,8 +43,10 @@ class Setting
      */
     public function setSettingConfig(): void
     {
-        $json = file_get_contents($this->settingFile);
-        $this->settings = json_decode($json, true);
+        if (file_exists($this->settingFile)) {
+            $json = file_get_contents($this->settingFile);
+            $this->settings = json_decode($json, true);
+        }
     }
 
     /**
@@ -81,13 +83,13 @@ class Setting
      * Update setting item value and save to file
      *
      * @param string $settingName
-     * @param $settingValue
+     * @param array|string|bool|int|null $settingValue
      *
      * @return bool
      */
     public function updateSetting(
         string $settingName,
-        $settingValue = null
+        mixed $settingValue = null
     ): bool {
         $settingKeys = explode('.', $settingName);
         $lastKey = array_pop($settingKeys);

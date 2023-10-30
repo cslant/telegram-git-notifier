@@ -42,12 +42,12 @@ class ConfigHelper
     /**
      * Return template data
      *
-     * @param $partialPath
+     * @param string $partialPath
      * @param array $data
      *
      * @return bool|string
      */
-    public function getTemplateData($partialPath, array $data = []): bool|string
+    public function getTemplateData(string $partialPath, array $data = []): bool|string
     {
         $viewPathFile = $this->execConfig('telegram-git-notifier.view.path') . '/'
             . str_replace('.', '/', $partialPath) . '.php';
@@ -56,6 +56,7 @@ class ConfigHelper
             return '';
         }
 
+        $content = '';
         ob_start();
         try {
             extract($data, EXTR_SKIP);

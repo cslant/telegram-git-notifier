@@ -25,14 +25,14 @@ class Validator
      *
      * @param string $platform Source code platform (GitHub, GitLab)
      * @param string $event Event name (push, pull_request)
-     * @param $payload
+     * @param object $payload
      *
      * @return bool
      */
     public function isAccessEvent(
         string $platform,
         string $event,
-        $payload
+        object $payload
     ): bool {
         if (!$this->setting->isNotified()) {
             return false;

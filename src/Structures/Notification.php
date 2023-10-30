@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 trait Notification
 {
-    public mixed $payload;
+    public object $payload;
 
     public string $message = '';
 

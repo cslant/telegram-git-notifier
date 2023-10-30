@@ -10,12 +10,12 @@ interface EventInterface
     /**
      * Get action name of event from payload data
      *
-     * @param $payload
+     * @param object $payload
      *
      * @return string
      * @see ActionEventTrait::getActionOfEvent()
      */
-    public function getActionOfEvent($payload): string;
+    public function getActionOfEvent(object $payload): string;
 
     /**
      * Set platform and platform file for event

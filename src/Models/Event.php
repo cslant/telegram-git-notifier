@@ -50,8 +50,10 @@ class Event
     ): void {
         $this->platform = $platform;
 
-        $json = file_get_contents($this->platformFile);
-        $this->eventConfig = json_decode($json, true);
+        if (file_exists($this->platformFile)) {
+            $json = file_get_contents($this->platformFile);
+            $this->eventConfig = json_decode($json, true);
+        }
     }
 
     /**
