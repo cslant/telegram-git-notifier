@@ -65,7 +65,7 @@ trait EventSettingTrait
         return $prefix . $event . EventConstant::EVENT_UPDATE_SEPARATOR;
     }
 
-    public function getEventName(string $event, $value): string
+    public function getEventName(string $event, bool|array $value = false): string
     {
         if (is_array($value)) {
             return '⚙ ' . $event;
@@ -124,9 +124,9 @@ trait EventSettingTrait
             return $platform;
         }
 
-        if (str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
+        if ($callback && str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
             return 'github';
-        } elseif (str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
+        } elseif ($callback && str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
             return 'gitlab';
         }
 
@@ -157,6 +157,10 @@ trait EventSettingTrait
 
     public function getEventFromCallback(?string $callback): string
     {
+        if (!$callback) {
+            return '';
+        }
+
         return str_replace([
             EventConstant::EVENT_PREFIX,
             EventConstant::GITHUB_EVENT_SEPARATOR,

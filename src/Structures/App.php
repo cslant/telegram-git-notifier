@@ -27,7 +27,7 @@ trait App
         ];
     }
 
-    public function sendMessage(string $message = '', array $options = []): void
+    public function sendMessage(?string $message = '', array $options = []): void
     {
         if (empty($message)) {
             throw MessageIsEmptyException::create();

@@ -124,10 +124,11 @@ if (!function_exists('view')) {
      * @param string $partialPath
      * @param array $data
      *
-     * @return bool|string
+     * @return null|string
      */
-    function view(string $partialPath, array $data = []): bool|string
+    function view(string $partialPath, array $data = []): null|string
     {
-        return (new ConfigHelper())->getTemplateData($partialPath, $data);
+        $content = (new ConfigHelper())->getTemplateData($partialPath, $data);
+        return $content ?: null;
     }
 }
