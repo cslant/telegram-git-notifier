@@ -65,7 +65,7 @@ trait EventSettingTrait
         return $prefix . $event . EventConstant::EVENT_UPDATE_SEPARATOR;
     }
 
-    public function getEventName(string $event, $value): string
+    public function getEventName(string $event, bool|array $value = false): string
     {
         if (is_array($value)) {
             return '⚙ ' . $event;

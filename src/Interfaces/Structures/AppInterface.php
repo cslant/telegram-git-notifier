@@ -17,10 +17,7 @@ interface AppInterface
      * @throws MessageIsEmptyException
      * @see App::sendMessage()
      */
-    public function sendMessage(
-        string $message = '',
-        array $options = []
-    ): void;
+    public function sendMessage(string $message = '', array $options = []): void;
 
     /**
      * Send a photo to telegram
@@ -54,10 +51,7 @@ interface AppInterface
      * @return void
      * @see App::editMessageText()
      */
-    public function editMessageText(
-        ?string $text = null,
-        array $options = []
-    ): void;
+    public function editMessageText(string $text = null, array $options = []): void;
 
     /**
      * Edit message reply markup from a telegram

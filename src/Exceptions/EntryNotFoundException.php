@@ -9,12 +9,12 @@ final class EntryNotFoundException extends TelegramGitNotifierException
         return new self('File not found');
     }
 
-    public static function configNotFound($config): self
+    public static function configNotFound(string $config): self
     {
         return new self("Config {$config} not found");
     }
 
-    public static function viewNotFound($view): self
+    public static function viewNotFound(string $view): self
     {
         return new self("View {$view} not found");
     }

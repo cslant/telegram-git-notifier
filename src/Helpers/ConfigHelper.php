@@ -8,6 +8,9 @@ use Throwable;
 
 class ConfigHelper
 {
+    /**
+     * @var array<string, mixed>
+     */
     public array $config;
 
     public function __construct()

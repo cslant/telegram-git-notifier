@@ -38,12 +38,12 @@ interface SettingInterface
      * Get event name for markup
      *
      * @param string $event
-     * @param $value
+     * @param bool|array $value
      *
      * @return string
      * @see EventSettingTrait::getEventName()
      */
-    public function getEventName(string $event, $value): string;
+    public function getEventName(string $event, bool|array $value): string;
 
     /**
      * Get end keyboard buttons
