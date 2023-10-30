@@ -157,6 +157,10 @@ trait EventSettingTrait
 
     public function getEventFromCallback(?string $callback): string
     {
+        if (!$callback) {
+            return '';
+        }
+
         return str_replace([
             EventConstant::EVENT_PREFIX,
             EventConstant::GITHUB_EVENT_SEPARATOR,

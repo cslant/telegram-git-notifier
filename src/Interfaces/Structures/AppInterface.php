@@ -10,14 +10,14 @@ interface AppInterface
     /**
      * Send a message to telegram
      *
-     * @param string $message
+     * @param string|null $message
      * @param array $options
      *
      * @return void
      * @throws MessageIsEmptyException
      * @see App::sendMessage()
      */
-    public function sendMessage(string $message = '', array $options = []): void;
+    public function sendMessage(?string $message = '', array $options = []): void;
 
     /**
      * Send a photo to telegram

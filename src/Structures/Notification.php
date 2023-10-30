@@ -4,6 +4,7 @@ namespace LbilTech\TelegramGitNotifier\Structures;
 
 use GuzzleHttp\Exception\GuzzleException;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -30,11 +31,18 @@ trait Notification
 
     public function setPayload(Request $request, string $event)
     {
+        $content = null;
+
         if ($this->event->platform === 'gitlab') {
-            $this->payload = json_decode($request->getContent());
+            $content = $request->getContent();
         } elseif ($this->event->platform === EventConstant::DEFAULT_PLATFORM) {
-            $this->payload = json_decode($request->request->get('payload'));
+            $content = $request->request->get('payload');
         }
+
+        if (is_string($content)) {
+            $this->payload = json_decode($content);
+        }
+
         $this->setMessage($event);
 
         return $this->payload;
@@ -46,6 +54,7 @@ trait Notification
      * @param string $typeEvent
      *
      * @return void
+     * @throws MessageIsEmptyException
      */
     private function setMessage(string $typeEvent): void
     {
@@ -56,10 +65,16 @@ trait Notification
             ? "events.{$this->event->platform}.{$event}.default"
             : "events.{$this->event->platform}.{$event}.{$action}";
 
-        $this->message = view($viewTemplate, [
+        $viewResult = view($viewTemplate, [
             'payload' => $this->payload,
             'event'   => tgn_convert_event_name($typeEvent),
         ]);
+
+        if ($viewResult === null) {
+            throw MessageIsEmptyException::create();
+        }
+
+        $this->message = $viewResult;
     }
 
     public function sendNotify(string $message = null, array $options = []): bool
