@@ -9,7 +9,7 @@ trait EventTrait
 {
     use ActionEventTrait;
 
-    public function setPlatFormForEvent(string $platform, string $platformFile = null): void
+    public function setPlatFormForEvent(?string $platform = EventConstant::DEFAULT_PLATFORM, string $platformFile = null): void
     {
         /** @var array $platformFileDefaults<platform, platformFile> */
         $platformFileDefaults = config('telegram-git-notifier.data_file.platform');

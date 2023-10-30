@@ -43,8 +43,9 @@ class Setting
      */
     public function setSettingConfig(): void
     {
-        if (file_exists($this->settingFile)) {
-            $json = file_get_contents($this->settingFile);
+        $json = file_get_contents($this->settingFile);
+
+        if (!empty($json)) {
             $this->settings = json_decode($json, true);
         }
     }

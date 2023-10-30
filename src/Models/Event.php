@@ -41,17 +41,18 @@ class Event
     /**
      * Set event config
      *
-     * @param string $platform
+     * @param string|null $platform
      *
      * @return void
      */
     public function setEventConfig(
-        string $platform = EventConstant::DEFAULT_PLATFORM
+        string $platform = null
     ): void {
-        $this->platform = $platform;
+        $this->platform = $platform ?? EventConstant::DEFAULT_PLATFORM;
 
-        if (file_exists($this->platformFile)) {
-            $json = file_get_contents($this->platformFile);
+        $json = file_get_contents($this->platformFile);
+
+        if (!empty($json)) {
             $this->eventConfig = json_decode($json, true);
         }
     }

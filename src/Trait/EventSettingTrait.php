@@ -124,9 +124,9 @@ trait EventSettingTrait
             return $platform;
         }
 
-        if (str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
+        if ($callback && str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
             return 'github';
-        } elseif (str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
+        } elseif ($callback && str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
             return 'gitlab';
         }
 
