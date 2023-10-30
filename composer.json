@@ -33,11 +33,6 @@
       "common/helpers.php"
     ]
   },
-  "autoload-dev": {
-    "psr-4": {
-      "LbilTech\\TelegramGitNotifier\\Tests\\": "tests"
-    }
-  },
   "require": {
     "php": "^8.1",
     "eleirbag89/telegrambotphp": "^1.4",
