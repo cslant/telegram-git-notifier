@@ -33,6 +33,11 @@
       "common/helpers.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "LbilTech\\TelegramGitNotifier\\Tests\\": "tests"
+    }
+  },
   "require": {
     "php": "^8.1",
     "eleirbag89/telegrambotphp": "^1.4",
@@ -41,10 +46,12 @@
     "vlucas/phpdotenv": "^5.5"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.10.39"
+    "phpstan/phpstan": "^1.10.39",
+    "friendsofphp/php-cs-fixer": "^v3.37.1"
   },
   "scripts": {
-    "analyse": "vendor/bin/phpstan"
+    "analyse": "vendor/bin/phpstan",
+    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
   },
   "support": {
     "issues": "https://github.com/lbiltech/telegram-git-notifier/issues"
