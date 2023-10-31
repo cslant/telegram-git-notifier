@@ -4,9 +4,9 @@ namespace LbilTech\TelegramGitNotifier;
 
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Interfaces\BotInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\SettingInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
-use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
 use LbilTech\TelegramGitNotifier\Models\Event;
 use LbilTech\TelegramGitNotifier\Models\Setting;
 use LbilTech\TelegramGitNotifier\Structures\App;

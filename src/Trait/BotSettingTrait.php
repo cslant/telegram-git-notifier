@@ -21,7 +21,7 @@ trait BotSettingTrait
         ?string $view = null
     ): void {
         $this->telegram->setMyCommands([
-            'commands' => json_encode($menuCommand)
+            'commands' => json_encode($menuCommand),
         ]);
         $this->sendMessage(
             view(
@@ -59,7 +59,7 @@ trait BotSettingTrait
                     '',
                     SettingConstant::SETTING_ALL_EVENTS_NOTIFY
                 ),
-            ]
+            ],
         ];
 
         $markup = $this->customEventMarkup($markup);

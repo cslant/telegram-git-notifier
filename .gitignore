@@ -30,3 +30,4 @@ package-lock.json
 yarn.lock
 
 build
+.php-cs-fixer.cache
