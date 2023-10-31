@@ -68,6 +68,7 @@ interface SettingInterface
      * @see EventSettingTrait::eventHandle()
      */
     public function eventHandle(?string $callback = null, ?string $platform = null, string $platformFile = null): void;
+
     /**
      * Get the platform from callback
      *

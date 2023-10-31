@@ -36,6 +36,7 @@ class ConfigHelper
 
             $result = $result[$value];
         }
+
         return $result;
     }
 
@@ -58,6 +59,7 @@ class ConfigHelper
 
         $content = '';
         ob_start();
+
         try {
             extract($data, EXTR_SKIP);
             require_once $viewPathFile;

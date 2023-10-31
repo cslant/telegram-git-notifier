@@ -5,8 +5,8 @@ namespace LbilTech\TelegramGitNotifier;
 use GuzzleHttp\Client;
 use LbilTech\TelegramGitNotifier\Constants\EventConstant;
 use LbilTech\TelegramGitNotifier\Constants\NotificationConstant;
-use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
+use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use LbilTech\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
 use LbilTech\TelegramGitNotifier\Models\Event;
 use LbilTech\TelegramGitNotifier\Structures\App;
@@ -56,6 +56,7 @@ class Notifier implements AppInterface, NotificationInterface, EventInterface
                 ? explode(NotificationConstant::THREAD_ID_SEPARATOR, $threadIds)
                 : [];
         }
+
         return $chatThreadMapping;
     }
 }

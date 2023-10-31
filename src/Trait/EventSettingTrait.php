@@ -92,7 +92,7 @@ trait EventSettingTrait
                 '📚 Menu',
                 '',
                 SettingConstant::SETTING_BACK_TO_MAIN_MENU
-            )
+            ),
         ];
     }
 
@@ -149,6 +149,7 @@ trait EventSettingTrait
                 ),
                 ['reply_markup' => $this->eventMarkup(null, $platform)]
             );
+
             return true;
         }
 
@@ -164,7 +165,7 @@ trait EventSettingTrait
         return str_replace([
             EventConstant::EVENT_PREFIX,
             EventConstant::GITHUB_EVENT_SEPARATOR,
-            EventConstant::GITLAB_EVENT_SEPARATOR
+            EventConstant::GITLAB_EVENT_SEPARATOR,
         ], '', $callback);
     }
 
@@ -186,6 +187,7 @@ trait EventSettingTrait
                 ),
                 ['reply_markup' => $this->eventMarkup($event, $platform)]
             );
+
             return true;
         }
 

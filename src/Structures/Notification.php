@@ -19,13 +19,13 @@ trait Notification
         string $viewTemplate = null,
     ): void {
         $this->telegram->sendMessage([
-            'chat_id'                  => $this->chatBotId,
-            'text'                     => view(
+            'chat_id' => $this->chatBotId,
+            'text' => view(
                 $viewTemplate ?? config('telegram-git-notifier.view.globals.access_denied'),
                 ['chatId' => $chatId]
             ),
             'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML'
+            'parse_mode' => 'HTML',
         ]);
     }
 
@@ -67,7 +67,7 @@ trait Notification
 
         $viewResult = view($viewTemplate, [
             'payload' => $this->payload,
-            'event'   => tgn_convert_event_name($typeEvent),
+            'event' => tgn_convert_event_name($typeEvent),
         ]);
 
         if ($viewResult === null) {
@@ -87,7 +87,7 @@ trait Notification
 
         try {
             $response = $this->client->request('POST', $url, [
-                'form_params' => $queryParams
+                'form_params' => $queryParams,
             ]);
 
             if ($response->getStatusCode() === 200) {

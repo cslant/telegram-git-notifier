@@ -21,9 +21,9 @@ trait App
     private function createTelegramBaseContent(): array
     {
         return [
-            'chat_id'                  => $this->chatBotId,
+            'chat_id' => $this->chatBotId,
             'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML'
+            'parse_mode' => 'HTML',
         ];
     }
 
@@ -71,8 +71,8 @@ trait App
         try {
             $options = array_merge([
                 'callback_query_id' => $this->telegram->Callback_ID(),
-                'text'              => $text,
-                'show_alert'        => true
+                'text' => $text,
+                'show_alert' => true,
             ], $options);
             $this->telegram->answerCallbackQuery($options);
         } catch (Exception $e) {
@@ -86,7 +86,7 @@ trait App
     ): void {
         try {
             $content = array_merge([
-                'text' => $text ?? $this->getCallbackTextMessage()
+                'text' => $text ?? $this->getCallbackTextMessage(),
             ], $this->setCallbackContentMessage($options));
 
             $this->telegram->editMessageText($content);
@@ -114,10 +114,10 @@ trait App
     public function setCallbackContentMessage(array $options = []): array
     {
         $content = [
-            'chat_id'                  => $this->telegram->Callback_ChatID(),
-            'message_id'               => $this->telegram->MessageID(),
+            'chat_id' => $this->telegram->Callback_ChatID(),
+            'message_id' => $this->telegram->MessageID(),
             'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML',
+            'parse_mode' => 'HTML',
         ];
 
         $content['reply_markup'] = $options['reply_markup']
@@ -135,6 +135,7 @@ trait App
     public function getCommandMessage(): string
     {
         $text = $this->telegram->Text();
+
         return str_replace('@' . $this->getBotName(), '', $text);
     }
 }
