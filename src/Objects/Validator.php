@@ -50,10 +50,11 @@ class Validator
             $eventConfig = $eventConfig[$action];
         }
 
-        if (!$eventConfig) {
+        if (is_array($eventConfig) || !$eventConfig) {
+            $eventConfig = false;
             error_log('\n Event config is not found \n');
         }
 
-        return (bool)$eventConfig;
+        return $eventConfig;
     }
 }

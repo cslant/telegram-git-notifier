@@ -3,6 +3,7 @@
 namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
 
 use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -31,6 +32,7 @@ interface NotificationInterface
      *
      * @return mixed|void
      * @throws InvalidViewTemplateException
+     * @throws MessageIsEmptyException
      * @see Notification::setPayload()
      */
     public function setPayload(Request $request, string $event);
@@ -60,7 +62,10 @@ interface NotificationInterface
     /**
      * Convert chat and thread ids to array
      * Example: 1234567890;1234567890:thread1;1234567890:thread1,thread2
+     *
+     * @param string|null $chatIds
+     *
      * @return array
      */
-    public function parseNotifyChatIds(): array;
+    public function parseNotifyChatIds(?string $chatIds = null): array;
 }

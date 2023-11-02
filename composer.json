@@ -46,18 +46,29 @@
     "vlucas/phpdotenv": "^5.5"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.10.39",
-    "friendsofphp/php-cs-fixer": "^v3.37.1"
+    "friendsofphp/php-cs-fixer": "^v3.37.1",
+    "pestphp/pest": "^2.24",
+    "phpstan/phpstan": "^1.10.39"
   },
   "scripts": {
     "analyse": "vendor/bin/phpstan",
-    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes"
+    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+    "test": "vendor/bin/pest",
+    "post-install-cmd": [
+      "bash ./install.sh"
+    ],
+    "post-update-cmd": [
+      "bash ./install.sh"
+    ]
   },
   "support": {
     "issues": "https://github.com/lbiltech/telegram-git-notifier/issues"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true
