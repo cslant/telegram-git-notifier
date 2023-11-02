@@ -1,10 +1,10 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Structures;
+namespace CSlant\TelegramGitNotifier\Structures;
 
 use Exception;
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use Telegram;
 
 trait App

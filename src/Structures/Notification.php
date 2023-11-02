@@ -1,11 +1,11 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Structures;
+namespace CSlant\TelegramGitNotifier\Structures;
 
 use GuzzleHttp\Exception\GuzzleException;
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
-use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
 trait Notification

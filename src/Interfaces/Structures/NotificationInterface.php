@@ -1,10 +1,10 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
+namespace CSlant\TelegramGitNotifier\Interfaces\Structures;
 
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
-use LbilTech\TelegramGitNotifier\Exceptions\SendNotificationException;
+use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
 interface NotificationInterface

@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Trait;
+namespace CSlant\TelegramGitNotifier\Trait;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use Symfony\Component\HttpFoundation\Request;
 
 trait EventTrait

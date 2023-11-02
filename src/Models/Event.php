@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Models;
+namespace CSlant\TelegramGitNotifier\Models;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
 
 class Event
 {

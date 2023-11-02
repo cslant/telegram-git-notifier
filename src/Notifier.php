@@ -1,17 +1,17 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier;
+namespace CSlant\TelegramGitNotifier;
 
 use GuzzleHttp\Client;
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Constants\NotificationConstant;
-use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
-use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
-use LbilTech\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
-use LbilTech\TelegramGitNotifier\Models\Event;
-use LbilTech\TelegramGitNotifier\Structures\App;
-use LbilTech\TelegramGitNotifier\Structures\Notification;
-use LbilTech\TelegramGitNotifier\Trait\EventTrait;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Constants\NotificationConstant;
+use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
+use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
+use CSlant\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
+use CSlant\TelegramGitNotifier\Models\Event;
+use CSlant\TelegramGitNotifier\Structures\App;
+use CSlant\TelegramGitNotifier\Structures\Notification;
+use CSlant\TelegramGitNotifier\Trait\EventTrait;
 use Telegram;
 
 class Notifier implements AppInterface, NotificationInterface, EventInterface

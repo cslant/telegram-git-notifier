@@ -1,9 +1,9 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces\Structures;
+namespace CSlant\TelegramGitNotifier\Interfaces\Structures;
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 interface AppInterface
 {

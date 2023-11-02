@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Constants;
+namespace CSlant\TelegramGitNotifier\Constants;
 
 final class NotificationConstant
 {

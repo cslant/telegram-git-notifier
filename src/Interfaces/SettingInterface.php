@@ -1,12 +1,12 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace CSlant\TelegramGitNotifier\Interfaces;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
-use LbilTech\TelegramGitNotifier\Trait\BotSettingTrait;
-use LbilTech\TelegramGitNotifier\Trait\EventSettingTrait;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Trait\BotSettingTrait;
+use CSlant\TelegramGitNotifier\Trait\EventSettingTrait;
 
 interface SettingInterface
 {

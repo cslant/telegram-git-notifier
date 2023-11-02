@@ -1,8 +1,8 @@
 {
-  "name": "lbiltech/telegram-git-notifier",
+  "name": "cslant/telegram-git-notifier",
   "description": "Send notification from Gitlab and Github events to Telegram",
   "keywords": [
-    "lbiltech",
+    "cslant",
     "telegram-bot",
     "notify",
     "git-webhook",
@@ -15,7 +15,7 @@
     "telegram-bot-github-notify",
     "telegram-bot-gitlab-notify"
   ],
-  "homepage": "https://github.com/lbiltech/telegram-git-notifier",
+  "homepage": "https://github.com/cslant/telegram-git-notifier",
   "license": "MIT",
   "authors": [
     {
@@ -27,7 +27,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "LbilTech\\TelegramGitNotifier\\": "src/"
+      "CSlant\\TelegramGitNotifier\\": "src/"
     },
     "files": [
       "common/helpers.php"
@@ -35,7 +35,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "LbilTech\\TelegramGitNotifier\\Tests\\": "tests"
+      "CSlant\\TelegramGitNotifier\\Tests\\": "tests"
     }
   },
   "require": {
@@ -62,7 +62,7 @@
     ]
   },
   "support": {
-    "issues": "https://github.com/lbiltech/telegram-git-notifier/issues"
+    "issues": "https://github.com/cslant/telegram-git-notifier/issues"
   },
   "config": {
     "sort-packages": true,

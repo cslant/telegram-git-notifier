@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Trait;
+namespace CSlant\TelegramGitNotifier\Trait;
 
 trait ActionEventTrait
 {

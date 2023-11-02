@@ -1,7 +1,7 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Bot;
-use LbilTech\TelegramGitNotifier\Objects\Validator;
+use CSlant\TelegramGitNotifier\Bot;
+use CSlant\TelegramGitNotifier\Objects\Validator;
 
 beforeEach(function () {
     $this->bot = new Bot();
