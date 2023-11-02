@@ -42,11 +42,11 @@ class Notifier implements AppInterface, NotificationInterface, EventInterface
         $this->client = $client ?? new Client();
     }
 
-    public function parseNotifyChatIds(): array
+    public function parseNotifyChatIds(?string $chatIds = null): array
     {
         $chatData = explode(
             NotificationConstant::CHAT_ID_PAIRS_SEPARATOR,
-            config('telegram-git-notifier.bot.notify_chat_ids')
+            $chatIds ?? config('telegram-git-notifier.bot.notify_chat_ids')
         );
         $chatThreadMapping = [];
 
