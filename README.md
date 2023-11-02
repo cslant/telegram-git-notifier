@@ -10,7 +10,7 @@ and manage customization through messages and buttons on Telegram.
 </p>
 
 ![License](https://img.shields.io/github/license/lbiltech/telegram-git-notifier.svg?style=flat-square)
-[![Latest Version](https://img.shields.io/github/release/lbiltech/telegram-git-notifier.svg?style=flat-square)](https://github.com/lbiltech/telegram-git-notifier/releases)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/lbiltech/telegram-git-notifier.svg?style=flat-square)](https://packagist.org/lbiltech/telegram-git-notifier)
 [![Total Downloads](https://img.shields.io/packagist/dt/lbiltech/telegram-git-notifier.svg?style=flat-square)](https://packagist.org/packages/lbiltech/telegram-git-notifier)
 [![StyleCI](https://styleci.io/repos/683908657/shield)](https://styleci.io/repos/683908657)
 [![Quality Score](https://img.shields.io/scrutinizer/g/lbiltech/telegram-git-notifier.svg?style=flat-square)](https://scrutinizer-ci.com/g/lbiltech/telegram-git-notifier)
