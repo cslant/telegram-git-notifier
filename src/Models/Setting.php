@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Models;
+namespace CSlant\TelegramGitNotifier\Models;
 
-use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Constants\SettingConstant;
 
 class Setting
 {

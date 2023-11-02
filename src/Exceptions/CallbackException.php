@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Exceptions;
+namespace CSlant\TelegramGitNotifier\Exceptions;
 
 final class CallbackException extends TelegramGitNotifierException
 {

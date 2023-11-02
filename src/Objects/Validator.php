@@ -1,10 +1,10 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Objects;
+namespace CSlant\TelegramGitNotifier\Objects;
 
-use LbilTech\TelegramGitNotifier\Models\Event;
-use LbilTech\TelegramGitNotifier\Models\Setting;
-use LbilTech\TelegramGitNotifier\Trait\ActionEventTrait;
+use CSlant\TelegramGitNotifier\Models\Event;
+use CSlant\TelegramGitNotifier\Models\Setting;
+use CSlant\TelegramGitNotifier\Trait\ActionEventTrait;
 
 class Validator
 {

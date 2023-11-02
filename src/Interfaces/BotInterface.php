@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace CSlant\TelegramGitNotifier\Interfaces;
 
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 interface BotInterface
 {

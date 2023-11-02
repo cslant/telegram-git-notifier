@@ -1,19 +1,19 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier;
+namespace CSlant\TelegramGitNotifier;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Interfaces\BotInterface;
-use LbilTech\TelegramGitNotifier\Interfaces\EventInterface;
-use LbilTech\TelegramGitNotifier\Interfaces\SettingInterface;
-use LbilTech\TelegramGitNotifier\Interfaces\Structures\AppInterface;
-use LbilTech\TelegramGitNotifier\Models\Event;
-use LbilTech\TelegramGitNotifier\Models\Setting;
-use LbilTech\TelegramGitNotifier\Structures\App;
-use LbilTech\TelegramGitNotifier\Structures\TelegramBot;
-use LbilTech\TelegramGitNotifier\Trait\BotSettingTrait;
-use LbilTech\TelegramGitNotifier\Trait\EventSettingTrait;
-use LbilTech\TelegramGitNotifier\Trait\EventTrait;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Interfaces\BotInterface;
+use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
+use CSlant\TelegramGitNotifier\Interfaces\SettingInterface;
+use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
+use CSlant\TelegramGitNotifier\Models\Event;
+use CSlant\TelegramGitNotifier\Models\Setting;
+use CSlant\TelegramGitNotifier\Structures\App;
+use CSlant\TelegramGitNotifier\Structures\TelegramBot;
+use CSlant\TelegramGitNotifier\Trait\BotSettingTrait;
+use CSlant\TelegramGitNotifier\Trait\EventSettingTrait;
+use CSlant\TelegramGitNotifier\Trait\EventTrait;
 use Telegram;
 
 class Bot implements AppInterface, BotInterface, EventInterface, SettingInterface

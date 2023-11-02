@@ -1,9 +1,9 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Helpers;
+namespace CSlant\TelegramGitNotifier\Helpers;
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use Throwable;
 
 class ConfigHelper

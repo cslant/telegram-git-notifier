@@ -1,6 +1,6 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Notifier;
+use CSlant\TelegramGitNotifier\Notifier;
 
 beforeEach(function () {
     $this->nofitier = new Notifier();

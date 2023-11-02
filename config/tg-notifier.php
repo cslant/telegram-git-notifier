@@ -32,9 +32,9 @@ return [
 
         'author' => [
             'discussion'  => $_ENV['TGN_AUTHOR_DISCUSSION'] ??
-                'https://github.com/lbiltech/telegram-git-notifier/discussions',
+                'https://github.com/cslant/telegram-git-notifier/discussions',
             'source_code' => $_ENV['TGN_AUTHOR_SOURCE_CODE'] ??
-                'https://github.com/lbiltech/telegram-git-notifier',
+                'https://github.com/cslant/telegram-git-notifier',
         ],
 
         /** Set the path to the data file */

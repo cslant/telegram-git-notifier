@@ -1,9 +1,9 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Trait;
+namespace CSlant\TelegramGitNotifier\Trait;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Constants\SettingConstant;
 
 trait EventSettingTrait
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier;
+namespace CSlant\TelegramGitNotifier;
 
-use LbilTech\TelegramGitNotifier\Interfaces\WebhookInterface;
+use CSlant\TelegramGitNotifier\Interfaces\WebhookInterface;
 
 class Webhook implements WebhookInterface
 {

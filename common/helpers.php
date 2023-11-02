@@ -1,6 +1,6 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Helpers\ConfigHelper;
+use CSlant\TelegramGitNotifier\Helpers\ConfigHelper;
 
 if (!function_exists('tgn_singularity')) {
     /**

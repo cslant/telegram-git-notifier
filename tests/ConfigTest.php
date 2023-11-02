@@ -1,6 +1,6 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Bot;
+use CSlant\TelegramGitNotifier\Bot;
 
 beforeEach(function () {
     $this->bot = new Bot();

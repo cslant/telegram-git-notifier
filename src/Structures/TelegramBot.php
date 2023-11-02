@@ -1,6 +1,6 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Structures;
+namespace CSlant\TelegramGitNotifier\Structures;
 
 use Telegram;
 
