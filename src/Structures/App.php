@@ -2,9 +2,9 @@
 
 namespace CSlant\TelegramGitNotifier\Structures;
 
-use Exception;
 use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use Exception;
 use Telegram;
 
 trait App

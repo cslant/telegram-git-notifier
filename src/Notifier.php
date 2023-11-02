@@ -2,7 +2,6 @@
 
 namespace CSlant\TelegramGitNotifier;
 
-use GuzzleHttp\Client;
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Constants\NotificationConstant;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
@@ -12,6 +11,7 @@ use CSlant\TelegramGitNotifier\Models\Event;
 use CSlant\TelegramGitNotifier\Structures\App;
 use CSlant\TelegramGitNotifier\Structures\Notification;
 use CSlant\TelegramGitNotifier\Trait\EventTrait;
+use GuzzleHttp\Client;
 use Telegram;
 
 class Notifier implements AppInterface, NotificationInterface, EventInterface

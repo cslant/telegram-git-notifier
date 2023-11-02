@@ -2,10 +2,10 @@
 
 namespace CSlant\TelegramGitNotifier\Structures;
 
-use GuzzleHttp\Exception\GuzzleException;
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use CSlant\TelegramGitNotifier\Exceptions\SendNotificationException;
+use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Component\HttpFoundation\Request;
 
 trait Notification
