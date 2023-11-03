@@ -12,6 +12,8 @@ and manage customization through messages and buttons on Telegram.
 ![License](https://img.shields.io/github/license/cslant/telegram-git-notifier.svg?style=flat-square)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/cslant/telegram-git-notifier.svg?style=flat-square)](https://packagist.org/cslant/telegram-git-notifier)
 [![Total Downloads](https://img.shields.io/packagist/dt/cslant/telegram-git-notifier.svg?style=flat-square)](https://packagist.org/packages/cslant/telegram-git-notifier)
+![Test Status](https://img.shields.io/github/actions/workflow/status/cslant/telegram-git-notifier/setup_test.yml?label=tests&branch=main)
+![Code Style Status](https://img.shields.io/github/actions/workflow/status/cslant/telegram-git-notifier/php-cs-fixer.yml?label=code%20style&branch=main)
 [![StyleCI](https://styleci.io/repos/683908657/shield)](https://styleci.io/repos/683908657)
 [![Quality Score](https://img.shields.io/scrutinizer/g/cslant/telegram-git-notifier.svg?style=flat-square)](https://scrutinizer-ci.com/g/cslant/telegram-git-notifier)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b6f16164d55809d0918e/maintainability)](https://codeclimate.com/github/cslant/telegram-git-notifier/maintainability)
