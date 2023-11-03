@@ -2,6 +2,19 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.0 - 2023-11-03
+
+### ✨  New Release: Enhanced Features and Optimizations!
+
+We are thrilled to announce the latest release with several new features and improvements:
+
+- Bash **install.sh** Integration configuration files without navigating through complex installation steps. [d2982b1](https://github.com/cslant/telegram-git-notifier/commit/d2982b1cc4f3ae1a202a9cfab8dbdf443483bba9)
+- Codebase refactoring for cleaner, more intuitive structures. #21, #23
+- Integration of comprehensive test cases to ensure product reliability. #26
+- Incorporated extensive testing for multiple PHP versions, ensuring increased robustness and optimal compatibility across different PHP editions. #24
+- **chatIDs** Param for **Notifier**: Pass the chatIDs parameter when using the Notifier, allowing for more flexible and personalized notifications. #26
+- Update namespaces recent branding changes #27, [UPGRADING.md](https://github.com/cslant/telegram-git-notifier/blob/v1.3.0/UPGRADING.md)
+
 ## v1.2.0 - 2023-10-20
 
 - Add support for sending notifications in topics (threads in supergroups)
