@@ -12,7 +12,7 @@ json_files=(
 
 for file in "${json_files[@]}"; do
     if [ ! -f "storage/json/tgn/$file" ]; then
-        cp "./config/jsons/$file" "storage/json/tgn/$file"
+        cp "$(dirname "$0")/config/jsons/$file" "storage/json/tgn/$file"
         echo "Created storage/json/tgn/$file"
     fi
 done
