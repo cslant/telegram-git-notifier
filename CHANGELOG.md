@@ -2,6 +2,14 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.1 - 2023-11-03
+
+### 🔧 Improvements and Fixes
+
+In this release, we've made some important fixes that streamline the setup process and ensure a smoother experience for all users.
+
+- Automated Config Setup: Integration configuration files without navigating through complex installation steps. [c4b4187](https://github.com/cslant/telegram-git-notifier/commit/c4b41872e9b500c3a5cf1b51231b730ef1a49650)
+
 ## v1.3.0 - 2023-11-03
 
 ### ✨  New Release: Enhanced Features and Optimizations!
