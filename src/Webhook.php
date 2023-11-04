@@ -2,13 +2,23 @@
 
 namespace CSlant\TelegramGitNotifier;
 
+use CSlant\TelegramGitNotifier\Exceptions\WebhookException;
 use CSlant\TelegramGitNotifier\Interfaces\WebhookInterface;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 
 class Webhook implements WebhookInterface
 {
     private string $token;
 
     private string $url;
+
+    private Client $client;
+
+    public function __construct()
+    {
+        $this->client = new Client();
+    }
 
     public function setToken(string $token): void
     {
@@ -20,31 +30,51 @@ class Webhook implements WebhookInterface
         $this->url = $url;
     }
 
-    public function setWebhook(): false|string
+    public function setWebhook(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/setWebhook?url={$this->url}";
 
-        return file_get_contents($url);
+        try {
+            $response = $this->client->request('GET', $url);
+            return $response->getBody()->getContents();
+        } catch (GuzzleException) {
+            throw WebhookException::set();
+        }
     }
 
-    public function deleteWebHook(): false|string
+    public function deleteWebHook(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/deleteWebhook";
 
-        return file_get_contents($url);
+        try {
+            $response = $this->client->request('GET', $url);
+            return $response->getBody()->getContents();
+        } catch (GuzzleException) {
+            throw WebhookException::delete();
+        }
     }
 
-    public function getWebHookInfo(): false|string
+    public function getWebHookInfo(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/getWebhookInfo";
 
-        return file_get_contents($url);
+        try {
+            $response = $this->client->request('GET', $url);
+            return $response->getBody()->getContents();
+        } catch (GuzzleException) {
+            throw WebhookException::getWebHookInfo();
+        }
     }
 
-    public function getUpdates(): false|string
+    public function getUpdates(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/getUpdates";
 
-        return file_get_contents($url);
+        try {
+            $response = $this->client->request('GET', $url);
+            return $response->getBody()->getContents();
+        } catch (GuzzleException) {
+            throw WebhookException::getUpdates();
+        }
     }
 }
