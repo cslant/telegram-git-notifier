@@ -2,6 +2,12 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.2 - 2023-11-04
+
+### 🔧 Improvements and Fixes
+
+- Fixed helper function conflict with Laravel by ensuring config and view are not redefined if they already exist. #28
+
 ## v1.3.1 - 2023-11-03
 
 ### 🔧 Improvements and Fixes
