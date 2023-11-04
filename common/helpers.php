@@ -105,32 +105,38 @@ if (!function_exists('tgn_convert_action_name')) {
     }
 }
 
-if (!function_exists('config')) {
-    /**
-     * Return config value by string
-     *
-     * @param string $string
-     *
-     * @return mixed
-     */
-    function config(string $string): mixed
-    {
-        return (new ConfigHelper())->execConfig($string);
+if (!class_exists('Illuminate\Foundation\Application')) {
+    if (!function_exists('config')) {
+        /**
+         * Return config value by string
+         *
+         * @param string $string
+         *
+         * @return mixed
+         */
+        function config(string $string): mixed
+        {
+            return (new ConfigHelper())->execConfig($string);
+        }
     }
-}
 
-if (!function_exists('view')) {
-    /**
-     * Get view template
-     *
-     * @param string $partialPath
-     * @param array $data
-     *
-     * @return null|string
-     */
-    function view(string $partialPath, array $data = []): null|string
-    {
-        $content = (new ConfigHelper())->getTemplateData($partialPath, $data);
-        return $content ?: null;
+    if (!function_exists('view')) {
+        /**
+         * Get view template
+         *
+         * @param string $partialPath
+         * @param array $data
+         *
+         * @return null|string
+         */
+        function view(string $partialPath, array $data = []): null|string
+        {
+            $content = (new ConfigHelper())->getTemplateData(
+                $partialPath,
+                $data
+            );
+
+            return $content ?: null;
+        }
     }
 }
