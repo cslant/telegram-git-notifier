@@ -36,6 +36,7 @@ class Webhook implements WebhookInterface
 
         try {
             $response = $this->client->request('GET', $url);
+
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
             throw WebhookException::set();
@@ -48,6 +49,7 @@ class Webhook implements WebhookInterface
 
         try {
             $response = $this->client->request('GET', $url);
+
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
             throw WebhookException::delete();
@@ -60,6 +62,7 @@ class Webhook implements WebhookInterface
 
         try {
             $response = $this->client->request('GET', $url);
+
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
             throw WebhookException::getWebHookInfo();
@@ -72,6 +75,7 @@ class Webhook implements WebhookInterface
 
         try {
             $response = $this->client->request('GET', $url);
+
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
             throw WebhookException::getUpdates();
