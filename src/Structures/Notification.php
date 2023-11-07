@@ -94,11 +94,10 @@ trait Notification
                 return true;
             }
 
-            throw SendNotificationException::create();
+            $body = (string) $response->getBody();
+            throw SendNotificationException::create($body);
         } catch (GuzzleException $e) {
-            error_log($e->getMessage());
+            throw SendNotificationException::create($e->getMessage());
         }
-
-        return false;
     }
 }
