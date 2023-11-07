@@ -6,7 +6,7 @@ use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use Throwable;
 
-class ConfigHelper
+final class ConfigHelper
 {
     /**
      * @var array<string, mixed>

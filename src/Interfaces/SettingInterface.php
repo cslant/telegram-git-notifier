@@ -3,6 +3,7 @@
 namespace CSlant\TelegramGitNotifier\Interfaces;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Exceptions\BotException;
 use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use CSlant\TelegramGitNotifier\Trait\BotSettingTrait;
@@ -65,6 +66,7 @@ interface SettingInterface
      *
      * @return void
      * @throws InvalidViewTemplateException
+     * @throws BotException
      * @see EventSettingTrait::eventHandle()
      */
     public function eventHandle(?string $callback = null, ?string $platform = null, string $platformFile = null): void;
@@ -90,6 +92,7 @@ interface SettingInterface
      * @return bool
      * @see EventSettingTrait::sendSettingEventMessage()
      * @throws InvalidViewTemplateException
+     * @throws BotException
      */
     public function sendSettingEventMessage(string $platform, ?string $callback = null, ?string $view = null): bool;
 
@@ -113,6 +116,7 @@ interface SettingInterface
      * @return bool
      * @see EventSettingTrait::handleEventWithActions()
      * @throws InvalidViewTemplateException
+     * @throws BotException
      */
     public function handleEventWithActions(
         string $event,
@@ -129,6 +133,7 @@ interface SettingInterface
      *
      * @return void
      * @throws InvalidViewTemplateException
+     * @throws BotException
      * @see EventSettingTrait::handleEventUpdate()
      */
     public function handleEventUpdate(string $event, string $platform, string $platFormFile = null): void;
@@ -142,6 +147,7 @@ interface SettingInterface
      *
      * @return void
      * @throws InvalidViewTemplateException
+     * @throws BotException
      * @see EventSettingTrait::eventUpdateHandle()
      */
     public function eventUpdateHandle(string $event, string $platform, string $platFormFile = null): void;

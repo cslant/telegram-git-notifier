@@ -2,6 +2,8 @@
 
 namespace CSlant\TelegramGitNotifier\Interfaces\Structures;
 
+use CSlant\TelegramGitNotifier\Exceptions\BotException;
+use CSlant\TelegramGitNotifier\Exceptions\CallbackException;
 use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
@@ -35,12 +37,14 @@ interface AppInterface
      * Send callback response to telegram (show alert)
      *
      * @param string|null $text
+     * @param array $options
      *
      * @return void
      * @throws MessageIsEmptyException
+     * @throws CallbackException
      * @see App::answerCallbackQuery()
      */
-    public function answerCallbackQuery(string $text = null): void;
+    public function answerCallbackQuery(string $text = null, array $options = []): void;
 
     /**
      * Edit message text and reply markup
@@ -49,6 +53,7 @@ interface AppInterface
      * @param array $options
      *
      * @return void
+     * @throws BotException
      * @see App::editMessageText()
      */
     public function editMessageText(string $text = null, array $options = []): void;
@@ -59,6 +64,7 @@ interface AppInterface
      * @param array $options
      *
      * @return void
+     * @throws BotException
      * @see App::editMessageReplyMarkup()
      */
     public function editMessageReplyMarkup(array $options = []): void;
