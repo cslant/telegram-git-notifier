@@ -3,6 +3,7 @@
 namespace CSlant\TelegramGitNotifier;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\BotInterface;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
 use CSlant\TelegramGitNotifier\Interfaces\SettingInterface;
@@ -29,6 +30,17 @@ class Bot implements AppInterface, BotInterface, EventInterface, SettingInterfac
 
     public Setting $setting;
 
+    /**
+     * @param Telegram|null $telegram
+     * @param string|null $chatBotId
+     * @param Event|null $event
+     * @param string|null $platform
+     * @param string|null $platformFile
+     * @param Setting|null $setting
+     * @param string|null $settingFile
+     *
+     * @throws ConfigFileException
+     */
     public function __construct(
         Telegram $telegram = null,
         ?string $chatBotId = null,
@@ -38,12 +50,22 @@ class Bot implements AppInterface, BotInterface, EventInterface, SettingInterfac
         Setting $setting = null,
         ?string $settingFile = null,
     ) {
-        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
-        $this->setCurrentChatBotId($chatBotId);
         $this->event = $event ?? new Event();
         $this->setPlatFormForEvent($platform, $platformFile);
+        $this->validatePlatformFile();
 
         $this->setting = $setting ?? new Setting();
         $this->updateSetting($settingFile);
+        $this->validateSettingFile();
+
+        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
+        $this->setCurrentChatBotId($chatBotId);
+    }
+
+    public function validateSettingFile(): void
+    {
+        if (empty($this->setting->getSettingFile())) {
+            throw ConfigFileException::settingFile($this->setting->getSettingFile());
+        }
     }
 }

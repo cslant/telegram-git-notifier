@@ -3,13 +3,14 @@
 namespace CSlant\TelegramGitNotifier\Trait;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use Symfony\Component\HttpFoundation\Request;
 
 trait EventTrait
 {
     use ActionEventTrait;
 
-    public function setPlatFormForEvent(?string $platform = EventConstant::DEFAULT_PLATFORM, string $platformFile = null): void
+    public function setPlatFormForEvent(?string $platform = EventConstant::DEFAULT_PLATFORM, ?string $platformFile = null): void
     {
         /** @var array $platformFileDefaults<platform, platformFile> */
         $platformFileDefaults = config('telegram-git-notifier.data_file.platform');
@@ -30,5 +31,15 @@ trait EventTrait
         }
 
         return null;
+    }
+
+    public function validatePlatformFile(): void
+    {
+        if (empty($this->event->getEventConfig())) {
+            throw ConfigFileException::platformFile(
+                $this->event->platform,
+                $this->event->getPlatformFile()
+            );
+        }
     }
 }
