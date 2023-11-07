@@ -2,6 +2,8 @@
 
 namespace CSlant\TelegramGitNotifier\Structures;
 
+use CSlant\TelegramGitNotifier\Exceptions\BotException;
+use CSlant\TelegramGitNotifier\Exceptions\CallbackException;
 use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use Exception;
@@ -76,7 +78,7 @@ trait App
             ], $options);
             $this->telegram->answerCallbackQuery($options);
         } catch (Exception $e) {
-            error_log("Error answering callback query: " . $e->getMessage());
+            throw CallbackException::answer($e);
         }
     }
 
@@ -91,7 +93,7 @@ trait App
 
             $this->telegram->editMessageText($content);
         } catch (Exception $e) {
-            error_log($e->getMessage());
+            throw BotException::editMessageText($e);
         }
     }
 
@@ -102,7 +104,7 @@ trait App
                 $this->setCallbackContentMessage($options)
             );
         } catch (Exception $e) {
-            error_log($e->getMessage());
+            throw BotException::editMessageReplyMarkup($e);
         }
     }
 

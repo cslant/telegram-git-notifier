@@ -2,15 +2,12 @@
 
 namespace CSlant\TelegramGitNotifier\Exceptions;
 
+use Exception;
+
 final class CallbackException extends TelegramGitNotifierException
 {
-    public static function isEmpty(): self
+    public static function answer(Exception $exception): self
     {
-        return new self('Callback is empty');
-    }
-
-    public static function invalid(): self
-    {
-        return new self('Callback is invalid');
+        return new self('Error answering callback query: ' . $exception->getMessage());
     }
 }
