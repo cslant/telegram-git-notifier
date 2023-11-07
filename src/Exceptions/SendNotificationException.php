@@ -4,8 +4,8 @@ namespace CSlant\TelegramGitNotifier\Exceptions;
 
 final class SendNotificationException extends TelegramGitNotifierException
 {
-    public static function create(): self
+    public static function create(?string $exception = null): self
     {
-        return new self('Can\'t send notification');
+        return new self('Can\'t send notification. ' . ($exception ?? ''));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace CSlant\TelegramGitNotifier\Interfaces;
 
+use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 interface BotInterface
@@ -46,4 +47,10 @@ interface BotInterface
      * @return bool
      */
     public function isNotifyChat(): bool;
+
+    /**
+     * @return void
+     * @throws ConfigFileException
+     */
+    public function validateSettingFile(): void;
 }
