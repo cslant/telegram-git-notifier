@@ -95,6 +95,7 @@ trait Notification
             }
 
             $body = (string) $response->getBody();
+
             throw SendNotificationException::create($body);
         } catch (GuzzleException $e) {
             throw SendNotificationException::create($e->getMessage());
