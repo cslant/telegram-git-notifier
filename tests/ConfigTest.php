@@ -37,3 +37,17 @@ it('can get json config for event - gitlab', function () {
     expect($this->bot->event->getEventConfig())->toBeArray();
     expect($this->bot->event->getEventConfig())->toHaveKey('tag_push');
 });
+
+it('setting file is valid', function () {
+    $this->bot->updateSetting();
+    $this->bot->validateSettingFile();
+
+    expect($this->bot->setting->getSettings())->toBeArray();
+});
+
+it('platform file is valid', function () {
+    $this->bot->setPlatFormForEvent();
+    $this->bot->validatePlatformFile();
+
+    expect($this->bot->event->getEventConfig())->toBeArray();
+});

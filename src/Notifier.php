@@ -4,6 +4,7 @@ namespace CSlant\TelegramGitNotifier;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Constants\NotificationConstant;
+use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
 use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use CSlant\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
@@ -25,6 +26,16 @@ class Notifier implements AppInterface, NotificationInterface, EventInterface
 
     public Client $client;
 
+    /**
+     * @param Telegram|null $telegram
+     * @param string|null $chatBotId
+     * @param Event|null $event
+     * @param string|null $platform
+     * @param string|null $platformFile
+     * @param Client|null $client
+     *
+     * @throws ConfigFileException
+     */
     public function __construct(
         Telegram $telegram = null,
         ?string $chatBotId = null,
@@ -33,11 +44,12 @@ class Notifier implements AppInterface, NotificationInterface, EventInterface
         ?string $platformFile = null,
         Client $client = null,
     ) {
-        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
-        $this->setCurrentChatBotId($chatBotId);
-
         $this->event = $event ?? new Event();
         $this->setPlatFormForEvent($platform, $platformFile);
+        $this->validatePlatformFile();
+
+        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
+        $this->setCurrentChatBotId($chatBotId);
 
         $this->client = $client ?? new Client();
     }
