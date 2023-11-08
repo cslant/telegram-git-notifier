@@ -2,6 +2,17 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.3 - 2023-11-08
+
+### 📝 What's Changed
+
+- Enhanced Exception Handling: We've expanded our exception handling to give you clearer insights into what's going wrong and why. (#29, #30)
+- Config File Integrity Checks: To ensure the integrity and reliability of your notification system. (#29)
+
+### 🔧 Improvements and Fixes
+
+- Fixed some functions that conflict with Laravel framework.([b41efea](https://github.com/cslant/telegram-git-notifier/commit/b41efea3320edd1f3bdec75247ea0e67c4987916))
+
 ## v1.3.2 - 2023-11-04
 
 ### 🔧 Improvements and Fixes
