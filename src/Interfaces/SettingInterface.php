@@ -62,14 +62,13 @@ interface SettingInterface
      *
      * @param string|null $callback
      * @param string|null $platform
-     * @param string|null $platformFile
      *
      * @return void
      * @throws InvalidViewTemplateException
      * @throws BotException
      * @see EventSettingTrait::eventHandle()
      */
-    public function eventHandle(?string $callback = null, ?string $platform = null, string $platformFile = null): void;
+    public function eventHandle(?string $callback = null, ?string $platform = null): void;
 
     /**
      * Get the platform from callback
@@ -129,28 +128,26 @@ interface SettingInterface
      *
      * @param string $event
      * @param string $platform
-     * @param string|null $platFormFile
      *
      * @return void
      * @throws InvalidViewTemplateException
      * @throws BotException
      * @see EventSettingTrait::handleEventUpdate()
      */
-    public function handleEventUpdate(string $event, string $platform, string $platFormFile = null): void;
+    public function handleEventUpdate(string $event, string $platform): void;
 
     /**
      * Handle event update
      *
      * @param string $event
      * @param string $platform
-     * @param string|null $platFormFile
      *
      * @return void
      * @throws InvalidViewTemplateException
      * @throws BotException
      * @see EventSettingTrait::eventUpdateHandle()
      */
-    public function eventUpdateHandle(string $event, string $platform, string $platFormFile = null): void;
+    public function eventUpdateHandle(string $event, string $platform): void;
 
     /**
      * Send a setting message

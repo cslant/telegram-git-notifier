@@ -98,8 +98,7 @@ trait EventSettingTrait
 
     public function eventHandle(
         ?string $callback = null,
-        ?string $platform = null,
-        ?string $platFormFile = null
+        ?string $platform = null
     ): void {
         $platform = $this->getPlatformFromCallback($callback, $platform);
 
@@ -113,7 +112,7 @@ trait EventSettingTrait
             return;
         }
 
-        $this->handleEventUpdate($event, $platform, $platFormFile);
+        $this->handleEventUpdate($event, $platform);
     }
 
     public function getPlatformFromCallback(
@@ -196,8 +195,7 @@ trait EventSettingTrait
 
     public function handleEventUpdate(
         string $event,
-        string $platform,
-        string $platFormFile = null
+        string $platform
     ): void {
         if (str_contains($event, EventConstant::EVENT_UPDATE_SEPARATOR)) {
             $event = str_replace(
@@ -205,14 +203,13 @@ trait EventSettingTrait
                 '',
                 $event
             );
-            $this->eventUpdateHandle($event, $platform, $platFormFile);
+            $this->eventUpdateHandle($event, $platform);
         }
     }
 
     public function eventUpdateHandle(
         string $event,
-        string $platform,
-        string $platFormFile = null
+        string $platform
     ): void {
         if (str_contains($event, '.')) {
             [$event, $action] = explode('.', $event);
