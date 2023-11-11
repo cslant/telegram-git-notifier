@@ -2,6 +2,12 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.4 - 2023-11-11
+
+### 🔧 Improvements and Fixes
+
+- Fixed the error with the function view if need to use namespace in the Laravel package #31
+
 ## v1.3.3 - 2023-11-08
 
 ### 📝 What's Changed
