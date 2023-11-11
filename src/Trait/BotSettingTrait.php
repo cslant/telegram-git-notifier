@@ -24,7 +24,7 @@ trait BotSettingTrait
             'commands' => json_encode($menuCommand),
         ]);
         $this->sendMessage(
-            view(
+            tgn_view(
                 $view ??
                 config('telegram-git-notifier.view.tools.set_menu_cmd')
             )
@@ -34,7 +34,7 @@ trait BotSettingTrait
     public function settingHandle(?string $view = null): void
     {
         $this->sendMessage(
-            view($view ?? config('telegram-git-notifier.view.tools.settings')),
+            tgn_view($view ?? config('telegram-git-notifier.view.tools.settings')),
             ['reply_markup' => $this->settingMarkup()]
         );
     }

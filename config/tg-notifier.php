@@ -52,6 +52,8 @@ return [
 
         /** Set the path to the view file */
         'view' => [
+            'namespace' => ($_ENV['TGN_VIEW_NAMESPACE'] ?? 'tg-notifier'),
+
             'path' => $_ENV['TGN_VIEW_PATH'] ??
                 'resources/views',
 

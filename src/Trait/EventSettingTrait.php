@@ -143,7 +143,7 @@ trait EventSettingTrait
             || !$callback
         ) {
             $this->editMessageText(
-                view(
+                tgn_view(
                     $view ?? config('telegram-git-notifier.view.tools.custom_event'),
                     compact('platform')
                 ),
@@ -181,7 +181,7 @@ trait EventSettingTrait
                 $event
             );
             $this->editMessageText(
-                view(
+                tgn_view(
                     $view ?? config('telegram-git-notifier.view.tools.custom_event_action'),
                     compact('event', 'platform')
                 ),

@@ -20,7 +20,7 @@ trait Notification
     ): void {
         $this->telegram->sendMessage([
             'chat_id' => $this->chatBotId,
-            'text' => view(
+            'text' => tgn_view(
                 $viewTemplate ?? config('telegram-git-notifier.view.globals.access_denied'),
                 ['chatId' => $chatId]
             ),
@@ -65,7 +65,7 @@ trait Notification
             ? "events.{$this->event->platform}.{$event}.default"
             : "events.{$this->event->platform}.{$event}.{$action}";
 
-        $viewResult = view($viewTemplate, [
+        $viewResult = tgn_view($viewTemplate, [
             'payload' => $this->payload,
             'event' => tgn_convert_event_name($typeEvent),
         ]);
