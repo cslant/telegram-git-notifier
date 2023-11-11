@@ -52,6 +52,9 @@ return [
 
         /** Set the path to the view file */
         'view' => [
+            'namespace' => ($_ENV['TGN_VIEW_NAMESPACE'] ??
+                    'telegram-git-notifier') . '::',
+
             'path' => $_ENV['TGN_VIEW_PATH'] ??
                 'resources/views',
 

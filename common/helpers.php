@@ -140,3 +140,24 @@ if (!class_exists('Illuminate\Foundation\Application')) {
         }
     }
 }
+
+if (!function_exists('tgn_view')) {
+    /**
+     * Get view template
+     *
+     * @param string $partialPath
+     * @param array $data
+     *
+     * @return null|string
+     */
+    function tgn_view(string $partialPath, array $data = []): null|string
+    {
+        if (class_exists('Illuminate\Foundation\Application')) {
+            $partialPath = config('telegram-git-notifier.view.namespace') . $partialPath;
+        }
+
+        $content = view($partialPath, $data);
+
+        return $content ?: null;
+    }
+}
