@@ -148,16 +148,14 @@ if (!function_exists('tgn_view')) {
      * @param string $partialPath
      * @param array $data
      *
-     * @return null|string
+     * @noinspection PhpMissingReturnTypeInspection
      */
-    function tgn_view(string $partialPath, array $data = []): null|string
+    function tgn_view(string $partialPath, array $data = [])
     {
         if (class_exists('Illuminate\Foundation\Application')) {
             $partialPath = config('telegram-git-notifier.view.namespace') . '::' . $partialPath;
         }
 
-        $content = view($partialPath, $data);
-
-        return $content ?: null;
+        return view($partialPath, $data);
     }
 }
