@@ -52,6 +52,8 @@ return [
 
         /** Set the path to the view file */
         'view' => [
+            'ignore-message' => $_ENV['IGNORE_MESSAGE'] ?? 'ignore-message',
+
             'namespace' => ($_ENV['TGN_VIEW_NAMESPACE'] ?? 'tg-notifier'),
 
             'path' => $_ENV['TGN_VIEW_PATH'] ??
