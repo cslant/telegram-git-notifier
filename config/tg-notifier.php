@@ -16,12 +16,12 @@ return [
             'chat_id'         => $_ENV['TELEGRAM_BOT_CHAT_ID'] ?? '',
 
             /**
-             * Set the chat ids that will receive notifications
-             * You can add the owner bot id, group id, ...
+             * Set the chat IDs that will receive notifications
+             * You can add the owner bot ID, group ID, ...
              * -------------------------------------------------------
              * Note:
              * Please use semicolon ";" to separate chat ids
-             * And use colon ":" to separate chat id and thread id
+             * And use a colon ":" to separate chat ID and thread ID
              * And use comma "," if you want to add multiple thread ids
              * -------------------------------------------------------
              * The environment variable is expected to be in the format:
@@ -52,12 +52,12 @@ return [
 
         /** Set the path to the view file */
         'view' => [
-            'ignore-message' => $_ENV['IGNORE_MESSAGE'] ?? 'ignore-message',
-
-            'namespace' => ($_ENV['TGN_VIEW_NAMESPACE'] ?? 'tg-notifier'),
+            'namespace' => $_ENV['TGN_VIEW_NAMESPACE'] ?? 'tg-notifier',
 
             'path' => $_ENV['TGN_VIEW_PATH'] ??
                 'resources/views',
+
+            'ignore-message' => $_ENV['IGNORE_MESSAGE'] ?? 'ignore-message',
 
             'event' => [
                 'default' => $_ENV['TGN_VIEW_EVENT_DEFAULT'] ?? 'default',
