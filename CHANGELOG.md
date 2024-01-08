@@ -2,6 +2,21 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.5 - 2023-12-03
+
+### ✨ New Features:
+
+- Allows adding ignore message string to view files to prevent sending notifications. (https://github.com/cslant/telegram-git-notifier/pull/35)
+
+### 📝 What's Changed
+
+- Optimize: Remove redundant param in setting event
+- Change the return type for view function of core
+
+### ✍ New Contributors
+
+- @pxthinh made their first contribution in https://github.com/cslant/telegram-git-notifier/pull/35
+
 ## v1.3.4 - 2023-11-11
 
 ### 🔧 Improvements and Fixes

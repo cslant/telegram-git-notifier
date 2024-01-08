@@ -6,7 +6,7 @@ you can create a Telegram bot to receive notifications from GitHub or GitLab eve
 and manage customization through messages and buttons on Telegram.
 
 <p align="center">
-  <img alt="Telegram git notifier core" src="https://github.com/cslant/telegram-git-notifier/assets/35853002/193e523b-4654-4f61-aaf4-5b6d106b67e3" />
+  <img alt="Telegram git notifier core" src="https://github.com/cslant/telegram-git-notifier/assets/35853002/d731d731-3c32-40a7-80d2-b079d7f1de6c" />
 </p>
 
 ![License](https://img.shields.io/github/license/cslant/telegram-git-notifier.svg?style=flat-square)

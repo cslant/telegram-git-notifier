@@ -81,6 +81,10 @@ trait Notification
     {
         $this->message = !empty($message) ? $message : $this->message;
 
+        if (trim($this->message) === config('telegram-git-notifier.view.ignore-message')) {
+            return false;
+        }
+
         $queryParams = array_merge($this->createTelegramBaseContent(), ['text' => $this->message], $options);
 
         $url = 'https://api.telegram.org/bot' . config('telegram-git-notifier.bot.token') . '/sendMessage';
