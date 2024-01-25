@@ -33,9 +33,12 @@ class Webhook implements WebhookInterface
     public function setWebhook(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/setWebhook?url={$this->url}";
+        $options = [
+            'verify' => config('telegram-git-notifier.app.request_verify'),
+        ];
 
         try {
-            $response = $this->client->request('GET', $url);
+            $response = $this->client->request('GET', $url, $options);
 
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
@@ -46,9 +49,12 @@ class Webhook implements WebhookInterface
     public function deleteWebHook(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/deleteWebhook";
+        $options = [
+            'verify' => config('telegram-git-notifier.app.request_verify'),
+        ];
 
         try {
-            $response = $this->client->request('GET', $url);
+            $response = $this->client->request('GET', $url, $options);
 
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
@@ -59,9 +65,12 @@ class Webhook implements WebhookInterface
     public function getWebHookInfo(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/getWebhookInfo";
+        $options = [
+            'verify' => config('telegram-git-notifier.app.request_verify'),
+        ];
 
         try {
-            $response = $this->client->request('GET', $url);
+            $response = $this->client->request('GET', $url, $options);
 
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
@@ -72,9 +81,12 @@ class Webhook implements WebhookInterface
     public function getUpdates(): string
     {
         $url = "https://api.telegram.org/bot{$this->token}/getUpdates";
+        $options = [
+            'verify' => config('telegram-git-notifier.app.request_verify'),
+        ];
 
         try {
-            $response = $this->client->request('GET', $url);
+            $response = $this->client->request('GET', $url, $options);
 
             return $response->getBody()->getContents();
         } catch (GuzzleException) {
