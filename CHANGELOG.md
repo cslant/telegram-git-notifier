@@ -2,6 +2,18 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.6 - 2024-01-25
+
+### What's Changed
+
+* feat: add request_verify  fro `Client Request` to work correctly on window and linux by @LuongTienThinh in https://github.com/cslant/telegram-git-notifier/pull/38
+
+### New Contributors
+
+* @LuongTienThinh made their first contribution in https://github.com/cslant/telegram-git-notifier/pull/38
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.3.5...v1.3.6
+
 ## v1.3.5 - 2023-12-03
 
 ### ✨ New Features:
