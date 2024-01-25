@@ -34,7 +34,7 @@ class Webhook implements WebhookInterface
     {
         $url = "https://api.telegram.org/bot{$this->token}/setWebhook?url={$this->url}";
         $options = [
-            'verify' => config('telegram-git-notifier.app.verify_system'),
+            'verify' => config('telegram-git-notifier.app.request_verify'),
         ];
 
         try {
@@ -50,7 +50,7 @@ class Webhook implements WebhookInterface
     {
         $url = "https://api.telegram.org/bot{$this->token}/deleteWebhook";
         $options = [
-            'verify' => config('telegram-git-notifier.app.verify_system'),
+            'verify' => config('telegram-git-notifier.app.request_verify'),
         ];
 
         try {
@@ -66,7 +66,7 @@ class Webhook implements WebhookInterface
     {
         $url = "https://api.telegram.org/bot{$this->token}/getWebhookInfo";
         $options = [
-            'verify' => config('telegram-git-notifier.app.verify_system'),
+            'verify' => config('telegram-git-notifier.app.request_verify'),
         ];
 
         try {
@@ -82,7 +82,7 @@ class Webhook implements WebhookInterface
     {
         $url = "https://api.telegram.org/bot{$this->token}/getUpdates";
         $options = [
-            'verify' => config('telegram-git-notifier.app.verify_system'),
+            'verify' => config('telegram-git-notifier.app.request_verify'),
         ];
 
         try {
