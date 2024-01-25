@@ -90,9 +90,12 @@ trait Notification
         $url = 'https://api.telegram.org/bot' . config('telegram-git-notifier.bot.token') . '/sendMessage';
 
         try {
-            $response = $this->client->request('POST', $url, [
+            $options = [
                 'form_params' => $queryParams,
-            ]);
+                'verify' => config('telegram-git-notifier.app.request_verify'),
+            ];
+
+            $response = $this->client->request('POST', $url, $options);
 
             if ($response->getStatusCode() === 200) {
                 return true;
