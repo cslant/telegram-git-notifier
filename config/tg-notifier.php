@@ -9,6 +9,8 @@ return [
             'url'      => $_ENV['TGN_APP_URL'] ?? 'http://localhost:3000',
 
             'timezone' => $_ENV['TIMEZONE'] ?? 'Asia/Ho_Chi_Minh',
+
+            'verify_system' => $_ENV['VERIFY_SYSTEM'] ?? 'true',
         ],
 
         'bot' => [
