@@ -10,7 +10,7 @@ return [
 
             'timezone' => $_ENV['TIMEZONE'] ?? 'Asia/Ho_Chi_Minh',
 
-            'request_verify' => $_ENV['TGN_REQUEST_VERIFY'] ?? 'true',
+            'request_verify' => $_ENV['TGN_REQUEST_VERIFY'] ?? false,
         ],
 
         'bot' => [
