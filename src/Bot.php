@@ -5,9 +5,6 @@ namespace CSlant\TelegramGitNotifier;
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\BotInterface;
-use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
-use CSlant\TelegramGitNotifier\Interfaces\SettingInterface;
-use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use CSlant\TelegramGitNotifier\Models\Event;
 use CSlant\TelegramGitNotifier\Models\Setting;
 use CSlant\TelegramGitNotifier\Structures\App;
@@ -17,7 +14,7 @@ use CSlant\TelegramGitNotifier\Trait\EventSettingTrait;
 use CSlant\TelegramGitNotifier\Trait\EventTrait;
 use Telegram;
 
-class Bot implements AppInterface, BotInterface, EventInterface, SettingInterface
+class Bot implements BotInterface
 {
     use App;
     use TelegramBot;

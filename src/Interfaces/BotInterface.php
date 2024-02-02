@@ -4,8 +4,9 @@ namespace CSlant\TelegramGitNotifier\Interfaces;
 
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 
-interface BotInterface
+interface BotInterface extends AppInterface, EventInterface, SettingInterface
 {
     /**
      * Set the menu button for a telegram

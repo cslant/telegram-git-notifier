@@ -6,7 +6,6 @@ use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Constants\NotificationConstant;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
-use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 use CSlant\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
 use CSlant\TelegramGitNotifier\Models\Event;
 use CSlant\TelegramGitNotifier\Structures\App;
@@ -15,7 +14,7 @@ use CSlant\TelegramGitNotifier\Trait\EventTrait;
 use GuzzleHttp\Client;
 use Telegram;
 
-class Notifier implements AppInterface, NotificationInterface, EventInterface
+class Notifier implements NotificationInterface, EventInterface
 {
     use App;
     use Notification;
