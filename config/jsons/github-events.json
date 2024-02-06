@@ -128,5 +128,6 @@
     "requested": false,
     "in_progress": true,
     "completed": true
-  }
+  },
+  "delete": true
 }
