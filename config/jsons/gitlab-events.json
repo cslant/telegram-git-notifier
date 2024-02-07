@@ -32,6 +32,7 @@
   "feature_flag": false,
   "release": {
     "create": true,
-    "update": false
+    "update": false,
+    "delete": true
   }
 }

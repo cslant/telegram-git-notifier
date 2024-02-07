@@ -7,7 +7,7 @@ use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use CSlant\TelegramGitNotifier\Exceptions\SendNotificationException;
 use Symfony\Component\HttpFoundation\Request;
 
-interface NotificationInterface
+interface NotificationInterface extends AppInterface
 {
     /**
      * Notify access denied to other chat ids
