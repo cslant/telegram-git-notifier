@@ -129,5 +129,7 @@
     "in_progress": true,
     "completed": true
   },
-  "delete": true
+  "meta": {
+    "delete": true
+  }
 }
