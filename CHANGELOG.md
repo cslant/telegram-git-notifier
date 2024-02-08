@@ -2,6 +2,19 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.7 - 2024-02-08
+
+### What's Changed
+
+* Update config & package by @tanhongit in https://github.com/cslant/telegram-git-notifier/pull/39
+* add config for sent delete event by @avaelo in https://github.com/cslant/telegram-git-notifier/pull/40
+
+### New Contributors
+
+* @avaelo made their first contribution in https://github.com/cslant/telegram-git-notifier/pull/40
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.3.6...v1.3.7
+
 ## v1.3.6 - 2024-01-25
 
 ### What's Changed
