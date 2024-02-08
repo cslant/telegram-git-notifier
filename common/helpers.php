@@ -34,7 +34,6 @@ if (!function_exists('tgn_singularity')) {
             '/([^f])ves$/i' => '$1fe',
             '/(^analy)ses$/i' => '$1sis',
             '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i' => '$1$2sis',
-            '/([ti])a$/i' => '$1um',
             '/(n)ews$/i' => '$1ews',
             '/(.)s$/i' => '$1',
         ];
