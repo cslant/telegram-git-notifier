@@ -113,10 +113,10 @@
   },
   "star": {
     "created": true,
-    "deleted": false
+    "deleted": true
   },
   "watch": {
-    "started": true
+    "started": false
   },
   "workflow_job": {
     "queued": false,
