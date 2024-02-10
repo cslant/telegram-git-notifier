@@ -2,6 +2,18 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.8 - 2024-02-10
+
+### What's Changed
+
+* fix duplicate notification of star event by @kenautomus in https://github.com/cslant/telegram-git-notifier/pull/41
+
+### New Contributors
+
+* @kenautomus made their first contribution in https://github.com/cslant/telegram-git-notifier/pull/41
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.3.7...v1.3.8
+
 ## v1.3.7 - 2024-02-08
 
 ### What's Changed
