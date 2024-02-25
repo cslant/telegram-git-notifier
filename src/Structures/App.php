@@ -1,83 +1,84 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Services;
+namespace CSlant\TelegramGitNotifier\Structures;
 
+use CSlant\TelegramGitNotifier\Exceptions\BotException;
+use CSlant\TelegramGitNotifier\Exceptions\CallbackException;
+use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use Exception;
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
-use LbilTech\TelegramGitNotifier\Interfaces\AppInterface;
 use Telegram;
 
-class AppService implements AppInterface
+trait App
 {
     public Telegram $telegram;
 
-    public string $chatId;
+    public string $chatBotId;
 
-    public function __construct(Telegram $telegram = null)
+    public function setCurrentChatBotId(string $chatBotId = null): void
     {
-        $this->telegram = $telegram ?? new Telegram(config('telegram-git-notifier.bot.token'));
+        $this->chatBotId = $chatBotId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
-    public function setCurrentChatId(string $chatId = null): void
-    {
-        $this->chatId = $chatId ?? config('telegram-git-notifier.bot.chat_id');
-    }
-
-    private function createBaseContent(): array
+    private function createTelegramBaseContent(): array
     {
         return [
-            'chat_id'                  => $this->chatId,
+            'chat_id' => $this->chatBotId,
             'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML'
+            'parse_mode' => 'HTML',
         ];
     }
 
-    public function sendMessage(string $message = '', array $options = []): void
+    public function sendMessage(?string $message = '', array $options = []): void
     {
         if (empty($message)) {
             throw MessageIsEmptyException::create();
         }
 
-        $content = $this->createBaseContent();
+        $content = $this->createTelegramBaseContent();
         $content['text'] = $message;
 
         if (!empty($options['reply_markup'])) {
             $content['reply_markup'] = $this->telegram->buildInlineKeyBoard(
                 $options['reply_markup']
             );
+            unset($options['reply_markup']);
         }
+
+        $content = $content + $options;
 
         $this->telegram->sendMessage($content);
     }
 
-    public function sendPhoto(string $photo = '', string $caption = ''): void
+    public function sendPhoto(string $photo = '', array $options = []): void
     {
         if (empty($photo)) {
             throw EntryNotFoundException::fileNotFound();
         }
 
-        $content = $this->createBaseContent();
+        $content = $this->createTelegramBaseContent();
         $content['photo'] = curl_file_create($photo);
-        $content['caption'] = $caption;
+
+        $content = $content + $options;
 
         $this->telegram->sendPhoto($content);
     }
 
-    public function answerCallbackQuery(string $text = null): void
+    public function answerCallbackQuery(string $text = null, array $options = []): void
     {
         if (empty($text)) {
             throw MessageIsEmptyException::create();
         }
 
         try {
-            $this->telegram->answerCallbackQuery([
+            $options = array_merge([
                 'callback_query_id' => $this->telegram->Callback_ID(),
-                'text'              => $text,
-                'show_alert'        => true
-            ]);
+                'text' => $text,
+                'show_alert' => true,
+            ], $options);
+            $this->telegram->answerCallbackQuery($options);
         } catch (Exception $e) {
-            error_log("Error answering callback query: " . $e->getMessage());
+            throw CallbackException::answer($e);
         }
     }
 
@@ -87,12 +88,12 @@ class AppService implements AppInterface
     ): void {
         try {
             $content = array_merge([
-                'text' => $text ?? $this->getCallbackTextMessage()
+                'text' => $text ?? $this->getCallbackTextMessage(),
             ], $this->setCallbackContentMessage($options));
 
             $this->telegram->editMessageText($content);
         } catch (Exception $e) {
-            error_log($e->getMessage());
+            throw BotException::editMessageText($e);
         }
     }
 
@@ -103,7 +104,7 @@ class AppService implements AppInterface
                 $this->setCallbackContentMessage($options)
             );
         } catch (Exception $e) {
-            error_log($e->getMessage());
+            throw BotException::editMessageReplyMarkup($e);
         }
     }
 
@@ -115,10 +116,10 @@ class AppService implements AppInterface
     public function setCallbackContentMessage(array $options = []): array
     {
         $content = [
-            'chat_id'                  => $this->telegram->Callback_ChatID(),
-            'message_id'               => $this->telegram->MessageID(),
+            'chat_id' => $this->telegram->Callback_ChatID(),
+            'message_id' => $this->telegram->MessageID(),
             'disable_web_page_preview' => true,
-            'parse_mode'               => 'HTML',
+            'parse_mode' => 'HTML',
         ];
 
         $content['reply_markup'] = $options['reply_markup']
@@ -136,6 +137,7 @@ class AppService implements AppInterface
     public function getCommandMessage(): string
     {
         $text = $this->telegram->Text();
+
         return str_replace('@' . $this->getBotName(), '', $text);
     }
 }

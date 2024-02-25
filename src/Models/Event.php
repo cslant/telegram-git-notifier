@@ -1,12 +1,12 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Models;
+namespace CSlant\TelegramGitNotifier\Models;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
 
 class Event
 {
-    public array $eventConfig = [];
+    private array $eventConfig = [];
 
     public string $platform = EventConstant::DEFAULT_PLATFORM;
 
@@ -31,19 +31,30 @@ class Event
     }
 
     /**
+     * @return array
+     */
+    public function getEventConfig(): array
+    {
+        return $this->eventConfig;
+    }
+
+    /**
      * Set event config
      *
-     * @param string $platform
+     * @param string|null $platform
      *
      * @return void
      */
     public function setEventConfig(
-        string $platform = EventConstant::DEFAULT_PLATFORM
+        string $platform = null
     ): void {
-        $this->platform = $platform;
+        $this->platform = $platform ?? EventConstant::DEFAULT_PLATFORM;
 
         $json = file_get_contents($this->platformFile);
-        $this->eventConfig = json_decode($json, true);
+
+        if (!empty($json)) {
+            $this->eventConfig = json_decode($json, true);
+        }
     }
 
     /**

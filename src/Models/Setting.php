@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Models;
+namespace CSlant\TelegramGitNotifier\Models;
 
-use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Constants\SettingConstant;
 
 class Setting
 {
@@ -44,7 +44,10 @@ class Setting
     public function setSettingConfig(): void
     {
         $json = file_get_contents($this->settingFile);
-        $this->settings = json_decode($json, true);
+
+        if (!empty($json)) {
+            $this->settings = json_decode($json, true);
+        }
     }
 
     /**
@@ -62,6 +65,8 @@ class Setting
     }
 
     /**
+     * Condition for checking the notification status
+     *
      * @return bool
      */
     public function isNotified(): bool
@@ -79,13 +84,13 @@ class Setting
      * Update setting item value and save to file
      *
      * @param string $settingName
-     * @param $settingValue
+     * @param array|string|bool|int|null $settingValue
      *
      * @return bool
      */
-    public function updateSettingItem(
+    public function updateSetting(
         string $settingName,
-        $settingValue = null
+        mixed $settingValue = null
     ): bool {
         $settingKeys = explode('.', $settingName);
         $lastKey = array_pop($settingKeys);

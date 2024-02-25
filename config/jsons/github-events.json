@@ -113,10 +113,10 @@
   },
   "star": {
     "created": true,
-    "deleted": false
+    "deleted": true
   },
   "watch": {
-    "started": true
+    "started": false
   },
   "workflow_job": {
     "queued": false,
@@ -128,5 +128,8 @@
     "requested": false,
     "in_progress": true,
     "completed": true
+  },
+  "meta": {
+    "deleted": true
   }
 }

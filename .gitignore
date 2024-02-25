@@ -1,12 +1,9 @@
-/vendor
+vendor
 composer.lock
 composer.phar
 .DS_Store
-/node_modules
-/public/storage
-/storage/*.key
 Thumbs.db
-/bower_components
+bower_components
 
 .env
 .env.backup
@@ -14,17 +11,15 @@ Thumbs.db
 .vscode
 
 .vagrant
-Homestead.json
-Homestead.yaml
 npm-debug.log
 
 .phpunit.cache
 .phpunit.result.cache
-/storage/.license
-/storage/fonts
-/storage/installing
-/storage/installed
-/log
+storage
+log
 
 package-lock.json
 yarn.lock
+
+build
+.php-cs-fixer.cache

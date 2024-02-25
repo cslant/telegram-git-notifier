@@ -1,16 +1,16 @@
 <?php
 
-use LbilTech\TelegramGitNotifier\Helpers\ConfigHelper;
+use CSlant\TelegramGitNotifier\Helpers\ConfigHelper;
 
 if (!function_exists('tgn_singularity')) {
     /**
      * The reverse of pluralizing, returns the singular form of a word in a string.
      *
-     * @param $word
+     * @param string $word
      *
-     * @return bool|string
+     * @return string|null
      */
-    function tgn_singularity($word): bool|string
+    function tgn_singularity(string $word): string|null
     {
         static $singular_rules = [
             '/(quiz)zes$/i' => '$1',
@@ -34,10 +34,10 @@ if (!function_exists('tgn_singularity')) {
             '/([^f])ves$/i' => '$1fe',
             '/(^analy)ses$/i' => '$1sis',
             '/((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)ses$/i' => '$1$2sis',
-            '/([ti])a$/i' => '$1um',
             '/(n)ews$/i' => '$1ews',
-            '/(.)s$/i' => '$1'
+            '/(.)s$/i' => '$1',
         ];
+
         return preg_replace(
             array_keys($singular_rules),
             array_values($singular_rules),
@@ -50,13 +50,14 @@ if (!function_exists('tgn_snake_case')) {
     /**
      * Convert a string to a snack case
      *
-     * @param $string
+     * @param string $string
      *
      * @return string
      */
-    function tgn_snake_case($string): string
+    function tgn_snake_case(string $string): string
     {
         $string = preg_replace('/\s+/', '_', $string);
+
         return strtolower($string);
     }
 }
@@ -103,31 +104,57 @@ if (!function_exists('tgn_convert_action_name')) {
     }
 }
 
-if (!function_exists('config')) {
-    /**
-     * Return config value by string
-     *
-     * @param string $string
-     *
-     * @return mixed
-     */
-    function config(string $string): mixed
-    {
-        return (new ConfigHelper())->execConfig($string);
+if (!class_exists('Illuminate\Foundation\Application')) {
+    if (!function_exists('config')) {
+        /**
+         * Return config value by string
+         *
+         * @param string $string
+         *
+         * @return mixed
+         */
+        function config(string $string): mixed
+        {
+            return (new ConfigHelper())->execConfig($string);
+        }
+    }
+
+    if (!function_exists('view')) {
+        /**
+         * Get view template
+         *
+         * @param string $partialPath
+         * @param array $data
+         *
+         * @return null|string
+         */
+        function view(string $partialPath, array $data = []): null|string
+        {
+            $content = (new ConfigHelper())->getTemplateData(
+                $partialPath,
+                $data
+            );
+
+            return $content ?: null;
+        }
     }
 }
 
-if (!function_exists('view')) {
+if (!function_exists('tgn_view')) {
     /**
      * Get view template
      *
      * @param string $partialPath
      * @param array $data
      *
-     * @return bool|string
+     * @noinspection PhpMissingReturnTypeInspection
      */
-    function view(string $partialPath, array $data = []): bool|string
+    function tgn_view(string $partialPath, array $data = [])
     {
-        return (new ConfigHelper())->getTemplateData($partialPath, $data);
+        if (class_exists('Illuminate\Foundation\Application')) {
+            $partialPath = config('telegram-git-notifier.view.namespace') . '::' . $partialPath;
+        }
+
+        return view($partialPath, $data);
     }
 }

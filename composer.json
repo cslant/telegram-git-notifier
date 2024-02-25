@@ -1,8 +1,8 @@
 {
-  "name": "lbiltech/telegram-git-notifier",
+  "name": "cslant/telegram-git-notifier",
   "description": "Send notification from Gitlab and Github events to Telegram",
   "keywords": [
-    "lbiltech",
+    "cslant",
     "telegram-bot",
     "notify",
     "git-webhook",
@@ -15,7 +15,7 @@
     "telegram-bot-github-notify",
     "telegram-bot-gitlab-notify"
   ],
-  "homepage": "https://github.com/lbiltech/telegram-git-notifier",
+  "homepage": "https://github.com/cslant/telegram-git-notifier",
   "license": "MIT",
   "authors": [
     {
@@ -27,24 +27,42 @@
   ],
   "autoload": {
     "psr-4": {
-      "LbilTech\\TelegramGitNotifier\\": "src/"
+      "CSlant\\TelegramGitNotifier\\": "src/"
     },
     "files": [
       "common/helpers.php"
     ]
   },
+  "autoload-dev": {
+    "psr-4": {
+      "CSlant\\TelegramGitNotifier\\Tests\\": "tests"
+    }
+  },
   "require": {
-    "php": "^8.0",
+    "php": "^8.1",
     "eleirbag89/telegrambotphp": "^1.4",
     "guzzlehttp/guzzle": "^7.8",
     "symfony/http-foundation": "^6.3",
     "vlucas/phpdotenv": "^5.5"
   },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^v3.37.1",
+    "pestphp/pest": "^2.24",
+    "phpstan/phpstan": "^1.10.39"
+  },
+  "scripts": {
+    "analyse": "vendor/bin/phpstan",
+    "format": "vendor/bin/php-cs-fixer fix --allow-risky=yes",
+    "test": "vendor/bin/pest"
+  },
   "support": {
-    "issues": "https://github.com/lbiltech/telegram-git-notifier/issues"
+    "issues": "https://github.com/cslant/telegram-git-notifier/issues"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true

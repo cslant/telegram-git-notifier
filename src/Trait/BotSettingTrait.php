@@ -1,15 +1,40 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Trait;
+namespace CSlant\TelegramGitNotifier\Trait;
 
-use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Constants\SettingConstant;
 
 trait BotSettingTrait
 {
+    public function updateSetting(?string $settingFile = null): void
+    {
+        if ($this->setting->getSettingFile()) {
+            return;
+        }
+        $settingFile = $settingFile ?? config('telegram-git-notifier.data_file.setting');
+        $this->setting->setSettingFile($settingFile);
+        $this->setting->setSettingConfig();
+    }
+
+    public function setMyCommands(
+        array $menuCommand,
+        ?string $view = null
+    ): void {
+        $this->telegram->setMyCommands([
+            'commands' => json_encode($menuCommand),
+        ]);
+        $this->sendMessage(
+            tgn_view(
+                $view ??
+                config('telegram-git-notifier.view.tools.set_menu_cmd')
+            )
+        );
+    }
+
     public function settingHandle(?string $view = null): void
     {
         $this->sendMessage(
-            view($view ?? config('telegram-git-notifier.view.tools.settings')),
+            tgn_view($view ?? config('telegram-git-notifier.view.tools.settings')),
             ['reply_markup' => $this->settingMarkup()]
         );
     }
@@ -34,7 +59,7 @@ trait BotSettingTrait
                     '',
                     SettingConstant::SETTING_ALL_EVENTS_NOTIFY
                 ),
-            ]
+            ],
         ];
 
         $markup = $this->customEventMarkup($markup);

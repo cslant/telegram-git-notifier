@@ -1,6 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace CSlant\TelegramGitNotifier\Interfaces;
+
+use CSlant\TelegramGitNotifier\Exceptions\WebhookException;
 
 interface WebhookInterface
 {
@@ -25,14 +27,32 @@ interface WebhookInterface
     /**
      * Set webhook for telegram bot
      *
-     * @return false|string
+     * @return string
+     * @throws WebhookException
      */
-    public function setWebhook(): false|string;
+    public function setWebhook(): string;
 
     /**
      * Delete webhook for telegram bot
      *
-     * @return false|string
+     * @return string
+     * @throws WebhookException
      */
-    public function deleteWebHook(): false|string;
+    public function deleteWebHook(): string;
+
+    /**
+     * Get webhook info
+     *
+     * @return string
+     * @throws WebhookException
+     */
+    public function getWebHookInfo(): string;
+
+    /**
+     * Get webhook update
+     *
+     * @return string
+     * @throws WebhookException
+     */
+    public function getUpdates(): string;
 }

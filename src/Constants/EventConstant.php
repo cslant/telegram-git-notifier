@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Constants;
+namespace CSlant\TelegramGitNotifier\Constants;
 
-class EventConstant
+final class EventConstant
 {
     public const DEFAULT_PLATFORM = 'github';
 

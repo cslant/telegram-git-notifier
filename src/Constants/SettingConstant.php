@@ -1,8 +1,8 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Constants;
+namespace CSlant\TelegramGitNotifier\Constants;
 
-class SettingConstant
+final class SettingConstant
 {
     public const SETTING_PREFIX = 'stg.';
 

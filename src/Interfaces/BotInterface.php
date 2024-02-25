@@ -1,10 +1,12 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace CSlant\TelegramGitNotifier\Interfaces;
 
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Interfaces\Structures\AppInterface;
 
-interface TelegramInterface
+interface BotInterface extends AppInterface, EventInterface, SettingInterface
 {
     /**
      * Set the menu button for a telegram
@@ -46,4 +48,10 @@ interface TelegramInterface
      * @return bool
      */
     public function isNotifyChat(): bool;
+
+    /**
+     * @return void
+     * @throws ConfigFileException
+     */
+    public function validateSettingFile(): void;
 }

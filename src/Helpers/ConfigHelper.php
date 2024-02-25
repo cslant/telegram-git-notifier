@@ -1,13 +1,16 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Helpers;
+namespace CSlant\TelegramGitNotifier\Helpers;
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
+use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use Throwable;
 
-class ConfigHelper
+final class ConfigHelper
 {
+    /**
+     * @var array<string, mixed>
+     */
     public array $config;
 
     public function __construct()
@@ -33,18 +36,19 @@ class ConfigHelper
 
             $result = $result[$value];
         }
+
         return $result;
     }
 
     /**
      * Return template data
      *
-     * @param $partialPath
+     * @param string $partialPath
      * @param array $data
      *
      * @return bool|string
      */
-    public function getTemplateData($partialPath, array $data = []): bool|string
+    public function getTemplateData(string $partialPath, array $data = []): bool|string
     {
         $viewPathFile = $this->execConfig('telegram-git-notifier.view.path') . '/'
             . str_replace('.', '/', $partialPath) . '.php';
@@ -53,7 +57,9 @@ class ConfigHelper
             return '';
         }
 
+        $content = '';
         ob_start();
+
         try {
             extract($data, EXTR_SKIP);
             require_once $viewPathFile;

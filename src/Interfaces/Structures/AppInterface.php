@@ -1,46 +1,50 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Interfaces;
+namespace CSlant\TelegramGitNotifier\Interfaces\Structures;
 
-use LbilTech\TelegramGitNotifier\Exceptions\EntryNotFoundException;
-use LbilTech\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
+use CSlant\TelegramGitNotifier\Exceptions\BotException;
+use CSlant\TelegramGitNotifier\Exceptions\CallbackException;
+use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 interface AppInterface
 {
     /**
      * Send a message to telegram
      *
-     * @param string $message
+     * @param string|null $message
      * @param array $options
      *
      * @return void
      * @throws MessageIsEmptyException
+     * @see App::sendMessage()
      */
-    public function sendMessage(
-        string $message = '',
-        array $options = []
-    ): void;
+    public function sendMessage(?string $message = '', array $options = []): void;
 
     /**
      * Send a photo to telegram
      *
      * @param string $photo (path to photo)
-     * @param string $caption
+     * @param array $caption
      *
      * @return void
      * @throws EntryNotFoundException
+     * @see App::sendPhoto()
      */
-    public function sendPhoto(string $photo = '', string $caption = ''): void;
+    public function sendPhoto(string $photo = '', array $caption = []): void;
 
     /**
      * Send callback response to telegram (show alert)
      *
      * @param string|null $text
+     * @param array $options
      *
      * @return void
      * @throws MessageIsEmptyException
+     * @throws CallbackException
+     * @see App::answerCallbackQuery()
      */
-    public function answerCallbackQuery(string $text = null): void;
+    public function answerCallbackQuery(string $text = null, array $options = []): void;
 
     /**
      * Edit message text and reply markup
@@ -49,11 +53,10 @@ interface AppInterface
      * @param array $options
      *
      * @return void
+     * @throws BotException
+     * @see App::editMessageText()
      */
-    public function editMessageText(
-        ?string $text = null,
-        array $options = []
-    ): void;
+    public function editMessageText(string $text = null, array $options = []): void;
 
     /**
      * Edit message reply markup from a telegram
@@ -61,6 +64,8 @@ interface AppInterface
      * @param array $options
      *
      * @return void
+     * @throws BotException
+     * @see App::editMessageReplyMarkup()
      */
     public function editMessageReplyMarkup(array $options = []): void;
 
@@ -68,6 +73,7 @@ interface AppInterface
      * Get the text from callback message
      *
      * @return string
+     * @see App::getCallbackTextMessage()
      */
     public function getCallbackTextMessage(): string;
 
@@ -77,6 +83,7 @@ interface AppInterface
      * @param array $options
      *
      * @return array
+     * @see App::setCallbackContentMessage()
      */
     public function setCallbackContentMessage(array $options = []): array;
 
@@ -84,13 +91,15 @@ interface AppInterface
      * @param string $chatId
      *
      * @return void
+     * @see App::setCurrentChatBotId()
      */
-    public function setCurrentChatId(string $chatId): void;
+    public function setCurrentChatBotId(string $chatId): void;
 
     /**
      * Get the username of the bot
      *
      * @return string|null
+     * @see App::getBotName()
      */
     public function getBotName(): ?string;
 
@@ -98,6 +107,7 @@ interface AppInterface
      * Get the command message from a telegram
      *
      * @return string
+     * @see App::getCommandMessage()
      */
     public function getCommandMessage(): string;
 }

@@ -1,21 +1,23 @@
 <?php
 
-namespace LbilTech\TelegramGitNotifier\Trait;
+namespace CSlant\TelegramGitNotifier\Trait;
 
-use LbilTech\TelegramGitNotifier\Constants\EventConstant;
-use LbilTech\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Constants\SettingConstant;
 
 trait EventSettingTrait
 {
     public function eventMarkup(
         ?string $parentEvent = null,
-        string $platform = EventConstant::DEFAULT_PLATFORM
+        string $platform = EventConstant::DEFAULT_PLATFORM,
+        string $platformFile = null
     ): array {
         $replyMarkup = $replyMarkupItem = [];
 
-        $this->event->setEventConfig($platform);
-        $events = $parentEvent === null ? $this->event->eventConfig
-            : $this->event->eventConfig[$parentEvent];
+        $this->setPlatFormForEvent($platform, $platformFile);
+
+        $events = $parentEvent === null ? $this->event->getEventConfig()
+            : $this->event->getEventConfig()[$parentEvent];
 
         foreach ($events as $key => $value) {
             if (count($replyMarkupItem) === SettingConstant::BTN_LINE_ITEM_COUNT) {
@@ -63,7 +65,7 @@ trait EventSettingTrait
         return $prefix . $event . EventConstant::EVENT_UPDATE_SEPARATOR;
     }
 
-    public function getEventName(string $event, $value): string
+    public function getEventName(string $event, bool|array $value = false): string
     {
         if (is_array($value)) {
             return '⚙ ' . $event;
@@ -81,8 +83,7 @@ trait EventSettingTrait
         $back = SettingConstant::SETTING_BACK_TO_SETTINGS_MENU;
 
         if ($parentEvent) {
-            $back = SettingConstant::SETTING_BACK_TO_EVENTS_MENU
-                . $platform;
+            $back = SettingConstant::SETTING_BACK_TO_EVENTS_MENU . ".$platform";
         }
 
         return [
@@ -91,7 +92,7 @@ trait EventSettingTrait
                 '📚 Menu',
                 '',
                 SettingConstant::SETTING_BACK_TO_MAIN_MENU
-            )
+            ),
         ];
     }
 
@@ -122,9 +123,9 @@ trait EventSettingTrait
             return $platform;
         }
 
-        if (str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
+        if ($callback && str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
             return 'github';
-        } elseif (str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
+        } elseif ($callback && str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
             return 'gitlab';
         }
 
@@ -141,12 +142,13 @@ trait EventSettingTrait
             || !$callback
         ) {
             $this->editMessageText(
-                view(
+                tgn_view(
                     $view ?? config('telegram-git-notifier.view.tools.custom_event'),
                     compact('platform')
                 ),
                 ['reply_markup' => $this->eventMarkup(null, $platform)]
             );
+
             return true;
         }
 
@@ -155,10 +157,14 @@ trait EventSettingTrait
 
     public function getEventFromCallback(?string $callback): string
     {
+        if (!$callback) {
+            return '';
+        }
+
         return str_replace([
             EventConstant::EVENT_PREFIX,
             EventConstant::GITHUB_EVENT_SEPARATOR,
-            EventConstant::GITLAB_EVENT_SEPARATOR
+            EventConstant::GITLAB_EVENT_SEPARATOR,
         ], '', $callback);
     }
 
@@ -174,20 +180,23 @@ trait EventSettingTrait
                 $event
             );
             $this->editMessageText(
-                view(
+                tgn_view(
                     $view ?? config('telegram-git-notifier.view.tools.custom_event_action'),
                     compact('event', 'platform')
                 ),
                 ['reply_markup' => $this->eventMarkup($event, $platform)]
             );
+
             return true;
         }
 
         return false;
     }
 
-    public function handleEventUpdate(string $event, string $platform): void
-    {
+    public function handleEventUpdate(
+        string $event,
+        string $platform
+    ): void {
         if (str_contains($event, EventConstant::EVENT_UPDATE_SEPARATOR)) {
             $event = str_replace(
                 EventConstant::EVENT_UPDATE_SEPARATOR,
@@ -198,11 +207,17 @@ trait EventSettingTrait
         }
     }
 
-    public function eventUpdateHandle(string $event, string $platform): void
-    {
-        [$event, $action] = explode('.', $event);
+    public function eventUpdateHandle(
+        string $event,
+        string $platform
+    ): void {
+        if (str_contains($event, '.')) {
+            [$event, $action] = explode('.', $event);
+        } else {
+            $action = null;
+        }
 
-        $this->event->setEventConfig($platform);
+        $this->setPlatFormForEvent($platform);
         $this->event->updateEvent($event, $action);
         $this->eventHandle(
             $action
