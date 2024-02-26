@@ -30,3 +30,8 @@ jobs:
       - name: Run tests
         run: |
           composer validate --strict
+
+      - name: Run pest tests
+        run: |
+          bash install.sh
+          composer test

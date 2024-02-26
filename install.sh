@@ -18,7 +18,12 @@ for file in "${json_files[@]}"; do
 done
 
 if [[ "$(uname -s -r)" == *"Linux"* && "$(cat /etc/os-release)" == *"Ubuntu"* ]]; then
-    chmod 777 storage/json/tgn/*.json
+    # shellcheck disable=SC2196
+    OWNER=$(ps aux | egrep '(apache|httpd|nginx)' | grep -v root | head -n1 | awk '{print $1}')
+    if [ -z "$OWNER" ]; then
+        OWNER=$(whoami)
+    fi
+    sudo chown -R "$OWNER":"$OWNER" storage/json/tgn
 fi
 
 echo "Telegram Git Notifier config files are ready!"
