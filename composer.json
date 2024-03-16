@@ -42,13 +42,13 @@
     "php": "^8.1",
     "eleirbag89/telegrambotphp": "^1.4",
     "guzzlehttp/guzzle": "^7.8",
-    "symfony/http-foundation": "^6.3",
-    "vlucas/phpdotenv": "^5.5"
+    "symfony/http-foundation": "^6.4",
+    "vlucas/phpdotenv": "^5.6"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^v3.37.1",
+    "friendsofphp/php-cs-fixer": "^v3.0",
     "pestphp/pest": "^2.24",
-    "phpstan/phpstan": "^1.10.39"
+    "phpstan/phpstan": "^1.0"
   },
   "scripts": {
     "analyse": "vendor/bin/phpstan",
