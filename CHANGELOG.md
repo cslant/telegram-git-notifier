@@ -2,6 +2,15 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.3.9 - 2024-03-19
+
+### What's Changed
+
+* Adjust owner instead of setting full permissions for json files by @tanhongit in https://github.com/cslant/telegram-git-notifier/pull/43
+* Laravel 11.x Support by @tanhongit in https://github.com/cslant/telegram-git-notifier/pull/44
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.3.8...v1.3.9
+
 ## v1.3.8 - 2024-02-10
 
 ### What's Changed
