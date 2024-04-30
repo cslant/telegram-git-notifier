@@ -2,6 +2,21 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.4.0 - 2024-04-30
+
+### What's Changed
+
+* chore(deps): bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/cslant/telegram-git-notifier/pull/45
+* chore(deps): bump dependabot/fetch-metadata from 2.0.0 to 2.1.0 by @dependabot in https://github.com/cslant/telegram-git-notifier/pull/46
+
+### New Contributors
+
+Update dependency to support Laravel 11.x
+
+* @dependabot made their first contribution in https://github.com/cslant/telegram-git-notifier/pull/45
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.3.9...v1.4.0
+
 ## v1.3.9 - 2024-03-19
 
 ### What's Changed
