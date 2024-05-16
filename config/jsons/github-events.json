@@ -115,6 +115,14 @@
     "created": true,
     "deleted": true
   },
+  "team": {
+    "added_to_repository": true,
+    "created": true,
+    "deleted": true,
+    "edited": true,
+    "removed_from_repository": true
+  },
+  "team_add": true,
   "watch": {
     "started": false
   },
