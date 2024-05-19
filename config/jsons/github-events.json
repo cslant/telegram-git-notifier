@@ -118,9 +118,9 @@
   "team": {
     "added_to_repository": true,
     "created": true,
-    "deleted": true,
-    "edited": true,
-    "removed_from_repository": true
+    "deleted": false,
+    "edited": false,
+    "removed_from_repository": false
   },
   "team_add": true,
   "watch": {
@@ -134,7 +134,7 @@
   },
   "workflow_run": {
     "requested": false,
-    "in_progress": true,
+    "in_progress": false,
     "completed": true
   },
   "meta": {
