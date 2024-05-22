@@ -39,5 +39,5 @@
     "delete": true
   },
   "pipeline": true,
-  "job": true
+  "job": false
 }
