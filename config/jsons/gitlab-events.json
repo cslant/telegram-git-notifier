@@ -38,5 +38,6 @@
     "update": false,
     "delete": true
   },
-  "pipeline": true
+  "pipeline": true,
+  "job": true
 }
