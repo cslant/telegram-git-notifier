@@ -1,7 +1,9 @@
 {
   "push": true,
   "tag_push": true,
+  "confidential_issue": true,
   "issue": {
+    "default": true,
     "open": true,
     "close": true,
     "reopen": false,
@@ -14,6 +16,7 @@
     "snippet": false
   },
   "merge_request": {
+    "default": true,
     "open": true,
     "close": true,
     "reopen": false,
@@ -34,5 +37,7 @@
     "create": true,
     "update": false,
     "delete": true
-  }
+  },
+  "pipeline": true,
+  "job": false
 }
