@@ -39,6 +39,6 @@
     "delete": true
   },
   "pipeline": {
-    "default": true,
+    "default": true
   }
 }
