@@ -38,7 +38,5 @@
     "update": false,
     "delete": true
   },
-  "pipeline": {
-    "default": true
-  }
+  "pipeline": true
 }
