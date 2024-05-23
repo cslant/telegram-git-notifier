@@ -2,6 +2,19 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v1.5.0 - 2024-05-23
+
+### What's Changed
+
+* feature/team by @hokhacminhtri in https://github.com/cslant/telegram-git-notifier/pull/47
+* Update config for gitlab actions by @tanhongit in https://github.com/cslant/telegram-git-notifier/pull/48
+
+### New Contributors
+
+* @hokhacminhtri made their first contribution in https://github.com/cslant/telegram-git-notifier/pull/47
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.4.0...v1.5.0
+
 ## v1.4.0 - 2024-04-30
 
 ### What's Changed
