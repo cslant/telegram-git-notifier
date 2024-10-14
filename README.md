@@ -41,7 +41,7 @@ composer test
 
 ## 📖 Official Documentation
 
-Please see the [Telegram Git Notifier Documentation](https://docs.cslant.com/telegram-git-notifier/) for more information.
+Please see the [Telegram Git Notifier Documentation](https://docs.cslant.com/telegram-git-notifier) for more information.
 
 ## License
 
