@@ -1,70 +1,58 @@
 <?php
 
-declare(strict_types=1);
-
 namespace CSlant\TelegramGitNotifier\Interfaces;
 
 use CSlant\TelegramGitNotifier\Exceptions\WebhookException;
 
-/**
- * Interface WebhookInterface
- * 
- * Defines the contract for handling Telegram webhook operations.
- * Any class implementing this interface must provide methods for managing
- * Telegram bot webhooks and retrieving updates.
- */
 interface WebhookInterface
 {
     /**
-     * Set the Telegram bot token
+     * Set the telegram bot token
      *
-     * @param string $token The Telegram bot token
+     * @param string $token
+     *
      * @return void
-     * @throws \InvalidArgumentException If the token is empty
      */
     public function setToken(string $token): void;
 
     /**
-     * Set the webhook URL
+     * Set app url
      *
-     * @param string $url The webhook URL to set
+     * @param string $url
+     *
      * @return void
-     * @throws \InvalidArgumentException If the URL is invalid
      */
     public function setUrl(string $url): void;
 
     /**
-     * Set up the webhook with Telegram
+     * Set webhook for telegram bot
      *
-     * @param array<string, mixed> $params Additional parameters for the webhook
-     * @return array<string, mixed> The Telegram API response
-     * @throws WebhookException If the operation fails
+     * @return string
+     * @throws WebhookException
      */
-    public function setWebhook(array $params = []): array;
+    public function setWebhook(): string;
 
     /**
-     * Delete the current webhook
+     * Delete webhook for telegram bot
      *
-     * @param bool $dropPendingUpdates Whether to drop all pending updates
-     * @return array<string, mixed> The Telegram API response
-     * @throws WebhookException If the operation fails
+     * @return string
+     * @throws WebhookException
      */
-    public function deleteWebHook(bool $dropPendingUpdates = false): array;
+    public function deleteWebHook(): string;
 
     /**
-     * Get information about the current webhook
+     * Get webhook info
      *
-     * @return array<string, mixed> Webhook information
-     * @throws WebhookException If the operation fails
+     * @return string
+     * @throws WebhookException
      */
-    public function getWebHookInfo(): array;
+    public function getWebHookInfo(): string;
 
     /**
-     * Get updates from the Telegram API
+     * Get webhook update
      *
-     * @param array<string, mixed> $params Additional parameters for the request
-     * @return array<string, mixed> The updates from Telegram
-     * @throws WebhookException If the operation fails
+     * @return string
+     * @throws WebhookException
      */
-    public function getUpdates(array $params = []): array;
+    public function getUpdates(): string;
 }
