@@ -23,7 +23,7 @@ it('platform can be set for event with null parameter', function () {
 it('platform can be set for event with platform file', function () {
     $this->bot->setPlatFormForEvent('gitlab', 'storage/json/tgn/gitlab-events.json');
     expect($this->bot->event->platform)->toBe('gitlab')
-        ->and($this->bot->event->getPlatformFile())
+        ->and($this->bot)
         ->toBe('storage/json/tgn/gitlab-events.json');
 });
 

@@ -10,24 +10,13 @@ class Event
 
     public string $platform = EventConstant::DEFAULT_PLATFORM;
 
-    private string $platformFile = '';
-
-    /**
-     * @return string
-     */
-    public function getPlatformFile(): string
-    {
-        return $this->platformFile;
-    }
-
-    /**
-     * @param string $platformFile
-     *
-     * @return void
-     */
-    public function setPlatformFile(string $platformFile): void
-    {
-        $this->platformFile = $platformFile;
+    public string $platformFile = '' {
+        get {
+            return $this->platformFile;
+        }
+        set {
+            $this->platformFile = $value;
+        }
     }
 
     /**

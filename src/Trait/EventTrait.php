@@ -14,7 +14,7 @@ trait EventTrait
     {
         /** @var array $platformFileDefaults<platform, platformFile> */
         $platformFileDefaults = config('telegram-git-notifier.data_file.platform');
-        $this->event->setPlatformFile($platformFile ?? $platformFileDefaults[$platform]);
+        $this->event = $platformFile ?? $platformFileDefaults[$platform];
         $this->event->setEventConfig($platform);
     }
 
@@ -38,7 +38,7 @@ trait EventTrait
         if (empty($this->event->getEventConfig())) {
             throw ConfigFileException::platformFile(
                 $this->event->platform,
-                $this->event->getPlatformFile()
+                $this->event
             );
         }
     }
