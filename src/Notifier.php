@@ -3,7 +3,6 @@
 namespace CSlant\TelegramGitNotifier;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
-use CSlant\TelegramGitNotifier\Constants\NotificationConstant;
 use CSlant\TelegramGitNotifier\DTOs\ChatTarget;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;

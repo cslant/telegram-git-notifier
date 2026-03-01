@@ -11,7 +11,8 @@ readonly class ChatTarget
     public function __construct(
         public string $chatId,
         public array $threadIds = [],
-    ) {}
+    ) {
+    }
 
     public function hasThreads(): bool
     {
