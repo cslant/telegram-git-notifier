@@ -39,16 +39,16 @@
     }
   },
   "require": {
-    "php": "^8.1|^8.2",
+    "php": "^8.4|^8.5",
     "eleirbag89/telegrambotphp": "^1.4",
     "guzzlehttp/guzzle": "^7.8",
-    "symfony/http-foundation": "^6.4|^7.0",
-    "vlucas/phpdotenv": "^5.4"
+    "symfony/http-foundation": "^7.0",
+    "vlucas/phpdotenv": "^5.6"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^v3.0",
-    "pestphp/pest": "^2.24",
-    "phpstan/phpstan": "^1.0"
+    "friendsofphp/php-cs-fixer": "^v3.94",
+    "pestphp/pest": "^4.0",
+    "phpstan/phpstan": "^2.0"
   },
   "scripts": {
     "analyse": "vendor/bin/phpstan",
