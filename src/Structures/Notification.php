@@ -15,8 +15,8 @@ trait Notification
     public string $message = '';
 
     public function accessDenied(
-        string $chatId = null,
-        string $viewTemplate = null,
+        ?string $chatId = null,
+        ?string $viewTemplate = null,
     ): void {
         $this->telegram->sendMessage([
             'chat_id' => $this->chatBotId,
@@ -29,18 +29,27 @@ trait Notification
         ]);
     }
 
-    public function setPayload(Request $request, string $event)
+    /**
+     * Parse webhook payload from request and build notification message.
+     *
+     * @return object|null The parsed payload object, or null if content is empty.
+     *
+     * @throws MessageIsEmptyException
+     */
+    public function setPayload(Request $request, string $event): ?object
     {
-        $content = null;
+        $content = match ($this->event->platform) {
+            'gitlab' => $request->getContent(),
+            EventConstant::DEFAULT_PLATFORM => $request->request->get('payload'),
+            default => null,
+        };
 
-        if ($this->event->platform === 'gitlab') {
-            $content = $request->getContent();
-        } elseif ($this->event->platform === EventConstant::DEFAULT_PLATFORM) {
-            $content = $request->request->get('payload');
+        if (is_string($content) && $content !== '') {
+            $this->payload = json_decode($content);
         }
 
-        if (is_string($content)) {
-            $this->payload = json_decode($content);
+        if (!isset($this->payload)) {
+            return null;
         }
 
         $this->setMessage($event);
@@ -49,11 +58,8 @@ trait Notification
     }
 
     /**
-     * Set message from payload
+     * Build notification message from event template.
      *
-     * @param string $typeEvent
-     *
-     * @return void
      * @throws MessageIsEmptyException
      */
     private function setMessage(string $typeEvent): void
@@ -61,9 +67,9 @@ trait Notification
         $event = tgn_event_name($typeEvent);
         $action = $this->getActionOfEvent($this->payload);
 
-        $viewTemplate = empty($action)
-            ? "events.{$this->event->platform}.{$event}.default"
-            : "events.{$this->event->platform}.{$event}.{$action}";
+        $viewTemplate = $action !== ''
+            ? "events.{$this->event->platform}.{$event}.{$action}"
+            : "events.{$this->event->platform}.{$event}.default";
 
         $viewResult = tgn_view($viewTemplate, [
             'payload' => $this->payload,
@@ -77,35 +83,80 @@ trait Notification
         $this->message = $viewResult;
     }
 
-    public function sendNotify(string $message = null, array $options = []): bool
+    /**
+     * Send notification message to Telegram.
+     *
+     * @throws SendNotificationException
+     */
+    #[\NoDiscard('The return value indicates whether the notification was sent successfully')]
+    public function sendNotify(?string $message = null, array $options = []): bool
     {
-        $this->message = !empty($message) ? $message : $this->message;
+        if (!empty($message)) {
+            $this->message = $message;
+        }
 
-        if (trim($this->message) === config('telegram-git-notifier.view.ignore-message')) {
+        $ignoreMessage = config('telegram-git-notifier.view.ignore-message');
+        if (trim($this->message) === $ignoreMessage) {
             return false;
         }
 
-        $queryParams = array_merge($this->createTelegramBaseContent(), ['text' => $this->message], $options);
+        $queryParams = array_merge(
+            $this->createTelegramBaseContent(),
+            ['text' => $this->message],
+            $options,
+        );
 
-        $url = 'https://api.telegram.org/bot' . config('telegram-git-notifier.bot.token') . '/sendMessage';
+        $url = 'https://api.telegram.org/bot'
+            . config('telegram-git-notifier.bot.token')
+            . '/sendMessage';
 
-        try {
-            $options = [
-                'form_params' => $queryParams,
-                'verify' => config('telegram-git-notifier.app.request_verify'),
-            ];
+        $requestOptions = [
+            'form_params' => $queryParams,
+            'verify' => config('telegram-git-notifier.app.request_verify'),
+        ];
 
-            $response = $this->client->request('POST', $url, $options);
+        return $this->sendWithRetry($url, $requestOptions);
+    }
 
-            if ($response->getStatusCode() === 200) {
-                return true;
+    /**
+     * Send HTTP request with exponential backoff retry for rate limits.
+     *
+     * @throws SendNotificationException
+     */
+    private function sendWithRetry(string $url, array $options, int $maxRetries = 3): bool
+    {
+        $attempt = 0;
+
+        while (true) {
+            try {
+                $response = $this->client->request('POST', $url, $options);
+
+                if ($response->getStatusCode() === 200) {
+                    return true;
+                }
+
+                $body = (string) $response->getBody();
+
+                // Telegram returns 429 for rate limiting
+                if ($response->getStatusCode() === 429 && $attempt < $maxRetries) {
+                    $retryAfter = json_decode($body, true)['parameters']['retry_after'] ?? (2 ** $attempt);
+                    usleep((int) ($retryAfter * 1_000_000));
+                    $attempt++;
+
+                    continue;
+                }
+
+                throw SendNotificationException::create($body);
+            } catch (GuzzleException $e) {
+                if ($attempt < $maxRetries && str_contains($e->getMessage(), '429')) {
+                    usleep(2 ** $attempt * 1_000_000);
+                    $attempt++;
+
+                    continue;
+                }
+
+                throw SendNotificationException::create($e->getMessage());
             }
-
-            $body = (string) $response->getBody();
-
-            throw SendNotificationException::create($body);
-        } catch (GuzzleException $e) {
-            throw SendNotificationException::create($e->getMessage());
         }
     }
 }

@@ -10,11 +10,13 @@ trait EventTrait
 {
     use ActionEventTrait;
 
-    public function setPlatFormForEvent(?string $platform = EventConstant::DEFAULT_PLATFORM, ?string $platformFile = null): void
-    {
-        /** @var array $platformFileDefaults<platform, platformFile> */
+    public function setPlatFormForEvent(
+        ?string $platform = EventConstant::DEFAULT_PLATFORM,
+        ?string $platformFile = null,
+    ): void {
+        /** @var array<string, string> $platformFileDefaults */
         $platformFileDefaults = config('telegram-git-notifier.data_file.platform');
-        $this->event = $platformFile ?? $platformFileDefaults[$platform];
+        $this->event->platformFile = $platformFile ?? $platformFileDefaults[$platform] ?? '';
         $this->event->setEventConfig($platform);
     }
 
@@ -22,7 +24,7 @@ trait EventTrait
     {
         foreach (EventConstant::WEBHOOK_EVENT_HEADER as $platform => $header) {
             $event = $request->server->get($header);
-            if (!is_null($event)) {
+            if ($event !== null) {
                 $this->event->platform = $platform;
                 $this->setPlatFormForEvent($platform);
 
@@ -35,10 +37,10 @@ trait EventTrait
 
     public function validatePlatformFile(): void
     {
-        if (empty($this->event->getEventConfig())) {
+        if ($this->event->getEventConfig() === []) {
             throw ConfigFileException::platformFile(
                 $this->event->platform,
-                $this->event
+                $this->event->platformFile,
             );
         }
     }

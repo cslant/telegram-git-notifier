@@ -42,6 +42,7 @@
     "php": "^8.4|^8.5",
     "eleirbag89/telegrambotphp": "^1.4",
     "guzzlehttp/guzzle": "^7.8",
+    "psr/log": "^3.0",
     "symfony/http-foundation": "^7.0",
     "vlucas/phpdotenv": "^5.6"
   },

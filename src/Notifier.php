@@ -4,6 +4,7 @@ namespace CSlant\TelegramGitNotifier;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Constants\NotificationConstant;
+use CSlant\TelegramGitNotifier\DTOs\ChatTarget;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
 use CSlant\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
@@ -26,22 +27,15 @@ class Notifier implements NotificationInterface, EventInterface
     public Client $client;
 
     /**
-     * @param Telegram|null $telegram
-     * @param string|null $chatBotId
-     * @param Event|null $event
-     * @param string|null $platform
-     * @param string|null $platformFile
-     * @param Client|null $client
-     *
      * @throws ConfigFileException
      */
     public function __construct(
-        Telegram $telegram = null,
+        ?Telegram $telegram = null,
         ?string $chatBotId = null,
-        Event $event = null,
+        ?Event $event = null,
         ?string $platform = EventConstant::DEFAULT_PLATFORM,
         ?string $platformFile = null,
-        Client $client = null,
+        ?Client $client = null,
     ) {
         $this->event = $event ?? new Event();
         $this->setPlatFormForEvent($platform, $platformFile);
@@ -53,21 +47,40 @@ class Notifier implements NotificationInterface, EventInterface
         $this->client = $client ?? new Client();
     }
 
+    /**
+     * Parse notification chat IDs string into structured array.
+     *
+     * @return array<string, list<string>> Map of chatId => threadIds
+     */
     public function parseNotifyChatIds(?string $chatIds = null): array
     {
-        $chatData = explode(
-            NotificationConstant::CHAT_ID_PAIRS_SEPARATOR,
-            $chatIds ?? config('telegram-git-notifier.bot.notify_chat_ids')
-        );
-        $chatThreadMapping = [];
+        $raw = $chatIds ?? config('telegram-git-notifier.bot.notify_chat_ids');
 
-        foreach ($chatData as $data) {
-            [$chatId, $threadIds] = explode(NotificationConstant::CHAT_THREAD_ID_SEPARATOR, $data) + [null, null];
-            $chatThreadMapping[$chatId] = $threadIds
-                ? explode(NotificationConstant::THREAD_ID_SEPARATOR, $threadIds)
-                : [];
+        if (empty($raw)) {
+            return [];
         }
 
-        return $chatThreadMapping;
+        $targets = ChatTarget::parseMultiple($raw);
+        $mapping = [];
+
+        foreach ($targets as $target) {
+            if ($target->chatId !== '') {
+                $mapping[$target->chatId] = $target->threadIds;
+            }
+        }
+
+        return $mapping;
+    }
+
+    /**
+     * Parse notification chat IDs into ChatTarget DTOs.
+     *
+     * @return list<ChatTarget>
+     */
+    public function getChatTargets(?string $chatIds = null): array
+    {
+        $raw = $chatIds ?? config('telegram-git-notifier.bot.notify_chat_ids');
+
+        return ChatTarget::parseMultiple($raw ?? '');
     }
 }

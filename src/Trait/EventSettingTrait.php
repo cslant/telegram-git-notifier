@@ -10,7 +10,7 @@ trait EventSettingTrait
     public function eventMarkup(
         ?string $parentEvent = null,
         string $platform = EventConstant::DEFAULT_PLATFORM,
-        string $platformFile = null
+        ?string $platformFile = null
     ): array {
         $replyMarkup = $replyMarkupItem = [];
 
@@ -123,10 +123,12 @@ trait EventSettingTrait
             return $platform;
         }
 
-        if ($callback && str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
-            return 'github';
-        } elseif ($callback && str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
-            return 'gitlab';
+        if ($callback) {
+            return match (true) {
+                str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR) => 'github',
+                str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR) => 'gitlab',
+                default => EventConstant::DEFAULT_PLATFORM,
+            };
         }
 
         return EventConstant::DEFAULT_PLATFORM;

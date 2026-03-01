@@ -15,7 +15,7 @@ trait App
 
     public string $chatBotId;
 
-    public function setCurrentChatBotId(string $chatBotId = null): void
+    public function setCurrentChatBotId(?string $chatBotId = null): void
     {
         $this->chatBotId = $chatBotId ?? config('telegram-git-notifier.bot.chat_id');
     }
@@ -64,7 +64,7 @@ trait App
         $this->telegram->sendPhoto($content);
     }
 
-    public function answerCallbackQuery(string $text = null, array $options = []): void
+    public function answerCallbackQuery(?string $text = null, array $options = []): void
     {
         if (empty($text)) {
             throw MessageIsEmptyException::create();

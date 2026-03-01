@@ -20,22 +20,22 @@ interface NotificationInterface extends AppInterface
      * @see Notification::accessDenied()
      */
     public function accessDenied(
-        string $chatId = null,
-        string $viewTemplate = null,
+        ?string $chatId = null,
+        ?string $viewTemplate = null,
     ): void;
 
     /**
-     * Set payload from request
+     * Parse webhook payload from request and build notification message.
      *
      * @param Request $request
      * @param string $event
      *
-     * @return mixed|void
+     * @return object|null The parsed payload object, or null if content is empty.
      * @throws InvalidViewTemplateException
      * @throws MessageIsEmptyException
      * @see Notification::setPayload()
      */
-    public function setPayload(Request $request, string $event);
+    public function setPayload(Request $request, string $event): ?object;
 
     /**
      * Send notification to telegram
@@ -47,7 +47,7 @@ interface NotificationInterface extends AppInterface
      * @throws SendNotificationException
      * @see Notification::sendNotify()
      */
-    public function sendNotify(string $message = null, array $options = []): bool;
+    public function sendNotify(?string $message = null, array $options = []): bool;
 
     /**
      * Get action name of event from payload data

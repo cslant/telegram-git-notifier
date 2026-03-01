@@ -19,36 +19,34 @@ final class ConfigHelper
     }
 
     /**
-     * Handle config and return value
-     *
-     * @param string $string
-     *
-     * @return array|mixed
+     * Resolve a dot-notation config key to its value.
      */
     public function execConfig(string $string): mixed
     {
-        $config = explode('.', $string);
+        $keys = explode('.', $string);
         $result = $this->config;
-        foreach ($config as $value) {
-            if (!isset($result[$value])) {
+
+        foreach ($keys as $key) {
+            if (!isset($result[$key])) {
                 return '';
             }
 
-            $result = $result[$value];
+            $result = $result[$key];
         }
 
         return $result;
     }
 
     /**
-     * Return template data
+     * Render a PHP template file with the given data.
      *
-     * @param string $partialPath
-     * @param array $data
+     * Uses output buffering and a closure to isolate the template scope,
+     * preventing variable pollution.
      *
-     * @return bool|string
+     * @param string $partialPath Dot-notation path to the view file
+     * @param array<string, mixed> $data Variables to pass to the template
      */
-    public function getTemplateData(string $partialPath, array $data = []): bool|string
+    public function getTemplateData(string $partialPath, array $data = []): string
     {
         $viewPathFile = $this->execConfig('telegram-git-notifier.view.path') . '/'
             . str_replace('.', '/', $partialPath) . '.php';
@@ -57,16 +55,24 @@ final class ConfigHelper
             return '';
         }
 
-        $content = '';
-        ob_start();
-
         try {
-            extract($data, EXTR_SKIP);
-            require_once $viewPathFile;
-            $content = ob_get_clean();
+            $content = (static function (string $__viewFile, array $__data): string {
+                extract($__data, EXTR_SKIP);
+                ob_start();
+                require $__viewFile;
+
+                return (string) ob_get_clean();
+            })($viewPathFile, $data);
         } catch (EntryNotFoundException|InvalidViewTemplateException|Throwable $e) {
-            ob_end_clean();
-            error_log($e->getMessage());
+            if (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+
+            throw new InvalidViewTemplateException(
+                "Failed to render template '{$partialPath}': {$e->getMessage()}",
+                0,
+                $e,
+            );
         }
 
         return $content;

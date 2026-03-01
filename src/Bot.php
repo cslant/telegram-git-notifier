@@ -39,12 +39,12 @@ class Bot implements BotInterface
      * @throws ConfigFileException
      */
     public function __construct(
-        Telegram $telegram = null,
+        ?Telegram $telegram = null,
         ?string $chatBotId = null,
-        Event $event = null,
+        ?Event $event = null,
         ?string $platform = EventConstant::DEFAULT_PLATFORM,
         ?string $platformFile = null,
-        Setting $setting = null,
+        ?Setting $setting = null,
         ?string $settingFile = null,
     ) {
         $this->event = $event ?? new Event();

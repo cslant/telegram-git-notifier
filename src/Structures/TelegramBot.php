@@ -18,16 +18,13 @@ trait TelegramBot
 
     public function isOwner(): bool
     {
-        return $this->telegram->ChatID() == $this->chatBotId;
+        return (string) $this->telegram->ChatID() === (string) $this->chatBotId;
     }
 
     public function isNotifyChat(): bool
     {
         $chatIds = config('telegram-git-notifier.bot.notify_chat_ids');
-        if (in_array($this->telegram->ChatID(), $chatIds)) {
-            return true;
-        }
 
-        return false;
+        return in_array((string) $this->telegram->ChatID(), (array) $chatIds, true);
     }
 }

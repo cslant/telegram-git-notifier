@@ -2,6 +2,8 @@
 
 namespace CSlant\TelegramGitNotifier\Constants;
 
+use CSlant\TelegramGitNotifier\Enums\Platform;
+
 final class EventConstant
 {
     public const DEFAULT_PLATFORM = 'github';
@@ -25,4 +27,9 @@ final class EventConstant
         'github' => self::GITHUB_EVENT_SEPARATOR,
         'gitlab' => self::GITLAB_EVENT_SEPARATOR,
     ];
+
+    public static function platformEnum(string $platform): Platform
+    {
+        return Platform::from($platform);
+    }
 }

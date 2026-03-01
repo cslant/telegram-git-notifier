@@ -44,7 +44,7 @@ interface AppInterface
      * @throws CallbackException
      * @see App::answerCallbackQuery()
      */
-    public function answerCallbackQuery(string $text = null, array $options = []): void;
+    public function answerCallbackQuery(?string $text = null, array $options = []): void;
 
     /**
      * Edit message text and reply markup
@@ -56,7 +56,7 @@ interface AppInterface
      * @throws BotException
      * @see App::editMessageText()
      */
-    public function editMessageText(string $text = null, array $options = []): void;
+    public function editMessageText(?string $text = null, array $options = []): void;
 
     /**
      * Edit message reply markup from a telegram
@@ -93,7 +93,7 @@ interface AppInterface
      * @return void
      * @see App::setCurrentChatBotId()
      */
-    public function setCurrentChatBotId(string $chatId): void;
+    public function setCurrentChatBotId(?string $chatId = null): void;
 
     /**
      * Get the username of the bot
