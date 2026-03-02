@@ -2,6 +2,7 @@
 
 namespace CSlant\TelegramGitNotifier\Structures;
 
+use CSlant\TelegramGitNotifier\Notifier;
 use Telegram;
 
 trait TelegramBot
@@ -25,7 +26,7 @@ trait TelegramBot
     {
         $chatIds = config('telegram-git-notifier.bot.notify_chat_ids');
 
-        $notifyChatIds = ChatTarget::parseNotifyChatIds($chatIds);
+        $notifyChatIds = Notifier::parseNotifyChatIds($chatIds);
 
         return in_array((string) $this->telegram->ChatID(), $notifyChatIds, true);
     }
