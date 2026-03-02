@@ -5,7 +5,7 @@ use CSlant\TelegramGitNotifier\Objects\Validator;
 
 beforeEach(function () {
     $this->bot = new Bot();
-    $this->bot->updateSetting('config/jsons/tgn-settings.json');
+    $this->bot->updateSetting('storage/json/tgn/setting.json');
     $this->bot->setPlatFormForEvent();
     $this->validator = new Validator($this->bot->setting, $this->bot->event);
 });

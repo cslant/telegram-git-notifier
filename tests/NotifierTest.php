@@ -7,11 +7,11 @@ beforeEach(function () {
 });
 
 it('validates that the event files exist', function () {
-    $this->nofitier->setPlatFormForEvent('gitlab', 'config/jsons/gitlab-events.json');
+    $this->nofitier->setPlatFormForEvent('gitlab', 'storage/json/tgn/gitlab-events.json');
     expect($this->nofitier->event->getEventConfig())->toBeArray()
         ->and($this->nofitier->event->getEventConfig())->toHaveKey('tag_push');
 
-    $this->nofitier->setPlatFormForEvent('github', 'config/jsons/github-events.json');
+    $this->nofitier->setPlatFormForEvent('github', 'storage/json/tgn/github-events.json');
     expect($this->nofitier->event->getEventConfig())->toBeArray()
         ->and($this->nofitier->event->getEventConfig())
         ->toHaveKey('issue_comment');
