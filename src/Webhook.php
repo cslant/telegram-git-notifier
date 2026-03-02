@@ -13,11 +13,11 @@ class Webhook implements WebhookInterface
 
     private string $url;
 
-    private Client $client;
+    private readonly Client $client;
 
-    public function __construct()
+    public function __construct(?Client $client = null)
     {
-        $this->client = new Client();
+        $this->client = $client ?? new Client();
     }
 
     public function setToken(string $token): void
@@ -32,65 +32,81 @@ class Webhook implements WebhookInterface
 
     public function setWebhook(): string
     {
-        $url = "https://api.telegram.org/bot{$this->token}/setWebhook?url={$this->url}";
-        $options = [
-            'verify' => config('telegram-git-notifier.app.request_verify'),
-        ];
-
-        try {
-            $response = $this->client->request('GET', $url, $options);
-
-            return $response->getBody()->getContents();
-        } catch (GuzzleException) {
-            throw WebhookException::set();
-        }
+        return $this->callTelegramApi(
+            "setWebhook?url={$this->url}",
+            static fn () => WebhookException::set(),
+        );
     }
 
     public function deleteWebHook(): string
     {
-        $url = "https://api.telegram.org/bot{$this->token}/deleteWebhook";
-        $options = [
-            'verify' => config('telegram-git-notifier.app.request_verify'),
-        ];
-
-        try {
-            $response = $this->client->request('GET', $url, $options);
-
-            return $response->getBody()->getContents();
-        } catch (GuzzleException) {
-            throw WebhookException::delete();
-        }
+        return $this->callTelegramApi(
+            'deleteWebhook',
+            static fn () => WebhookException::delete(),
+        );
     }
 
     public function getWebHookInfo(): string
     {
-        $url = "https://api.telegram.org/bot{$this->token}/getWebhookInfo";
-        $options = [
-            'verify' => config('telegram-git-notifier.app.request_verify'),
-        ];
-
-        try {
-            $response = $this->client->request('GET', $url, $options);
-
-            return $response->getBody()->getContents();
-        } catch (GuzzleException) {
-            throw WebhookException::getWebHookInfo();
-        }
+        return $this->callTelegramApi(
+            'getWebhookInfo',
+            static fn () => WebhookException::getWebHookInfo(),
+        );
     }
 
     public function getUpdates(): string
     {
-        $url = "https://api.telegram.org/bot{$this->token}/getUpdates";
+        return $this->callTelegramApi(
+            'getUpdates',
+            static fn () => WebhookException::getUpdates(),
+        );
+    }
+
+    /**
+     * Centralized Telegram API call with retry support.
+     *
+     * @param string $endpoint    API endpoint (after /bot{token}/)
+     * @param callable(): WebhookException $exceptionFactory
+     * @param int $maxRetries     Max retry attempts for rate limiting
+     *
+     * @throws WebhookException
+     */
+    private function callTelegramApi(string $endpoint, callable $exceptionFactory, int $maxRetries = 3): string
+    {
+        $url = "https://api.telegram.org/bot{$this->token}/{$endpoint}";
         $options = [
             'verify' => config('telegram-git-notifier.app.request_verify'),
         ];
 
-        try {
-            $response = $this->client->request('GET', $url, $options);
+        $attempt = 0;
 
-            return $response->getBody()->getContents();
-        } catch (GuzzleException) {
-            throw WebhookException::getUpdates();
+        while (true) {
+            try {
+                $response = $this->client->request('GET', $url, $options);
+
+                return $response->getBody()->getContents();
+            } catch (GuzzleException $e) {
+                if ($attempt < $maxRetries && str_contains($e->getMessage(), '429')) {
+                    usleep(2 ** $attempt * 1_000_000);
+                    $attempt++;
+
+                    continue;
+                }
+
+                $baseException = $exceptionFactory();
+                $message = $baseException->getMessage();
+
+                if ($e->getMessage() !== '') {
+                    $suffix = 'GuzzleException: ' . $e->getMessage();
+                    $message = $message !== '' ? $message . ' | ' . $suffix : $suffix;
+                }
+
+                throw new WebhookException(
+                    $message,
+                    $baseException->getCode(),
+                    $e
+                );
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace CSlant\TelegramGitNotifier\Interfaces;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Trait\ActionEventTrait;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +28,7 @@ interface EventInterface
      * @return void
      * @see EventTrait::setPlatFormForEvent()
      */
-    public function setPlatFormForEvent(?string $platform = EventConstant::DEFAULT_PLATFORM, ?string $platformFile = null): void;
+    public function setPlatFormForEvent(?string $platform = Platform::DEFAULT, ?string $platformFile = null): void;
 
     /**
      * Set event config and get event name

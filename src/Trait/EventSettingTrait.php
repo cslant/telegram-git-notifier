@@ -4,13 +4,17 @@ namespace CSlant\TelegramGitNotifier\Trait;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 
 trait EventSettingTrait
 {
+    /**
+     * @return array<int, array<int, mixed>>
+     */
     public function eventMarkup(
         ?string $parentEvent = null,
-        string $platform = EventConstant::DEFAULT_PLATFORM,
-        string $platformFile = null
+        string $platform = Platform::DEFAULT,
+        ?string $platformFile = null
     ): array {
         $replyMarkup = $replyMarkupItem = [];
 
@@ -44,15 +48,16 @@ trait EventSettingTrait
         return $replyMarkup;
     }
 
+    /**
+     * @param array<string, mixed>|bool $value
+     */
     public function getCallbackData(
         string $event,
         string $platform,
         array|bool $value = false,
         ?string $parentEvent = null
     ): string {
-        $platformSeparator = $platform === EventConstant::DEFAULT_PLATFORM
-            ? EventConstant::GITHUB_EVENT_SEPARATOR
-            : EventConstant::GITLAB_EVENT_SEPARATOR;
+        $platformSeparator = Platform::from($platform)->eventSeparator();
         $prefix = EventConstant::EVENT_PREFIX . $platformSeparator;
 
         if (is_array($value)) {
@@ -65,6 +70,9 @@ trait EventSettingTrait
         return $prefix . $event . EventConstant::EVENT_UPDATE_SEPARATOR;
     }
 
+    /**
+     * @param bool|array<string, mixed> $value
+     */
     public function getEventName(string $event, bool|array $value = false): string
     {
         if (is_array($value)) {
@@ -76,6 +84,9 @@ trait EventSettingTrait
         return '❌ ' . $event;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     public function getEndKeyboard(
         string $platform,
         ?string $parentEvent = null
@@ -123,13 +134,15 @@ trait EventSettingTrait
             return $platform;
         }
 
-        if ($callback && str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR)) {
-            return 'github';
-        } elseif ($callback && str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR)) {
-            return 'gitlab';
+        if ($callback) {
+            foreach (Platform::cases() as $p) {
+                if (str_contains($callback, $p->eventSeparator())) {
+                    return $p->value;
+                }
+            }
         }
 
-        return EventConstant::DEFAULT_PLATFORM;
+        return Platform::DEFAULT;
     }
 
     public function sendSettingEventMessage(
@@ -161,11 +174,16 @@ trait EventSettingTrait
             return '';
         }
 
-        return str_replace([
-            EventConstant::EVENT_PREFIX,
-            EventConstant::GITHUB_EVENT_SEPARATOR,
-            EventConstant::GITLAB_EVENT_SEPARATOR,
-        ], '', $callback);
+        $separators = array_map(
+            fn (Platform $p) => $p->eventSeparator(),
+            Platform::cases(),
+        );
+
+        return str_replace(
+            [EventConstant::EVENT_PREFIX, ...$separators],
+            '',
+            $callback,
+        );
     }
 
     public function handleEventWithActions(
@@ -221,7 +239,7 @@ trait EventSettingTrait
         $this->event->updateEvent($event, $action);
         $this->eventHandle(
             $action
-                ? EventConstant::PLATFORM_EVENT_SEPARATOR[$platform]
+                ? Platform::from($platform)->eventSeparator()
                 . EventConstant::EVENT_HAS_ACTION_SEPARATOR . $event
                 : null,
             $platform

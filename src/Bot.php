@@ -2,7 +2,7 @@
 
 namespace CSlant\TelegramGitNotifier;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\BotInterface;
 use CSlant\TelegramGitNotifier\Models\Event;
@@ -39,12 +39,12 @@ class Bot implements BotInterface
      * @throws ConfigFileException
      */
     public function __construct(
-        Telegram $telegram = null,
+        ?Telegram $telegram = null,
         ?string $chatBotId = null,
-        Event $event = null,
-        ?string $platform = EventConstant::DEFAULT_PLATFORM,
+        ?Event $event = null,
+        ?string $platform = Platform::DEFAULT,
         ?string $platformFile = null,
-        Setting $setting = null,
+        ?Setting $setting = null,
         ?string $settingFile = null,
     ) {
         $this->event = $event ?? new Event();
@@ -61,7 +61,7 @@ class Bot implements BotInterface
 
     public function validateSettingFile(): void
     {
-        if (empty($this->setting->getSettingFile())) {
+        if ($this->setting->getSettingFile() === '') {
             throw ConfigFileException::settingFile($this->setting->getSettingFile());
         }
     }

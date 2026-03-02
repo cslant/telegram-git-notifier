@@ -10,7 +10,7 @@ if (!function_exists('tgn_singularity')) {
      *
      * @return string|null
      */
-    function tgn_singularity(string $word): string|null
+    function tgn_singularity(string $word): ?string
     {
         static $singular_rules = [
             '/(quiz)zes$/i' => '$1',
@@ -56,7 +56,7 @@ if (!function_exists('tgn_snake_case')) {
      */
     function tgn_snake_case(string $string): string
     {
-        $string = preg_replace('/\s+/', '_', $string);
+        $string = preg_replace('/\s+/', '_', $string) ?? $string;
 
         return strtolower($string);
     }
@@ -100,7 +100,7 @@ if (!function_exists('tgn_convert_action_name')) {
      */
     function tgn_convert_action_name(string $action): string
     {
-        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $action));
+        return strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $action) ?? $action);
     }
 }
 
@@ -128,28 +128,26 @@ if (!class_exists('Illuminate\Foundation\Application')) {
          *
          * @return null|string
          */
-        function view(string $partialPath, array $data = []): null|string
+        function view(string $partialPath, array $data = []): ?string
         {
             $content = (new ConfigHelper())->getTemplateData(
                 $partialPath,
                 $data
             );
 
-            return $content ?: null;
+            return $content !== '' ? $content : null;
         }
     }
 }
 
 if (!function_exists('tgn_view')) {
     /**
-     * Get view template
+     * Get view template from the correct source (Laravel Blade or standalone PHP).
      *
-     * @param string $partialPath
-     * @param array $data
-     *
-     * @noinspection PhpMissingReturnTypeInspection
+     * @param string $partialPath Dot-notation template path
+     * @param array<string, mixed> $data Variables to pass to the template
      */
-    function tgn_view(string $partialPath, array $data = [])
+    function tgn_view(string $partialPath, array $data = []): mixed
     {
         if (class_exists('Illuminate\Foundation\Application')) {
             $partialPath = config('telegram-git-notifier.view.namespace') . '::' . $partialPath;

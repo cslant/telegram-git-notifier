@@ -15,11 +15,14 @@ trait App
 
     public string $chatBotId;
 
-    public function setCurrentChatBotId(string $chatBotId = null): void
+    public function setCurrentChatBotId(?string $chatBotId = null): void
     {
         $this->chatBotId = $chatBotId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function createTelegramBaseContent(): array
     {
         return [
@@ -29,16 +32,21 @@ trait App
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws MessageIsEmptyException
+     */
     public function sendMessage(?string $message = '', array $options = []): void
     {
-        if (empty($message)) {
+        if ($message === null || $message === '') {
             throw MessageIsEmptyException::create();
         }
 
         $content = $this->createTelegramBaseContent();
         $content['text'] = $message;
 
-        if (!empty($options['reply_markup'])) {
+        if (isset($options['reply_markup'])) {
             $content['reply_markup'] = $this->telegram->buildInlineKeyBoard(
                 $options['reply_markup']
             );
@@ -50,9 +58,14 @@ trait App
         $this->telegram->sendMessage($content);
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws EntryNotFoundException
+     */
     public function sendPhoto(string $photo = '', array $options = []): void
     {
-        if (empty($photo)) {
+        if ($photo === '') {
             throw EntryNotFoundException::fileNotFound();
         }
 
@@ -64,9 +77,15 @@ trait App
         $this->telegram->sendPhoto($content);
     }
 
-    public function answerCallbackQuery(string $text = null, array $options = []): void
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws MessageIsEmptyException
+     * @throws CallbackException
+     */
+    public function answerCallbackQuery(?string $text = null, array $options = []): void
     {
-        if (empty($text)) {
+        if ($text === null || $text === '') {
             throw MessageIsEmptyException::create();
         }
 
@@ -82,6 +101,11 @@ trait App
         }
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws BotException
+     */
     public function editMessageText(
         ?string $text = null,
         array $options = []
@@ -97,6 +121,11 @@ trait App
         }
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws BotException
+     */
     public function editMessageReplyMarkup(array $options = []): void
     {
         try {
@@ -113,6 +142,10 @@ trait App
         return $this->telegram->Callback_Message()['text'];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
     public function setCallbackContentMessage(array $options = []): array
     {
         $content = [
@@ -122,7 +155,7 @@ trait App
             'parse_mode' => 'HTML',
         ];
 
-        $content['reply_markup'] = $options['reply_markup']
+        $content['reply_markup'] = isset($options['reply_markup'])
             ? $this->telegram->buildInlineKeyBoard($options['reply_markup'])
             : null;
 

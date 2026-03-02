@@ -2,36 +2,30 @@
 
 namespace CSlant\TelegramGitNotifier\Models;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 
 class Event
 {
+    /** @var array<string, mixed> */
     private array $eventConfig = [];
 
-    public string $platform = EventConstant::DEFAULT_PLATFORM;
+    private bool $dirty = false;
 
-    private string $platformFile = '';
+    private string $lastLoadedFile = '';
 
-    /**
-     * @return string
-     */
-    public function getPlatformFile(): string
-    {
-        return $this->platformFile;
+    public string $platform = Platform::DEFAULT;
+
+    public string $platformFile = '' {
+        get {
+            return $this->platformFile;
+        }
+        set {
+            $this->platformFile = $value;
+        }
     }
 
     /**
-     * @param string $platformFile
-     *
-     * @return void
-     */
-    public function setPlatformFile(string $platformFile): void
-    {
-        $this->platformFile = $platformFile;
-    }
-
-    /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getEventConfig(): array
     {
@@ -39,54 +33,78 @@ class Event
     }
 
     /**
-     * Set event config
-     *
-     * @param string|null $platform
-     *
-     * @return void
+     * Set event config from JSON file with in-memory caching.
+     * Only reads from disk if the file hasn't been loaded yet or platform changes.
      */
-    public function setEventConfig(
-        string $platform = null
-    ): void {
-        $this->platform = $platform ?? EventConstant::DEFAULT_PLATFORM;
+    public function setEventConfig(?string $platform = null): void
+    {
+        $newPlatform = $platform ?? Platform::DEFAULT;
+        $this->platform = $newPlatform;
 
-        $json = file_get_contents($this->platformFile);
-
-        if (!empty($json)) {
-            $this->eventConfig = json_decode($json, true);
+        // Skip re-reading if same file is already loaded
+        if ($this->platformFile === $this->lastLoadedFile && $this->eventConfig !== []) {
+            return;
         }
+
+        $this->loadFromFile();
     }
 
     /**
-     * Update event config by event and action
-     *
-     * @param string $event
-     * @param string|null $action
-     *
-     * @return void
+     * Force reload event config from file.
      */
-    public function updateEvent(string $event, string|null $action): void
+    public function reloadEventConfig(): void
     {
-        if (!empty($action)) {
+        $this->loadFromFile();
+    }
+
+    /**
+     * Update event config by event and action.
+     * Toggle the boolean value for the specified event/action.
+     */
+    public function updateEvent(string $event, ?string $action): void
+    {
+        if ($action !== null && $action !== '') {
             $this->eventConfig[$event][$action]
                 = !$this->eventConfig[$event][$action];
         } else {
             $this->eventConfig[$event] = !$this->eventConfig[$event];
         }
 
-        $this->saveEventConfig();
+        $this->dirty = true;
+        $this->persist();
     }
 
-    /**
-     * Save event config
-     *
-     * @return void
-     */
-    private function saveEventConfig(): void
+    public function getPlatformEnum(): Platform
     {
-        if (file_exists($this->platformFile)) {
-            $json = json_encode($this->eventConfig, JSON_PRETTY_PRINT);
-            file_put_contents($this->platformFile, $json, LOCK_EX);
+        return Platform::from($this->platform);
+    }
+
+    private function loadFromFile(): void
+    {
+        if ($this->platformFile === '' || !file_exists($this->platformFile)) {
+            $this->eventConfig = [];
+
+            return;
         }
+
+        $json = file_get_contents($this->platformFile);
+
+        if ($json !== false && $json !== '') {
+            $this->eventConfig = json_decode($json, true) ?? [];
+        }
+
+        $this->lastLoadedFile = $this->platformFile;
+        $this->dirty = false;
+    }
+
+    private function persist(): void
+    {
+        if (!$this->dirty || !file_exists($this->platformFile)) {
+            return;
+        }
+
+        $json = json_encode($this->eventConfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        file_put_contents($this->platformFile, $json, LOCK_EX);
+        $this->dirty = false;
     }
 }

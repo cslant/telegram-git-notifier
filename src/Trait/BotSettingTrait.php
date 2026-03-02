@@ -3,6 +3,7 @@
 namespace CSlant\TelegramGitNotifier\Trait;
 
 use CSlant\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 
 trait BotSettingTrait
 {
@@ -16,6 +17,11 @@ trait BotSettingTrait
         $this->setting->setSettingConfig();
     }
 
+    /**
+     * @param  array<int, array{command: string, description: string}>  $menuCommand
+     *
+     * @throws MessageIsEmptyException
+     */
     public function setMyCommands(
         array $menuCommand,
         ?string $view = null
@@ -39,6 +45,9 @@ trait BotSettingTrait
         );
     }
 
+    /**
+     * @return array<int, array<int, mixed>>
+     */
     public function settingMarkup(): array
     {
         $markup = [
@@ -75,6 +84,10 @@ trait BotSettingTrait
         return $markup;
     }
 
+    /**
+     * @param array<int, array<int, mixed>> $markup
+     * @return array<int, array<int, mixed>>
+     */
     public function customEventMarkup(array $markup): array
     {
         if (!$this->setting->getSettings()[SettingConstant::T_ALL_EVENTS_NOTIFICATION]) {
