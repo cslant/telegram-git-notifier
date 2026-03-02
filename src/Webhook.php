@@ -93,7 +93,19 @@ class Webhook implements WebhookInterface
                     continue;
                 }
 
-                throw $exceptionFactory();
+                $baseException = $exceptionFactory();
+                $message = $baseException->getMessage();
+
+                if ($e->getMessage() !== '') {
+                    $suffix = 'GuzzleException: ' . $e->getMessage();
+                    $message = $message !== '' ? $message . ' | ' . $suffix : $suffix;
+                }
+
+                throw new WebhookException(
+                    $message,
+                    $baseException->getCode(),
+                    $e
+                );
             }
         }
     }
