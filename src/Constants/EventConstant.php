@@ -4,9 +4,9 @@ namespace CSlant\TelegramGitNotifier\Constants;
 
 final class EventConstant
 {
-    public const EVENT_PREFIX = SettingConstant::SETTING_CUSTOM_EVENTS . '.evt.';
+    public const string EVENT_PREFIX = SettingConstant::SETTING_CUSTOM_EVENTS . '.evt.';
 
-    public const EVENT_HAS_ACTION_SEPARATOR = 'atc.';
+    public const string EVENT_HAS_ACTION_SEPARATOR = 'atc.';
 
-    public const EVENT_UPDATE_SEPARATOR = '.eus';
+    public const string EVENT_UPDATE_SEPARATOR = '.eus';
 }
