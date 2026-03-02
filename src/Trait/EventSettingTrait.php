@@ -7,6 +7,9 @@ use CSlant\TelegramGitNotifier\Constants\SettingConstant;
 
 trait EventSettingTrait
 {
+    /**
+     * @return array<int, array<int, mixed>>
+     */
     public function eventMarkup(
         ?string $parentEvent = null,
         string $platform = EventConstant::DEFAULT_PLATFORM,
@@ -44,6 +47,9 @@ trait EventSettingTrait
         return $replyMarkup;
     }
 
+    /**
+     * @param array<string, mixed>|bool $value
+     */
     public function getCallbackData(
         string $event,
         string $platform,
@@ -65,6 +71,9 @@ trait EventSettingTrait
         return $prefix . $event . EventConstant::EVENT_UPDATE_SEPARATOR;
     }
 
+    /**
+     * @param bool|array<string, mixed> $value
+     */
     public function getEventName(string $event, bool|array $value = false): string
     {
         if (is_array($value)) {
@@ -76,6 +85,9 @@ trait EventSettingTrait
         return '❌ ' . $event;
     }
 
+    /**
+     * @return array<int, mixed>
+     */
     public function getEndKeyboard(
         string $platform,
         ?string $parentEvent = null

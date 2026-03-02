@@ -41,7 +41,7 @@ interface NotificationInterface extends AppInterface
      * Send notification to telegram
      *
      * @param string|null $message
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return bool
      * @throws SendNotificationException
@@ -65,7 +65,7 @@ interface NotificationInterface extends AppInterface
      *
      * @param string|null $chatIds
      *
-     * @return array
+     * @return array<string, list<string>>
      */
     public function parseNotifyChatIds(?string $chatIds = null): array;
 }

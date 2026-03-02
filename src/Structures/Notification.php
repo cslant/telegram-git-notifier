@@ -86,6 +86,8 @@ trait Notification
     /**
      * Send notification message to Telegram.
      *
+     * @param array<string, mixed> $options
+     *
      * @throws SendNotificationException
      */
     #[\NoDiscard('The return value indicates whether the notification was sent successfully')]
@@ -120,6 +122,8 @@ trait Notification
 
     /**
      * Send HTTP request with exponential backoff retry for rate limits.
+     *
+     * @param array<string, mixed> $options
      *
      * @throws SendNotificationException
      */

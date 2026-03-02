@@ -17,7 +17,7 @@ interface SettingInterface
      * @param string|null $parentEvent
      * @param string $platform
      *
-     * @return array
+     * @return array<int, array<int, mixed>>
      * @see EventSettingTrait::eventMarkup()
      */
     public function eventMarkup(?string $parentEvent = null, string $platform = EventConstant::DEFAULT_PLATFORM): array;
@@ -27,7 +27,7 @@ interface SettingInterface
      *
      * @param string $event
      * @param string $platform
-     * @param array|bool $value
+     * @param array<string, mixed>|bool $value
      * @param string|null $parentEvent
      *
      * @return string
@@ -39,7 +39,7 @@ interface SettingInterface
      * Get event name for markup
      *
      * @param string $event
-     * @param bool|array $value
+     * @param bool|array<string, mixed> $value
      *
      * @return string
      * @see EventSettingTrait::getEventName()
@@ -52,7 +52,7 @@ interface SettingInterface
      * @param string $platform
      * @param string|null $parentEvent
      *
-     * @return array
+     * @return array<int, mixed>
      * @see EventSettingTrait::getEndKeyboard()
      */
     public function getEndKeyboard(string $platform, ?string $parentEvent = null): array;
@@ -163,15 +163,15 @@ interface SettingInterface
     /**
      * Generate setting markup
      *
-     * @return array[]
+     * @return array<int, array<int, mixed>>
      * @see BotSettingTrait::settingMarkup()
      */
     public function settingMarkup(): array;
 
     /**
-     * @param array $markup
+     * @param array<int, array<int, mixed>> $markup
      *
-     * @return array
+     * @return array<int, array<int, mixed>>
      * @see BotSettingTrait::customEventMarkup()
      */
     public function customEventMarkup(array $markup): array;

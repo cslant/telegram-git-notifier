@@ -2,7 +2,6 @@
 
 namespace CSlant\TelegramGitNotifier\Helpers;
 
-use CSlant\TelegramGitNotifier\Exceptions\EntryNotFoundException;
 use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use Throwable;
 
@@ -43,8 +42,10 @@ final class ConfigHelper
      * Uses output buffering and a closure to isolate the template scope,
      * preventing variable pollution.
      *
-     * @param string $partialPath Dot-notation path to the view file
-     * @param array<string, mixed> $data Variables to pass to the template
+     * @param  string  $partialPath  Dot-notation path to the view file
+     * @param  array<string, mixed>  $data  Variables to pass to the template
+     *
+     * @throws InvalidViewTemplateException
      */
     public function getTemplateData(string $partialPath, array $data = []): string
     {
@@ -63,7 +64,7 @@ final class ConfigHelper
 
                 return (string) ob_get_clean();
             })($viewPathFile, $data);
-        } catch (EntryNotFoundException|InvalidViewTemplateException|Throwable $e) {
+        } catch (Throwable $e) {
             if (ob_get_level() > 0) {
                 ob_end_clean();
             }

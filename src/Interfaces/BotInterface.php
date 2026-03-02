@@ -11,7 +11,7 @@ interface BotInterface extends AppInterface, EventInterface, SettingInterface
     /**
      * Set the menu button for a telegram
      *
-     * @param array $menuCommand
+     * @param array<int, array{command: string, description: string}> $menuCommand
      * @param string|null $view
      *
      * @return void

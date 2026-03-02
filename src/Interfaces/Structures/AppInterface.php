@@ -13,7 +13,7 @@ interface AppInterface
      * Send a message to telegram
      *
      * @param string|null $message
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      * @throws MessageIsEmptyException
@@ -25,7 +25,7 @@ interface AppInterface
      * Send a photo to telegram
      *
      * @param string $photo (path to photo)
-     * @param array $caption
+     * @param array<string, mixed> $caption
      *
      * @return void
      * @throws EntryNotFoundException
@@ -37,7 +37,7 @@ interface AppInterface
      * Send callback response to telegram (show alert)
      *
      * @param string|null $text
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      * @throws MessageIsEmptyException
@@ -50,7 +50,7 @@ interface AppInterface
      * Edit message text and reply markup
      *
      * @param string|null $text
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      * @throws BotException
@@ -61,7 +61,7 @@ interface AppInterface
     /**
      * Edit message reply markup from a telegram
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
      * @return void
      * @throws BotException
@@ -80,9 +80,9 @@ interface AppInterface
     /**
      * Create content for a callback message
      *
-     * @param array $options
+     * @param array<string, mixed> $options
      *
-     * @return array
+     * @return array<string, mixed>
      * @see App::setCallbackContentMessage()
      */
     public function setCallbackContentMessage(array $options = []): array;

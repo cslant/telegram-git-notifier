@@ -20,6 +20,9 @@ trait App
         $this->chatBotId = $chatBotId ?? config('telegram-git-notifier.bot.chat_id');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function createTelegramBaseContent(): array
     {
         return [
@@ -29,6 +32,11 @@ trait App
         ];
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws MessageIsEmptyException
+     */
     public function sendMessage(?string $message = '', array $options = []): void
     {
         if ($message === null || $message === '') {
@@ -50,6 +58,11 @@ trait App
         $this->telegram->sendMessage($content);
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws EntryNotFoundException
+     */
     public function sendPhoto(string $photo = '', array $options = []): void
     {
         if ($photo === '') {
@@ -64,6 +77,12 @@ trait App
         $this->telegram->sendPhoto($content);
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws MessageIsEmptyException
+     * @throws CallbackException
+     */
     public function answerCallbackQuery(?string $text = null, array $options = []): void
     {
         if ($text === null || $text === '') {
@@ -82,6 +101,11 @@ trait App
         }
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws BotException
+     */
     public function editMessageText(
         ?string $text = null,
         array $options = []
@@ -97,6 +121,11 @@ trait App
         }
     }
 
+    /**
+     * @param  array<string, mixed>  $options
+     *
+     * @throws BotException
+     */
     public function editMessageReplyMarkup(array $options = []): void
     {
         try {
@@ -113,6 +142,10 @@ trait App
         return $this->telegram->Callback_Message()['text'];
     }
 
+    /**
+     * @param array<string, mixed> $options
+     * @return array<string, mixed>
+     */
     public function setCallbackContentMessage(array $options = []): array
     {
         $content = [

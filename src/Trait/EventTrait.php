@@ -16,7 +16,7 @@ trait EventTrait
     ): void {
         /** @var array<string, string> $platformFileDefaults */
         $platformFileDefaults = config('telegram-git-notifier.data_file.platform');
-        $this->event->platformFile = $platformFile ?? $platformFileDefaults[$platform] ?? '';
+        $this->event->platformFile = $platformFile ?? $platformFileDefaults[$platform ?? EventConstant::DEFAULT_PLATFORM] ?? '';
         $this->event->setEventConfig($platform);
     }
 

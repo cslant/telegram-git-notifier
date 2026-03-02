@@ -42,13 +42,13 @@ return [
         /** Set the path to the data file */
         'data_file' => [
             'setting'  => $_ENV['TGN_PATH_SETTING'] ??
-                'storage/json/tgn/tgn-settings.json',
+                'config/jsons/tgn-settings.json',
 
             'platform' => [
                 'gitlab' => $_ENV['TGN_PATH_PLATFORM_GITLAB'] ??
-                    'storage/json/tgn/gitlab-events.json',
+                    'config/jsons/gitlab-events.json',
                 'github' => $_ENV['TGN_PATH_PLATFORM_GITHUB'] ??
-                    'storage/json/tgn/github-events.json',
+                    'config/jsons/github-events.json',
             ],
         ],
 

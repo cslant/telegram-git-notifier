@@ -4,22 +4,22 @@ namespace CSlant\TelegramGitNotifier\Enums;
 
 enum Platform: string
 {
-    case GitHub = 'github';
-    case GitLab = 'gitlab';
+    case GITHUB = 'github';
+    case GITLAB = 'gitlab';
 
     public function eventSeparator(): string
     {
         return match ($this) {
-            self::GitHub => 'gh.',
-            self::GitLab => 'gl.',
+            self::GITHUB => 'gh.',
+            self::GITLAB => 'gl.',
         };
     }
 
     public function webhookEventHeader(): string
     {
         return match ($this) {
-            self::GitHub => 'HTTP_X_GITHUB_EVENT',
-            self::GitLab => 'HTTP_X_GITLAB_EVENT',
+            self::GITHUB => 'HTTP_X_GITHUB_EVENT',
+            self::GITLAB => 'HTTP_X_GITLAB_EVENT',
         };
     }
 
@@ -47,6 +47,6 @@ enum Platform: string
 
     public static function default(): self
     {
-        return self::GitHub;
+        return self::GITHUB;
     }
 }

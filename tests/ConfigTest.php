@@ -21,10 +21,10 @@ it('platform can be set for event with null parameter', function () {
 });
 
 it('platform can be set for event with platform file', function () {
-    $this->bot->setPlatFormForEvent('gitlab', 'storage/json/tgn/gitlab-events.json');
+    $this->bot->setPlatFormForEvent('gitlab', 'config/jsons/gitlab-events.json');
     expect($this->bot->event->platform)->toBe('gitlab')
         ->and($this->bot->event->platformFile)
-        ->toBe('storage/json/tgn/gitlab-events.json');
+        ->toBe('config/jsons/gitlab-events.json');
 });
 
 it('can get json config for event - github', function () {
@@ -34,7 +34,7 @@ it('can get json config for event - github', function () {
 });
 
 it('can get json config for event - gitlab', function () {
-    $this->bot->setPlatFormForEvent('gitlab', 'storage/json/tgn/gitlab-events.json');
+    $this->bot->setPlatFormForEvent('gitlab', 'config/jsons/gitlab-events.json');
     expect($this->bot->event->getEventConfig())->toBeArray()
         ->and($this->bot->event->getEventConfig())->toHaveKey('tag_push');
 });
