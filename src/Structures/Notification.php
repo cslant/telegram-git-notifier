@@ -2,7 +2,7 @@
 
 namespace CSlant\TelegramGitNotifier\Structures;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
 use CSlant\TelegramGitNotifier\Exceptions\SendNotificationException;
 use GuzzleHttp\Exception\GuzzleException;
@@ -40,7 +40,7 @@ trait Notification
     {
         $content = match ($this->event->platform) {
             'gitlab' => $request->getContent(),
-            EventConstant::DEFAULT_PLATFORM => $request->request->get('payload'),
+            Platform::DEFAULT => $request->request->get('payload'),
             default => null,
         };
 

@@ -16,9 +16,9 @@ final class SettingConstant
 
     public const string SETTING_CUSTOM_EVENTS = self::SETTING_PREFIX . 'cus';
 
-    public const string SETTING_GITHUB_EVENTS = self::SETTING_CUSTOM_EVENTS . EventConstant::GITHUB_EVENT_SEPARATOR;
+    public const string SETTING_GITHUB_EVENTS = self::SETTING_CUSTOM_EVENTS . 'gh.';
 
-    public const string SETTING_GITLAB_EVENTS = self::SETTING_CUSTOM_EVENTS . EventConstant::GITLAB_EVENT_SEPARATOR;
+    public const string SETTING_GITLAB_EVENTS = self::SETTING_CUSTOM_EVENTS . 'gl.';
 
     public const int BTN_LINE_ITEM_COUNT = 2;
 

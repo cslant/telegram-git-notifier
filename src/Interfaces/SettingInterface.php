@@ -2,7 +2,7 @@
 
 namespace CSlant\TelegramGitNotifier\Interfaces;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 use CSlant\TelegramGitNotifier\Exceptions\BotException;
 use CSlant\TelegramGitNotifier\Exceptions\InvalidViewTemplateException;
 use CSlant\TelegramGitNotifier\Exceptions\MessageIsEmptyException;
@@ -20,7 +20,7 @@ interface SettingInterface
      * @return array<int, array<int, mixed>>
      * @see EventSettingTrait::eventMarkup()
      */
-    public function eventMarkup(?string $parentEvent = null, string $platform = EventConstant::DEFAULT_PLATFORM): array;
+    public function eventMarkup(?string $parentEvent = null, string $platform = Platform::DEFAULT): array;
 
     /**
      * Get callback data for markup

@@ -4,6 +4,7 @@ namespace CSlant\TelegramGitNotifier\Trait;
 
 use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Constants\SettingConstant;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 
 trait EventSettingTrait
 {
@@ -12,7 +13,7 @@ trait EventSettingTrait
      */
     public function eventMarkup(
         ?string $parentEvent = null,
-        string $platform = EventConstant::DEFAULT_PLATFORM,
+        string $platform = Platform::DEFAULT,
         ?string $platformFile = null
     ): array {
         $replyMarkup = $replyMarkupItem = [];
@@ -56,9 +57,7 @@ trait EventSettingTrait
         array|bool $value = false,
         ?string $parentEvent = null
     ): string {
-        $platformSeparator = $platform === EventConstant::DEFAULT_PLATFORM
-            ? EventConstant::GITHUB_EVENT_SEPARATOR
-            : EventConstant::GITLAB_EVENT_SEPARATOR;
+        $platformSeparator = Platform::from($platform)->eventSeparator();
         $prefix = EventConstant::EVENT_PREFIX . $platformSeparator;
 
         if (is_array($value)) {
@@ -136,14 +135,14 @@ trait EventSettingTrait
         }
 
         if ($callback) {
-            return match (true) {
-                str_contains($callback, EventConstant::GITHUB_EVENT_SEPARATOR) => 'github',
-                str_contains($callback, EventConstant::GITLAB_EVENT_SEPARATOR) => 'gitlab',
-                default => EventConstant::DEFAULT_PLATFORM,
-            };
+            foreach (Platform::cases() as $p) {
+                if (str_contains($callback, $p->eventSeparator())) {
+                    return $p->value;
+                }
+            }
         }
 
-        return EventConstant::DEFAULT_PLATFORM;
+        return Platform::DEFAULT;
     }
 
     public function sendSettingEventMessage(
@@ -175,11 +174,16 @@ trait EventSettingTrait
             return '';
         }
 
-        return str_replace([
-            EventConstant::EVENT_PREFIX,
-            EventConstant::GITHUB_EVENT_SEPARATOR,
-            EventConstant::GITLAB_EVENT_SEPARATOR,
-        ], '', $callback);
+        $separators = array_map(
+            fn (Platform $p) => $p->eventSeparator(),
+            Platform::cases(),
+        );
+
+        return str_replace(
+            [EventConstant::EVENT_PREFIX, ...$separators],
+            '',
+            $callback,
+        );
     }
 
     public function handleEventWithActions(
@@ -235,7 +239,7 @@ trait EventSettingTrait
         $this->event->updateEvent($event, $action);
         $this->eventHandle(
             $action
-                ? EventConstant::PLATFORM_EVENT_SEPARATOR[$platform]
+                ? Platform::from($platform)->eventSeparator()
                 . EventConstant::EVENT_HAS_ACTION_SEPARATOR . $event
                 : null,
             $platform

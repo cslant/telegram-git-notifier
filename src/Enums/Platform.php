@@ -7,6 +7,8 @@ enum Platform: string
     case GITHUB = 'github';
     case GITLAB = 'gitlab';
 
+    public const DEFAULT = 'github';
+
     public function eventSeparator(): string
     {
         return match ($this) {

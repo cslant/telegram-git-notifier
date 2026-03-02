@@ -2,8 +2,8 @@
 
 namespace CSlant\TelegramGitNotifier;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\DTOs\ChatTarget;
+use CSlant\TelegramGitNotifier\Enums\Platform;
 use CSlant\TelegramGitNotifier\Exceptions\ConfigFileException;
 use CSlant\TelegramGitNotifier\Interfaces\EventInterface;
 use CSlant\TelegramGitNotifier\Interfaces\Structures\NotificationInterface;
@@ -32,7 +32,7 @@ class Notifier implements NotificationInterface, EventInterface
         ?Telegram $telegram = null,
         ?string $chatBotId = null,
         ?Event $event = null,
-        ?string $platform = EventConstant::DEFAULT_PLATFORM,
+        ?string $platform = Platform::DEFAULT,
         ?string $platformFile = null,
         ?Client $client = null,
     ) {

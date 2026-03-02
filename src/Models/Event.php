@@ -2,7 +2,6 @@
 
 namespace CSlant\TelegramGitNotifier\Models;
 
-use CSlant\TelegramGitNotifier\Constants\EventConstant;
 use CSlant\TelegramGitNotifier\Enums\Platform;
 
 class Event
@@ -14,7 +13,7 @@ class Event
 
     private string $lastLoadedFile = '';
 
-    public string $platform = EventConstant::DEFAULT_PLATFORM;
+    public string $platform = Platform::DEFAULT;
 
     public string $platformFile = '' {
         get {
@@ -39,7 +38,7 @@ class Event
      */
     public function setEventConfig(?string $platform = null): void
     {
-        $newPlatform = $platform ?? EventConstant::DEFAULT_PLATFORM;
+        $newPlatform = $platform ?? Platform::DEFAULT;
         $this->platform = $newPlatform;
 
         // Skip re-reading if same file is already loaded
