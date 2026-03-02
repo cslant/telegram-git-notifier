@@ -25,6 +25,8 @@ trait TelegramBot
     {
         $chatIds = config('telegram-git-notifier.bot.notify_chat_ids');
 
-        return in_array((string) $this->telegram->ChatID(), (array) $chatIds, true);
+        $notifyChatIds = ChatTarget::parseNotifyChatIds($chatIds);
+
+        return in_array((string) $this->telegram->ChatID(), $notifyChatIds, true);
     }
 }
