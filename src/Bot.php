@@ -61,7 +61,7 @@ class Bot implements BotInterface
 
     public function validateSettingFile(): void
     {
-        if (empty($this->setting->getSettingFile())) {
+        if ($this->setting->getSettingFile() === '') {
             throw ConfigFileException::settingFile($this->setting->getSettingFile());
         }
     }

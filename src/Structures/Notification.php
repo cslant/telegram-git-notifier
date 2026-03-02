@@ -91,7 +91,7 @@ trait Notification
     #[\NoDiscard('The return value indicates whether the notification was sent successfully')]
     public function sendNotify(?string $message = null, array $options = []): bool
     {
-        if (!empty($message)) {
+        if ($message !== null && $message !== '') {
             $this->message = $message;
         }
 

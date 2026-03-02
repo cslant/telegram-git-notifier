@@ -64,7 +64,7 @@ class Event
      */
     public function updateEvent(string $event, ?string $action): void
     {
-        if (!empty($action)) {
+        if ($action !== null && $action !== '') {
             $this->eventConfig[$event][$action]
                 = !$this->eventConfig[$event][$action];
         } else {
@@ -82,7 +82,7 @@ class Event
 
     private function loadFromFile(): void
     {
-        if (empty($this->platformFile) || !file_exists($this->platformFile)) {
+        if ($this->platformFile === '' || !file_exists($this->platformFile)) {
             $this->eventConfig = [];
 
             return;
@@ -90,7 +90,7 @@ class Event
 
         $json = file_get_contents($this->platformFile);
 
-        if (!empty($json)) {
+        if ($json !== false && $json !== '') {
             $this->eventConfig = json_decode($json, true) ?? [];
         }
 

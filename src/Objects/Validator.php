@@ -53,7 +53,7 @@ class Validator
         $eventConfig = $this->event->getEventConfig()[tgn_convert_event_name($event)] ?? false;
         $action = $this->getActionOfEvent($payload);
 
-        if (!empty($action) && isset($eventConfig[$action])) {
+        if ($action !== '' && isset($eventConfig[$action])) {
             $eventConfig = $eventConfig[$action];
         }
 

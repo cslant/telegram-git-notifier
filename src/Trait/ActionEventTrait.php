@@ -11,7 +11,7 @@ trait ActionEventTrait
             ?? $payload->object_attributes?->noteable_type
             ?? '';
 
-        if (!empty($action)) {
+        if ($action !== '') {
             return tgn_convert_action_name($action);
         }
 

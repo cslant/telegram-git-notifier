@@ -53,13 +53,13 @@ class Setting
 
     public function isAllEventsNotification(): bool
     {
-        return !empty($this->settings)
+        return $this->settings !== []
             && ($this->settings[SettingConstant::T_ALL_EVENTS_NOTIFICATION] ?? false) === true;
     }
 
     public function isNotified(): bool
     {
-        return !empty($this->settings)
+        return $this->settings !== []
             && ($this->settings[SettingConstant::T_IS_NOTIFIED] ?? false) === true;
     }
 
@@ -98,7 +98,7 @@ class Setting
 
     private function loadFromFile(): void
     {
-        if (empty($this->settingFile) || !file_exists($this->settingFile)) {
+        if ($this->settingFile === '' || !file_exists($this->settingFile)) {
             $this->settings = [];
 
             return;
@@ -106,7 +106,7 @@ class Setting
 
         $json = file_get_contents($this->settingFile);
 
-        if (!empty($json)) {
+        if ($json !== false && $json !== '') {
             $this->settings = json_decode($json, true) ?? [];
         }
 

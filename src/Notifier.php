@@ -55,7 +55,7 @@ class Notifier implements NotificationInterface, EventInterface
     {
         $raw = $chatIds ?? config('telegram-git-notifier.bot.notify_chat_ids');
 
-        if (empty($raw)) {
+        if ($raw === null || $raw === '') {
             return [];
         }
 

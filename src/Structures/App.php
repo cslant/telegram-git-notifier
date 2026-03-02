@@ -31,14 +31,14 @@ trait App
 
     public function sendMessage(?string $message = '', array $options = []): void
     {
-        if (empty($message)) {
+        if ($message === null || $message === '') {
             throw MessageIsEmptyException::create();
         }
 
         $content = $this->createTelegramBaseContent();
         $content['text'] = $message;
 
-        if (!empty($options['reply_markup'])) {
+        if (isset($options['reply_markup'])) {
             $content['reply_markup'] = $this->telegram->buildInlineKeyBoard(
                 $options['reply_markup']
             );
@@ -52,7 +52,7 @@ trait App
 
     public function sendPhoto(string $photo = '', array $options = []): void
     {
-        if (empty($photo)) {
+        if ($photo === '') {
             throw EntryNotFoundException::fileNotFound();
         }
 
@@ -66,7 +66,7 @@ trait App
 
     public function answerCallbackQuery(?string $text = null, array $options = []): void
     {
-        if (empty($text)) {
+        if ($text === null || $text === '') {
             throw MessageIsEmptyException::create();
         }
 
@@ -122,7 +122,7 @@ trait App
             'parse_mode' => 'HTML',
         ];
 
-        $content['reply_markup'] = $options['reply_markup']
+        $content['reply_markup'] = isset($options['reply_markup'])
             ? $this->telegram->buildInlineKeyBoard($options['reply_markup'])
             : null;
 

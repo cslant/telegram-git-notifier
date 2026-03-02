@@ -11,7 +11,7 @@ final class ConfigHelper
     /**
      * @var array<string, mixed>
      */
-    public array $config;
+    private readonly array $config;
 
     public function __construct()
     {
@@ -27,7 +27,7 @@ final class ConfigHelper
         $result = $this->config;
 
         foreach ($keys as $key) {
-            if (!isset($result[$key])) {
+            if (!is_array($result) || !array_key_exists($key, $result)) {
                 return '';
             }
 
