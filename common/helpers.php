@@ -48,7 +48,7 @@ if (!function_exists('tgn_singularity')) {
 
 if (!function_exists('tgn_snake_case')) {
     /**
-     * Convert a string to a snack case
+     * Convert a string to a snake case
      *
      * @param string $string
      *
