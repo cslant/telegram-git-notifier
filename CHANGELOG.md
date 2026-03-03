@@ -2,6 +2,42 @@
 
 Here you can see the full list of changes between each Telegram Git Notifier release.
 
+## v2.0.0 - 2026-03-03
+
+### 🚀 Major Release - PHP 8.4+ & Modern Architecture
+
+### ✨ New Features
+
+- **Platform Enum**: Added `CSlant\TelegramGitNotifier\Enums\Platform` backed string enum for type-safe GitHub/GitLab handling
+- **ChatTarget DTO**: Added `CSlant\TelegramGitNotifier\DTOs\ChatTarget` readonly class for structured chat ID parsing with thread support
+- **In-Memory Caching**: Event and Setting models now cache config files in memory with dirty flag for efficient I/O
+- **PSR-3 Logger**: Validator now accepts optional `LoggerInterface` for standardized logging
+- **API Retry Logic**: Added exponential backoff for Telegram API rate limits (HTTP 429 handling)
+- **Safe Template Rendering**: Closure-isolated scope for view templates in ConfigHelper
+- **NoDiscard Attribute**: `sendNotify()` method uses `#[\NoDiscard]` to ensure return value is checked
+
+### 🔧 Improvements
+
+- **PHP Version**: Upgraded to PHP ^8.4|^8.5
+- **Type Safety**: All implicit nullable params now use explicit `?Type $param = null`
+- **Strict Comparisons**: All loose `==` comparisons replaced with strict `===`
+- **Removed `empty()`**: All `empty()` calls replaced with explicit checks (`$var !== []`, `$var !== ''`, `isset()`)
+- **Readonly Properties**: Added `readonly` to DTOs and immutable properties
+
+### 🐛 Bug Fixes
+
+- Fixed `EventTrait` where string was incorrectly assigned to `Event` object property
+- Fixed undefined array key in `setCallbackContentMessage()`
+- Fixed default platform file paths in tests
+
+### 💥 Breaking Changes
+
+- PHP `^8.4|^8.5` now required
+- `psr/log` dependency added
+- `ConfigHelper::$config` is now `private readonly` - use `execConfig()` method
+
+**Full Changelog**: https://github.com/cslant/telegram-git-notifier/compare/v1.5.0...v2.0.0
+
 ## v1.5.0 - 2024-05-23
 
 ### What's Changed

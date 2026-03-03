@@ -3,15 +3,15 @@
 use CSlant\TelegramGitNotifier\Notifier;
 
 beforeEach(function () {
-    $this->notifier = new Notifier();
+    $this->notifier = new Notifier(platformFile: __DIR__.'/../config/jsons/github-events.json');
 });
 
 it('validates that the event files exist', function () {
-    $this->notifier->setPlatFormForEvent('gitlab', 'storage/json/tgn/gitlab-events.json');
+    $this->notifier->setPlatFormForEvent('gitlab', __DIR__.'/../config/jsons/gitlab-events.json');
     expect($this->notifier->event->getEventConfig())->toBeArray()
         ->and($this->notifier->event->getEventConfig())->toHaveKey('tag_push');
 
-    $this->notifier->setPlatFormForEvent('github', 'storage/json/tgn/github-events.json');
+    $this->notifier->setPlatFormForEvent('github', __DIR__.'/../config/jsons/github-events.json');
     expect($this->notifier->event->getEventConfig())->toBeArray()
         ->and($this->notifier->event->getEventConfig())
         ->toHaveKey('issue_comment');

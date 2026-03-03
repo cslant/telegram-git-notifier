@@ -1,8 +1,7 @@
 # Telegram Git Notifier Core Package
 
-This package provides the ability to integrate the Telegram messaging service and GitHub and GitLab.
-With this package,
-you can create a Telegram bot to receive notifications from GitHub or GitLab events
+This package provides the ability to integrate the Telegram messaging service with GitHub and GitLab.
+With this package, you can create a Telegram bot to receive notifications from GitHub or GitLab events
 and manage customization through messages and buttons on Telegram.
 
 <p align="center">
@@ -21,7 +20,7 @@ and manage customization through messages and buttons on Telegram.
 
 ## 📋 Requirements
 
-- PHP ^8.1
+- PHP ^8.4|^8.5
 - [Composer](https://getcomposer.org/)
 - [Telegram Bot](https://core.telegram.org/api)
 
@@ -33,6 +32,16 @@ You can install this package via Composer:
 composer require cslant/telegram-git-notifier
 ```
 
+## ✨ Features
+
+- **Platform Enum**: Type-safe GitHub/GitLab platform handling
+- **ChatTarget DTO**: Structured chat ID parsing with thread support
+- **In-Memory Caching**: Config files cached in memory with dirty flag for efficient I/O
+- **PSR-3 Logger**: Standardized logging interface support
+- **API Retry Logic**: Exponential backoff for Telegram API rate limits (HTTP 429)
+- **Safe Template Rendering**: Closure-isolated scope for view templates
+- **Strict Types**: Full type safety with `readonly` properties and explicit nullable params
+
 ## 🧪 Testing
 
 ```bash
@@ -42,6 +51,10 @@ composer test
 ## 📖 Official Documentation
 
 Please see the [Telegram Git Notifier Documentation](https://docs.cslant.com/telegram-git-notifier) for more information.
+
+## 📦 Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## License
 
